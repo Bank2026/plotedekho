@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PloteDekho.com - Find Real Estate, Land & Commercial Properties</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --accent: #f59e0b;
+      --whatsapp: #25d366;
+      --whatsapp-hover: #1da851;
+      --bg-light: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-light);
+      color: var(--text-main);
+      padding-bottom: 40px;
+    }
+
+    /* Header Navigation */
+    header {
+      background-color: var(--card-bg);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Smart SVG Brand Logo */
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .logo-icon {
+      width: 42px;
+      height: 42px;
+    }
+
+    .brand-text {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: -0.5px;
+    }
+
+    .brand-text span {
+      color: var(--text-main);
+    }
+
+    /* Auth Buttons */
+    .auth-buttons {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn-auth {
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--primary);
+      transition: all 0.2s;
+    }
+
+    .btn-login {
+      background-color: transparent;
+      color: var(--primary);
+    }
+
+    .btn-login:hover {
+      background-color: #eff6ff;
+    }
+
+    .btn-signup {
+      background-color: var(--primary);
+      color: #ffffff;
+    }
+
+    .btn-signup:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .user-welcome {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-logout {
+      background: #f1f5f9;
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    /* Layout */
+    .container {
+      max-width: 1200px;
+      margin: 24px auto;
+      padding: 0 24px;
+    }
+
+    /* Modals */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal {
+      background: #fff;
+      padding: 28px;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+
+    .modal h2 {
+      margin-bottom: 16px;
+      font-size: 20px;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--text-muted);
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .form-group input:focus {
+      border-color: var(--primary);
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 10px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    /* Admin Dashboard Panel */
+    .admin-dashboard {
+      background: #ffffff;
+      border: 2px solid var(--primary);
+      padding: 24px;
+      border-radius: 12px;
+      margin-bottom: 32px;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+    }
+
+    .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .admin-header h2 {
+      font-size: 20px;
+      color: var(--primary);
+    }
+
+    .admin-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+
+    .admin-grid input, .admin-grid select {
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .admin-grid input:focus, .admin-grid select:focus {
+      border-color: var(--primary);
+    }
+
+    /* Filters & Grid */
+    .filter-card {
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      margin-bottom: 32px;
+    }
+
+    .filter-card h3 {
+      font-size: 14px;
+      margin-bottom: 12px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .filter-group {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background-color: #fff;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-image-wrap {
+      position: relative;
+      height: 200px;
+      background-color: #cbd5e1;
+    }
+
+    .card-image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .tag-container {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      display: flex;
+      gap: 6px;
+    }
+
+    .tag {
+      background: rgba(15, 23, 42, 0.75);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .favorite-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: #ffffff;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 18px;
+      color: #94a3b8;
+    }
+
+    .favorite-btn.active {
+      color: #ef4444;
+    }
+
+    .card-body {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .price {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .title {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 4px 0 8px 0;
+    }
+
+    .location {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .specs {
+      font-size: 12px;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 8px 0;
+      margin-bottom: 16px;
+    }
+
+    .card-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: auto;
+    }
+
+    .btn {
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-decoration: none;
+    }
+
+    .btn-call {
+      background-color: #f1f5f9;
+      color: var(--text-main);
+    }
+
+    .btn-wa {
+      background-color: var(--whatsapp);
+      color: #ffffff;
+    }
+
+    .like-counter {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 12px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header Navigation -->
+  <header>
+    <div class="nav-container">
+      <a href="#" class="brand-logo">
+        <svg class="logo-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="100" height="100" rx="20" fill="#2563EB"/>
+          <path d="M50 20L22 42V78C22 80.2091 23.7909 82 26 82H74C76.2091 82 78 80.2091 78 78V42L50 20Z" fill="white" opacity="0.15"/>
+          <path d="M50 24L26 44V76H74V44L50 24Z" stroke="white" stroke-width="6" stroke-linejoin="round"/>
+          <circle cx="50" cy="48" r="8" fill="#F59E0B"/>
+          <path d="M50 56V68" stroke="#F59E0B" stroke-width="6" stroke-linecap="round"/>
+        </svg>
+        <div class="brand-text">plote<span>dekho</span>.com</div>
+      </a>
+      
+      <div class="auth-buttons" id="authContainer">
+        <button class="btn-auth btn-login" onclick="openModal('loginModal')">Log In</button>
+        <button class="btn-auth btn-signup" onclick="openModal('signupModal')">Sign Up</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <div class="container">
+
+    <!-- Admin Panel: Add New Property -->
+    <div class="admin-dashboard">
+      <div class="admin-header">
+        <h2>📌 Admin Dashboard - Add New Property</h2>
+        <span style="font-size:12px; background:#eff6ff; color:var(--primary); padding:4px 8px; border-radius:4px; font-weight:600;">Admin Mode Active</span>
+      </div>
+
+      <form id="addPropertyForm" onsubmit="handlePostProperty(event)">
+        <div class="admin-grid">
+          <div>
+            <label style="font-size:12px; font-weight:600; color:var(--text-muted);">Property Title</label>
+            <input type="text" id="pTitle" placeholder="e.g. 3 BHK Luxury Villa" required style="width:100%;">
+          </div>
+          <div>
+            <label style="font-size:12px; font-weight:600; color:var(--text-muted);">Price</label>
+            <input type="text" id="pPrice" placeholder="e.g. ₹65,00,000" required style="width:100%;">
+          </div>
+          <div>
+            <label style="font-size:12px; font-weight:600; color:var(--text-muted);">Location</label>
+            <input type="text" id="pLocation" placeholder="e.g. Model Town" required style="width:100%;">
+          </div>
+          <div>
+            <label style="font-size:12px; font-weight:600; color:var(--text-muted);">Plot Size / Area</label>
+            <input type="text" id="pSize" placeholder="e.g. 200 Sq Yards" required style="width:100%;">
+          </div>
+          <div>
+            <label style="font-size:12px; font-weight:600; color:var(--text-muted);">Area Category</label>
+            <select id="pArea" required style="width:100%;">
+              <option value="Urban">Urban</option>
+              <option value="Rural">Rural</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:12px; font-weight:600; color:var(--text-muted);">Property Type</label>
+            <select id="pType" required style="width:100%;">
+              <option value="Housing">Housing</option>
+              <option value="Shop">Shop / Commercial</option>
+              <option value="Agriculture">Agriculture</option>
+              <option value="Industrial">Industrial</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:12px; font-weight:600; color:var(--text-muted);">Image URL (Optional)</label>
+            <input type="url" id="pImg" placeholder="https://..." style="width:100%;">
+          </div>
+          <div style="display:flex; align-items:flex-end;">
+            <button type="submit" class="btn-submit" style="margin:0; height:40px;">+ Publish Property Listing</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- Dynamic Filters -->
+    <div class="filter-card">
+      <h3>Filter Properties</h3>
+      <div class="filter-group">
+        <select id="areaFilter" onchange="filterProperties()">
+          <option value="all">All Area Types (Urban / Rural)</option>
+          <option value="Urban">Urban</option>
+          <option value="Rural">Rural</option>
+        </select>
+
+        <select id="typeFilter" onchange="filterProperties()">
+          <option value="all">All Categories (Housing, Shop, etc.)</option>
+          <option value="Housing">Housing</option>
+          <option value="Shop">Shop / Commercial</option>
+          <option value="Agriculture">Agriculture</option>
+          <option value="Industrial">Industrial</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Property Grid -->
+    <div class="grid" id="propertyGrid">
+      <div class="card" data-area="Urban" data-type="Housing">
+        <div class="card-image-wrap">
+          <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=600&q=80" alt="House">
+          <div class="tag-container">
+            <span class="tag">Urban</span>
+            <span class="tag">Housing</span>
+          </div>
+          <button class="favorite-btn" onclick="toggleFavorite(this)">♥</button>
+        </div>
+        <div class="card-body">
+          <div class="price">₹45,00,000</div>
+          <div class="title">3 BHK Independent House</div>
+          <div class="location">📍 Urban Area, City Center</div>
+          <div class="specs">Size: <span>1500 sq ft</span></div>
+          <div class="card-actions">
+            <a href="tel:+916280630568" class="btn btn-call">📞 Call</a>
+            <button class="btn btn-wa" onclick="sendWhatsApp('3 BHK Independent House', '₹45,00,000', 'Urban', 'Housing', '1500 sq ft')">💬 WhatsApp</button>
+          </div>
+          <div class="like-counter" onclick="toggleLike(this)">👍 <span class="count">24</span> Likes</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Login Modal -->
+  <div class="modal-overlay" id="loginModal">
+    <div class="modal">
+      <button class="close-modal" onclick="closeModal('loginModal')">&times;</button>
+      <h2>Log In</h2>
+      <form onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label>ID / Username / Phone</label>
+          <input type="text" id="loginId" placeholder="Enter ID" required>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="loginPass" placeholder="Enter Password" required>
+        </div>
+        <button type="submit" class="btn-submit">Log In</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Sign Up Modal -->
+  <div class="modal-overlay" id="signupModal">
+    <div class="modal">
+      <button class="close-modal" onclick="closeModal('signupModal')">&times;</button>
+      <h2>Sign Up</h2>
+      <form onsubmit="handleSignup(event)">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="signupName" placeholder="Enter your full name" required>
+        </div>
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="tel" id="signupPhone" placeholder="Enter phone number" required>
+        </div>
+        <button type="submit" class="btn-submit">Sign Up</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const ADMIN_PHONE = "916280630568";
+    
+    function openModal(id) {
+      document.getElementById(id).style.display = 'flex';
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).style.display = 'none';
+    }
+
+    function handleLogin(e) {
+      e.preventDefault();
+      const id = document.getElementById('loginId').value.trim();
+      const pass = document.getElementById('loginPass').value.trim();
+
+      if (id === 'Sabby Khansian' && pass === 'Kismat2025') {
+        alert('Welcome Admin Sabby Khansian!');
+        closeModal('loginModal');
+        setLoggedInUser("Sabby Khansian (Admin)");
+      } else {
+        alert('User Logged In Successfully');
+        closeModal('loginModal');
+        setLoggedInUser(id);
+      }
+    }
+
+    function handleSignup(e) {
+      e.preventDefault();
+      const name = document.getElementById('signupName').value.trim();
+      alert(`Account created successfully for ${name}!`);
+      closeModal('signupModal');
+      setLoggedInUser(name);
+    }
+
+    function setLoggedInUser(displayName) {
+      const container = document.getElementById('authContainer');
+      container.innerHTML = `
+        <div class="user-welcome">
+          <span>👋 ${displayName}</span>
+          <button class="btn-logout" onclick="location.reload()">Logout</button>
+        </div>
+      `;
+    }
+
+    function handlePostProperty(e) {
+      e.preventDefault();
+      const title = document.getElementById('pTitle').value;
+      const price = document.getElementById('pPrice').value;
+      const location = document.getElementById('pLocation').value;
+      const size = document.getElementById('pSize').value;
+      const area = document.getElementById('pArea').value;
+      const type = document.getElementById('pType').value;
+      let img = document.getElementById('pImg').value.trim();
+
+      if (!img) {
+        img = "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=600&q=80";
+      }
+
+      const grid = document.getElementById('propertyGrid');
+      const newCard = document.createElement('div');
+      newCard.className = 'card';
+      newCard.setAttribute('data-area', area);
+      newCard.setAttribute('data-type', type);
+
+      newCard.innerHTML = `
+        <div class="card-image-wrap">
+          <img src="${img}" alt="Property Image">
+          <div class="tag-container">
+            <span class="tag">${area}</span>
+            <span class="tag">${type}</span>
+          </div>
+          <button class="favorite-btn" onclick="toggleFavorite(this)">♥</button>
+        </div>
+        <div class="card-body">
+          <div class="price">${price}</div>
+          <div class="title">${title}</div>
+          <div class="location">📍 ${location}</div>
+          <div class="specs">Size: <span>${size}</span></div>
+          <div class="card-actions">
+            <a href="tel:+916280630568" class="btn btn-call">📞 Call</a>
+            <button class="btn btn-wa" onclick="sendWhatsApp('${title}', '${price}', '${area}', '${type}', '${size}')">💬 WhatsApp</button>
+          </div>
+          <div class="like-counter" onclick="toggleLike(this)">👍 <span class="count">0</span> Likes</div>
+        </div>
+      `;
+
+      grid.prepend(newCard);
+      document.getElementById('addPropertyForm').reset();
+      alert('New property published successfully!');
+    }
+
+    function sendWhatsApp(title, price, area, type, size) {
+      const message = `Hello PloteDekho,\n\nI am interested in this property listing:\n- *Title:* ${title}\n- *Price:* ${price}\n- *Area Type:* ${area}\n- *Category:* ${type}\n- *Size:* ${size}\n\nPlease share more details.`;
+      const encodedMsg = encodeURIComponent(message);
+      window.open(`https://wa.me/${ADMIN_PHONE}?text=${encodedMsg}`, '_blank');
+    }
+
+    function toggleFavorite(btn) {
+      btn.classList.toggle('active');
+    }
+
+    function toggleLike(element) {
+      const countSpan = element.querySelector('.count');
+      let currentLikes = parseInt(countSpan.textContent);
+      if (element.classList.contains('liked')) {
+        element.classList.remove('liked');
+        countSpan.textContent = currentLikes - 1;
+      } else {
+        element.classList.add('liked');
+        countSpan.textContent = currentLikes + 1;
+      }
+    }
+
+    function filterProperties() {
+      const areaValue = document.getElementById('areaFilter').value;
+      const typeValue = document.getElementById('typeFilter').value;
+      const cards = document.querySelectorAll('.card');
+
+      cards.forEach(card => {
+        const cardArea = card.getAttribute('data-area');
+        const cardType = card.getAttribute('data-type');
+
+        const matchesArea = (areaValue === 'all' || cardArea === areaValue);
+        const matchesType = (typeValue === 'all' || cardType === typeValue);
+
+        if (matchesArea && matchesType) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>
