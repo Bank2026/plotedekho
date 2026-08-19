@@ -211,9 +211,8 @@
       margin-top: 8px;
     }
 
-    /* Admin Dashboard Panel (HIDDEN BY DEFAULT) */
+    /* Admin Dashboard Panel */
     .admin-dashboard {
-      display: none; /* Hidden until admin logs in */
       background: #ffffff;
       border: 2px solid var(--primary);
       padding: 24px;
@@ -446,8 +445,8 @@
   <!-- Main Content Container -->
   <div class="container">
 
-    <!-- Admin Panel: Add New Property (Hidden by default) -->
-    <div class="admin-dashboard" id="adminPanel">
+    <!-- Admin Panel: STRICTLY HIDDEN BY DEFAULT -->
+    <div class="admin-dashboard" id="adminPanel" style="display: none;">
       <div class="admin-header">
         <h2>📌 Admin Dashboard - Add New Property</h2>
         <span style="font-size:12px; background:#eff6ff; color:var(--primary); padding:4px 8px; border-radius:4px; font-weight:600;">Admin Mode Active</span>
@@ -602,12 +601,12 @@
         alert('Welcome Admin Sabby Khansian!');
         closeModal('loginModal');
         setLoggedInUser("Sabby Khansian (Admin)");
-        document.getElementById('adminPanel').style.display = 'block'; // Show admin form on admin login
+        document.getElementById('adminPanel').style.display = 'block'; // Show panel ONLY for admin
       } else {
         alert('User Logged In Successfully');
         closeModal('loginModal');
         setLoggedInUser(id);
-        document.getElementById('adminPanel').style.display = 'none'; // Keep hidden for regular users
+        document.getElementById('adminPanel').style.display = 'none'; // Keep hidden for standard users
       }
     }
 
