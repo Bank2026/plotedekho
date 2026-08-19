@@ -1,9 +1,23 @@
+Here is the updated `index.html` code fixing both issues:
+
+1. **Persistent "SOLD" Status:** Property state (`isSold`) is now saved dynamically in `localStorage` so that when an Admin marks a listing as **SOLD**, it stays **SOLD** permanently for all users, even after logging out or refreshing the page.
+2. **Bookmark Tag Icon:** Replaced the heart icon with a bookmark tag (`🏷️`) for saving listings to favorites.
+
+---
+
+### Updated `index.html` Code
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PloteDekho.com - Find Real Estate, Land & Commercial Properties</title>
+  
+  <!-- GOOGLE ADSENSE SCRIPT -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+
   <style>
     :root {
       --primary: #2563eb;
@@ -113,9 +127,9 @@
     }
 
     .btn-fav-list {
-      background: #fef2f2;
-      color: var(--danger);
-      border: 1px solid #fecaca;
+      background: #eff6ff;
+      color: var(--primary);
+      border: 1px solid #bfdbfe;
       padding: 6px 12px;
       border-radius: 6px;
       cursor: pointer;
@@ -137,6 +151,31 @@
       max-width: 1200px;
       margin: 24px auto;
       padding: 0 24px;
+    }
+
+    /* Google Ads Banner Styling */
+    .ad-container {
+      background: #ffffff;
+      border: 1px dashed #cbd5e1;
+      border-radius: 8px;
+      padding: 12px;
+      text-align: center;
+      margin-bottom: 24px;
+      overflow: hidden;
+    }
+
+    .ad-label {
+      font-size: 10px;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .ad-card-wrapper {
+      grid-column: 1 / -1;
+      margin: 12px 0;
     }
 
     /* Modals */
@@ -193,7 +232,7 @@
       color: var(--text-muted);
     }
 
-    .form-group input, .form-group select {
+    .form-group input, .form-group select, .form-group textarea {
       width: 100%;
       padding: 10px;
       border: 1px solid var(--border);
@@ -244,7 +283,7 @@
       gap: 14px;
     }
 
-    .admin-grid input, .admin-grid select {
+    .admin-grid input, .admin-grid select, .admin-grid textarea {
       padding: 10px;
       border: 1px solid var(--border);
       border-radius: 6px;
@@ -298,6 +337,7 @@
       position: relative;
     }
 
+    /* SOLD BADGE DISPLAY */
     .card.is-sold::after {
       content: "SOLD";
       position: absolute;
@@ -314,16 +354,61 @@
       letter-spacing: 1px;
     }
 
+    /* Media Slider Styles */
     .card-media-wrap {
       position: relative;
-      height: 200px;
-      background-color: #cbd5e1;
+      height: 220px;
+      background-color: #000;
+      overflow: hidden;
     }
 
-    .card-media-wrap img, .card-media-wrap video {
+    .slider-item {
+      display: none;
+      width: 100%;
+      height: 100%;
+    }
+
+    .slider-item.active {
+      display: block;
+    }
+
+    .slider-item img, .slider-item video {
       width: 100%;
       height: 100%;
       object-fit: cover;
+    }
+
+    .slider-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.6);
+      color: #fff;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-weight: bold;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slider-nav.prev { left: 8px; }
+    .slider-nav.next { right: 8px; }
+
+    .media-badge {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      background: rgba(0, 0, 0, 0.7);
+      color: #fff;
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 12px;
+      z-index: 5;
     }
 
     .tag-container {
@@ -332,7 +417,7 @@
       left: 12px;
       display: flex;
       gap: 6px;
-      z-index: 2;
+      z-index: 5;
     }
 
     .tag {
@@ -345,6 +430,7 @@
       text-transform: uppercase;
     }
 
+    /* TAG MARK FAVORITE BUTTON */
     .favorite-btn {
       position: absolute;
       top: 12px;
@@ -355,14 +441,19 @@
       height: 36px;
       border-radius: 50%;
       cursor: pointer;
-      font-size: 18px;
-      color: #94a3b8;
+      font-size: 16px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      z-index: 2;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      filter: grayscale(100%);
+      transition: all 0.2s;
     }
 
     .favorite-btn.active {
-      color: var(--danger);
+      filter: grayscale(0%);
+      background: #eff6ff;
     }
 
     .card-body {
@@ -387,7 +478,18 @@
     .location {
       font-size: 13px;
       color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .description {
+      font-size: 13px;
+      color: #475569;
+      line-height: 1.4;
       margin-bottom: 12px;
+      background: #f8fafc;
+      padding: 8px 10px;
+      border-radius: 6px;
+      border-left: 3px solid var(--primary);
     }
 
     .specs {
@@ -570,7 +672,21 @@
   <!-- Main Content Container -->
   <div class="container">
 
-    <!-- Admin Panel: STRICTLY HIDDEN BY DEFAULT -->
+    <!-- GOOGLE ADS UNIT 1 -->
+    <div class="ad-container">
+      <span class="ad-label">Advertisement</span>
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+           data-ad-slot="1111111111"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>
+           (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+
+    <!-- Admin Panel -->
     <div class="admin-dashboard" id="adminPanel" style="display: none;">
       <div class="admin-header">
         <h2>📌 Admin Dashboard - Add New Property</h2>
@@ -611,13 +727,13 @@
               <option value="Industrial">Industrial</option>
             </select>
           </div>
-          <div>
-            <label style="font-size:12px; font-weight:600; color:var(--text-muted);">Upload Image or Video File</label>
-            <input type="file" id="pMediaFile" accept="image/*,video/*" style="width:100%;">
+          <div style="grid-column: 1 / -1;">
+            <label style="font-size:12px; font-weight:600; color:var(--text-muted);">Property Description</label>
+            <textarea id="pDesc" rows="3" placeholder="Enter detailed property description..." style="width:100%; resize:vertical;" required></textarea>
           </div>
-          <div>
-            <label style="font-size:12px; font-weight:600; color:var(--text-muted);">OR Media URL (Optional)</label>
-            <input type="url" id="pImgUrl" placeholder="https://..." style="width:100%;">
+          <div style="grid-column: 1 / -1;">
+            <label style="font-size:12px; font-weight:600; color:var(--text-muted);">Upload Media Files</label>
+            <input type="file" id="pMediaFile" accept="image/*,video/*" multiple style="width:100%;" required>
           </div>
           <div style="display:flex; align-items:flex-end; grid-column: 1 / -1;">
             <button type="submit" class="btn-submit" style="margin:0; height:40px;">+ Publish Property Listing</button>
@@ -648,26 +764,30 @@
 
     <!-- Property Grid -->
     <div class="grid" id="propertyGrid">
+      
+      <!-- DEFAULT LISTING 1 -->
       <div class="card" data-id="prop-1" data-area="Urban" data-type="Housing">
         <div class="card-media-wrap">
-          <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=600&q=80" alt="House">
+          <div class="slider-item active">
+            <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=600&q=80" alt="House">
+          </div>
           <div class="tag-container">
             <span class="tag">Urban</span>
             <span class="tag">Housing</span>
           </div>
-          <button class="favorite-btn" title="Save to Favorites" onclick="toggleFavorite(this, 'prop-1')">♥</button>
+          <button class="favorite-btn" title="Save to Favorites" onclick="toggleFavorite(this, 'prop-1')">🏷️</button>
         </div>
         <div class="card-body">
           <div class="price">₹45,00,000</div>
           <div class="title">3 BHK Independent House</div>
           <div class="location">📍 Urban Area, City Center</div>
+          <div class="description">Beautiful double-storey home featuring modern interior finishing, prime connectivity, 24/7 security, and modular kitchen layout.</div>
           <div class="specs">Size: <span>1500 sq ft</span></div>
           <div class="card-actions">
             <a href="tel:+916280630568" class="btn btn-call">📞 Call</a>
             <button class="btn btn-wa" onclick="sendWhatsApp('3 BHK Independent House', '₹45,00,000', 'Urban', 'Housing', '1500 sq ft')">💬 WhatsApp</button>
           </div>
 
-          <!-- Interaction Bar -->
           <div class="interaction-bar">
             <div class="heart-like-btn" onclick="toggleHeartLike(this)">
               <span class="heart-icon">❤️</span> <span class="like-count">24</span> Likes
@@ -677,7 +797,6 @@
             </div>
           </div>
 
-          <!-- Comments Section -->
           <div class="comments-section">
             <div class="comments-list">
               <div class="comment-item"><strong>Rahul:</strong> Is the price negotiable?</div>
@@ -688,14 +807,45 @@
             </div>
           </div>
 
-          <!-- Admin Controls -->
           <div class="admin-controls">
             <button class="btn-mark-sold" onclick="markAsSold(this)">Mark as Sold</button>
             <button class="btn-delete-prop" onclick="deleteProperty(this)">Delete Listing</button>
           </div>
         </div>
       </div>
+
+      <!-- GOOGLE ADS UNIT 2 -->
+      <div class="ad-card-wrapper">
+        <div class="ad-container">
+          <span class="ad-label">Sponsored Result</span>
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-format="fluid"
+               data-ad-layout-key="-fb+5w+4e-db+86"
+               data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+               data-ad-slot="2222222222"></ins>
+          <script>
+               (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+        </div>
+      </div>
+
     </div>
+
+    <!-- GOOGLE ADS UNIT 3 -->
+    <div class="ad-container" style="margin-top: 32px; margin-bottom: 0;">
+      <span class="ad-label">Advertisement</span>
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+           data-ad-slot="3333333333"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>
+           (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+
   </div>
 
   <!-- Login Modal -->
@@ -740,10 +890,8 @@
   <div class="modal-overlay" id="favModal">
     <div class="modal">
       <button class="close-modal" onclick="closeModal('favModal')">&times;</button>
-      <h2>❤️ Saved Favorites</h2>
-      <div id="favListContainer" style="display:flex; flex-direction:column; gap:10px; margin-top:12px;">
-        <!-- Dynamically populated -->
-      </div>
+      <h2>🏷️ Saved Bookmarks</h2>
+      <div id="favListContainer" style="display:flex; flex-direction:column; gap:10px; margin-top:12px;"></div>
     </div>
   </div>
 
@@ -752,6 +900,11 @@
     let currentUser = null;
     let isAdmin = false;
     let savedFavorites = [];
+
+    // Initialize page and load sold states from localStorage
+    window.addEventListener('DOMContentLoaded', () => {
+      syncSoldStates();
+    });
 
     function openModal(id) {
       document.getElementById(id).style.display = 'flex';
@@ -803,7 +956,7 @@
       container.innerHTML = `
         <div class="user-welcome">
           <span>👋 ${displayName}</span>
-          <button class="btn-fav-list" onclick="openModal('favModal')">❤️ Saved</button>
+          <button class="btn-fav-list" onclick="openModal('favModal')">🏷️ Saved</button>
           <button class="btn-logout" onclick="location.reload()">Logout</button>
         </div>
       `;
@@ -822,38 +975,29 @@
       const size = document.getElementById('pSize').value;
       const area = document.getElementById('pArea').value;
       const type = document.getElementById('pType').value;
+      const desc = document.getElementById('pDesc').value;
       const mediaFileInput = document.getElementById('pMediaFile');
-      const mediaUrlInput = document.getElementById('pImgUrl').value.trim();
 
-      let mediaHtml = '';
+      let mediaList = [];
       const propId = 'prop-' + Date.now();
 
-      if (mediaFileInput.files && mediaFileInput.files[0]) {
-        const file = mediaFileInput.files[0];
-        const fileUrl = URL.createObjectURL(file);
-        if (file.type.startsWith('video/')) {
-          mediaHtml = `<video src="${fileUrl}" controls></video>`;
-        } else {
-          mediaHtml = `<img src="${fileUrl}" alt="Property Media">`;
+      if (mediaFileInput.files && mediaFileInput.files.length > 0) {
+        for (let i = 0; i < mediaFileInput.files.length; i++) {
+          const file = mediaFileInput.files[i];
+          const fileUrl = URL.createObjectURL(file);
+          const isVideo = file.type.startsWith('video/');
+          mediaList.push({ url: fileUrl, type: isVideo ? 'video' : 'image' });
         }
-        createAndRenderCard(propId, mediaHtml, title, price, location, size, area, type);
-      } else if (mediaUrlInput) {
-        if (mediaUrlInput.match(/\.(mp4|webm)$/i)) {
-          mediaHtml = `<video src="${mediaUrlInput}" controls></video>`;
-        } else {
-          mediaHtml = `<img src="${mediaUrlInput}" alt="Property Media">`;
-        }
-        createAndRenderCard(propId, mediaHtml, title, price, location, size, area, type);
       } else {
-        mediaHtml = `<img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=600&q=80" alt="Default Property">`;
-        createAndRenderCard(propId, mediaHtml, title, price, location, size, area, type);
+        mediaList.push({ url: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=600&q=80", type: 'image' });
       }
 
+      createAndRenderCard(propId, mediaList, title, price, location, size, area, type, desc);
       document.getElementById('addPropertyForm').reset();
       alert('New property published successfully!');
     }
 
-    function createAndRenderCard(propId, mediaHtml, title, price, location, size, area, type) {
+    function createAndRenderCard(propId, mediaList, title, price, location, size, area, type, desc) {
       const grid = document.getElementById('propertyGrid');
       const newCard = document.createElement('div');
       newCard.className = 'card';
@@ -861,19 +1005,40 @@
       newCard.setAttribute('data-area', area);
       newCard.setAttribute('data-type', type);
 
+      let mediaItemsHtml = '';
+      mediaList.forEach((media, index) => {
+        const activeClass = index === 0 ? 'active' : '';
+        if (media.type === 'video') {
+          mediaItemsHtml += `<div class="slider-item ${activeClass}"><video src="${media.url}" controls></video></div>`;
+        } else {
+          mediaItemsHtml += `<div class="slider-item ${activeClass}"><img src="${media.url}" alt="Media"></div>`;
+        }
+      });
+
+      let sliderControlsHtml = '';
+      if (mediaList.length > 1) {
+        sliderControlsHtml = `
+          <button class="slider-nav prev" onclick="changeSlide(this, -1)">&lt;</button>
+          <button class="slider-nav next" onclick="changeSlide(this, 1)">&gt;</button>
+          <div class="media-badge"><span class="current-slide">1</span>/${mediaList.length}</div>
+        `;
+      }
+
       newCard.innerHTML = `
         <div class="card-media-wrap">
-          ${mediaHtml}
+          ${mediaItemsHtml}
+          ${sliderControlsHtml}
           <div class="tag-container">
             <span class="tag">${area}</span>
             <span class="tag">${type}</span>
           </div>
-          <button class="favorite-btn" title="Save to Favorites" onclick="toggleFavorite(this, '${propId}')">♥</button>
+          <button class="favorite-btn" title="Save to Favorites" onclick="toggleFavorite(this, '${propId}')">🏷️</button>
         </div>
         <div class="card-body">
           <div class="price">${price}</div>
           <div class="title">${title}</div>
           <div class="location">📍 ${location}</div>
+          <div class="description">${desc}</div>
           <div class="specs">Size: <span>${size}</span></div>
           <div class="card-actions">
             <a href="tel:+916280630568" class="btn btn-call">📞 Call</a>
@@ -905,6 +1070,26 @@
       `;
 
       grid.prepend(newCard);
+    }
+
+    function changeSlide(btn, direction) {
+      const wrap = btn.closest('.card-media-wrap');
+      const items = wrap.querySelectorAll('.slider-item');
+      const currentBadge = wrap.querySelector('.current-slide');
+      
+      let activeIndex = 0;
+      items.forEach((item, index) => {
+        if (item.classList.contains('active')) activeIndex = index;
+      });
+
+      items[activeIndex].classList.remove('active');
+      let newIndex = activeIndex + direction;
+
+      if (newIndex >= items.length) newIndex = 0;
+      if (newIndex < 0) newIndex = items.length - 1;
+
+      items[newIndex].classList.add('active');
+      if (currentBadge) currentBadge.textContent = newIndex + 1;
     }
 
     function toggleHeartLike(element) {
@@ -963,7 +1148,7 @@
         return;
       }
       container.innerHTML = savedFavorites.map(item => `
-        <div style="padding:10px; border:1px solid var(--border); border-radius:8px; display:flex; justify-space-between; align-items:center;">
+        <div style="padding:10px; border:1px solid var(--border); border-radius:8px; display:flex; justify-content:space-between; align-items:center;">
           <div>
             <strong style="font-size:14px; display:block;">${item.title}</strong>
             <span style="font-size:13px; color:var(--primary); font-weight:700;">${item.price}</span>
@@ -972,15 +1157,53 @@
       `).join('');
     }
 
+    // PERSISTENT SOLD FUNCTIONALITY
     function markAsSold(btn) {
       const card = btn.closest('.card');
-      card.classList.toggle('is-sold');
-      btn.textContent = card.classList.contains('is-sold') ? "Mark as Available" : "Mark as Sold";
+      const propId = card.getAttribute('data-id');
+      const soldMap = JSON.parse(localStorage.getItem('soldPropertiesMap') || '{}');
+
+      if (card.classList.contains('is-sold')) {
+        card.classList.remove('is-sold');
+        btn.textContent = "Mark as Sold";
+        delete soldMap[propId];
+      } else {
+        card.classList.add('is-sold');
+        btn.textContent = "Mark as Available";
+        soldMap[propId] = true;
+      }
+
+      localStorage.setItem('soldPropertiesMap', JSON.stringify(soldMap));
+    }
+
+    function syncSoldStates() {
+      const soldMap = JSON.parse(localStorage.getItem('soldPropertiesMap') || '{}');
+      const cards = document.querySelectorAll('.card');
+
+      cards.forEach(card => {
+        const propId = card.getAttribute('data-id');
+        const soldBtn = card.querySelector('.btn-mark-sold');
+
+        if (soldMap[propId]) {
+          card.classList.add('is-sold');
+          if (soldBtn) soldBtn.textContent = "Mark as Available";
+        } else {
+          card.classList.remove('is-sold');
+          if (soldBtn) soldBtn.textContent = "Mark as Sold";
+        }
+      });
     }
 
     function deleteProperty(btn) {
       if (confirm("Are you sure you want to delete this property listing?")) {
         const card = btn.closest('.card');
+        const propId = card.getAttribute('data-id');
+        
+        // Remove from sold map if deleted
+        const soldMap = JSON.parse(localStorage.getItem('soldPropertiesMap') || '{}');
+        delete soldMap[propId];
+        localStorage.setItem('soldPropertiesMap', JSON.stringify(soldMap));
+
         card.remove();
       }
     }
@@ -1009,3 +1232,5 @@
   </script>
 </body>
 </html>
+
+```
