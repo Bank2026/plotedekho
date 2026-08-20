@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FinMatrix - All-in-One Financial Calculator, Live Market & Exam Hub</title>
-    <meta name="description" content="FinMatrix financial intelligence portal. Real-time auto-updating market rates, property analytics, loan prepayments, and complete banking exam preparation compendiums.">
+    <title>FinMatrix - All-in-One Smart Financial Calculator, Live Rates & Banking Exam Preparation Hub</title>
+    <meta name="description" content="FinMatrix is India's premier financial calculation and banking exam preparation portal. Features Loan EMI, Property ROI, Tax Comparison, Live Market Rates, and full master revision compendiums for Quantitative Aptitude, Reasoning, English, and General Awareness.">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
@@ -30,13 +30,15 @@
             line-height: 1.6; 
         }
 
-        /* LIVE REAL-TIME TRADINGVIEW TICKER TAPE */
-        .tv-ticker-wrapper {
-            width: 100%;
-            overflow: hidden;
+        /* LIVE STOCK MARKET TICKER BAR */
+        .ticker-wrap {
             background: #0f172a;
-            border-bottom: 1px solid #1e293b;
+            color: #f8fafc;
+            overflow: hidden;
             height: 46px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #1e293b;
         }
 
         /* HEADER & NAVIGATION */
@@ -56,10 +58,10 @@
         .brand-container { display: flex; align-items: center; gap: 0.85rem; text-decoration: none; cursor: pointer; }
         
         .logo-box {
-            width: 48px;
-            height: 48px;
+            width: 50px;
+            height: 50px;
             background: linear-gradient(135deg, #1e40af, #2563eb);
-            border-radius: 12px;
+            border-radius: 14px;
             display: grid;
             grid-template-columns: 1fr 1fr;
             grid-template-rows: 1fr 1fr;
@@ -72,7 +74,7 @@
             align-items: center;
             justify-content: center;
             color: #ffffff;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             font-weight: 900;
             line-height: 1;
         }
@@ -80,27 +82,33 @@
         .logo-symbol.orange { color: #fb923c; }
         
         .brand-text-block { display: flex; flex-direction: column; }
-        .logo-title { font-size: 1.45rem; font-weight: 900; color: var(--primary); letter-spacing: -0.5px; line-height: 1.1; }
-        .logo-tagline { font-size: 0.72rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+        .logo-title { font-size: 1.5rem; font-weight: 900; color: var(--primary); letter-spacing: -0.5px; line-height: 1.1; }
+        .logo-tagline { font-size: 0.75rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
 
+        .header-center-nav {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
         .btn-exam-portal {
             background: linear-gradient(135deg, #8b5cf6, #6d28d9);
             color: #ffffff;
             border: none;
             padding: 0.55rem 1.25rem;
             border-radius: 30px;
-            font-size: 0.9rem;
+            font-size: 0.92rem;
             font-weight: 800;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 0.5rem;
             box-shadow: 0 4px 14px rgba(109, 40, 217, 0.35);
-            transition: all 0.25s;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             animation: glow 2.5s infinite;
         }
         .btn-exam-portal:hover {
-            transform: translateY(-2px) scale(1.02);
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 6px 20px rgba(109, 40, 217, 0.5);
             background: linear-gradient(135deg, #7c3aed, #5b21b6);
         }
         @keyframes glow {
@@ -116,7 +124,7 @@
             border: 1px solid #bfdbfe;
             padding: 0.35rem 0.8rem;
             border-radius: 20px;
-            font-size: 0.78rem;
+            font-size: 0.8rem;
             font-weight: 700;
             color: #1d4ed8;
         }
@@ -131,7 +139,7 @@
 
         .section-title { font-size: 1.15rem; font-weight: 800; color: var(--text); margin: 1.5rem 0 0.8rem 0; display: flex; align-items: center; gap: 0.5rem; }
 
-        /* BUTTONS */
+        /* Navigation Buttons */
         .nav-section { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.5rem; }
         .btn-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.6rem; }
         @media (max-width: 768px) { .btn-grid { grid-template-columns: repeat(2, 1fr); } }
@@ -143,11 +151,18 @@
             font-size: 0.9rem;
             cursor: pointer;
             text-align: center;
-            transition: all 0.2s;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 2px 4px rgba(0,0,0,0.03);
             border: 1.5px solid transparent;
         }
         .btn-full { width: 100%; font-size: 1rem; }
+
+        .btn-full:hover, .tab-btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(0.96);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        }
+
         .theme-blue { background: #e0f2fe; color: #0369a1; border-color: #bae6fd; }
         .theme-emerald { background: #dcfce7; color: #15803d; border-color: #bbf7d0; }
         .theme-teal { background: #ccfbf1; color: #0f766e; border-color: #99f6e4; }
@@ -156,6 +171,7 @@
         .theme-cyan { background: #cffafe; color: #0e7490; border-color: #a5f3fc; }
         .theme-rose { background: #ffe4e6; color: #be123c; border-color: #fecdd3; }
         .theme-orange { background: #ffedd5; color: #c2410c; border-color: #fed7aa; }
+        .theme-yellow { background: #fef9c3; color: #a16207; border-color: #fef08a; }
         .theme-property { background: #fae8ff; color: #86198f; border-color: #f0abfc; }
 
         .btn-full.active, .tab-btn.active {
@@ -163,6 +179,7 @@
             color: #ffffff !important;
             border-color: #1d4ed8 !important;
             box-shadow: 0 4px 12px rgba(29, 78, 216, 0.35) !important;
+            transform: translateY(0);
         }
 
         .calc-wrapper { display: none; background: var(--card-bg); border-radius: 14px; border: 1px solid var(--border); padding: 2rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
@@ -173,77 +190,352 @@
         .input-group { margin-bottom: 1.2rem; }
         label { display: block; font-size: 0.875rem; font-weight: 700; margin-bottom: 0.4rem; color: var(--muted); }
         input[type="number"], select, input[type="text"] { width: 100%; padding: 0.7rem; border: 1.5px solid var(--border); border-radius: 8px; font-size: 1rem; outline: none; }
-        input:focus, select:focus { border-color: var(--primary); }
-
+        input[type="number"]:focus, select:focus, input[type="text"]:focus { border-color: var(--primary); }
         .results-box { background: #f1f5f9; border-radius: 10px; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
         .result-row { display: flex; justify-content: space-between; border-bottom: 1px dashed var(--border); padding-bottom: 0.5rem; font-size: 0.95rem; }
         .result-row:last-child { border-bottom: none; }
         .highlight { font-weight: 700; color: var(--primary); }
         .chart-container { position: relative; height: 210px; width: 100%; margin-top: 1rem; }
         
-        .simple-calc-layout { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 1.5rem; margin-bottom: 2rem; }
+        .simple-calc-layout {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 1.5rem;
+            align-items: stretch;
+            margin-bottom: 2rem;
+        }
         @media (max-width: 860px) { .simple-calc-layout { grid-template-columns: 1fr; } }
 
-        .simple-calc-card { width: 100%; background: #0f172a; border-radius: 20px; padding: 1.6rem; color: white; }
-        .calc-display { width: 100%; background: #1e293b; color: #fff; font-size: 2.2rem; min-height: 80px; text-align: right; padding: 0.8rem; border: none; border-radius: 12px; margin-bottom: 1.2rem; font-weight: 700; }
-        .calc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; }
-        .calc-grid button { padding: 1.2rem 0.5rem; font-size: 1.3rem; min-height: 60px; font-weight: 700; border-radius: 12px; border: none; cursor: pointer; background: #334155; color: white; }
+        .simple-calc-card { 
+            width: 100%; 
+            background: #0f172a; 
+            border-radius: 20px; 
+            padding: 1.6rem; 
+            color: white; 
+            box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.4);
+        }
+        .simple-calc-card .calc-display { 
+            width: 100%; 
+            background: #1e293b; 
+            color: #fff; 
+            font-size: 2.5rem; 
+            min-height: 85px; 
+            text-align: right; 
+            padding: 1rem; 
+            border: none; 
+            border-radius: 12px; 
+            margin-bottom: 1.2rem; 
+            font-weight: 700; 
+            letter-spacing: 1px;
+        }
+        .simple-calc-card .calc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; }
+        .simple-calc-card .calc-grid button { 
+            padding: 1.3rem 0.5rem; 
+            font-size: 1.35rem; 
+            min-height: 66px; 
+            font-weight: 700; 
+            border-radius: 12px; 
+            border: none; 
+            cursor: pointer; 
+            background: #334155; 
+            color: white; 
+            transition: 0.15s ease;
+        }
+        @media (max-width: 600px) {
+            .simple-calc-card .calc-display { font-size: 2.2rem; min-height: 80px; }
+            .simple-calc-card .calc-grid button { padding: 1.2rem 0.4rem; min-height: 65px; font-size: 1.25rem; }
+        }
+
+        .history-card {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            max-height: 570px;
+        }
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.8rem;
+            margin-bottom: 1rem;
+        }
+        .history-header h3 { font-size: 1.1rem; font-weight: 800; color: #1e3a8a; display: flex; align-items: center; gap: 0.4rem; }
+        .btn-clear-history {
+            background: #fee2e2;
+            color: #dc2626;
+            border: 1px solid #fca5a5;
+            padding: 0.35rem 0.75rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+        .btn-clear-history:hover { background: #fecaca; }
+        .history-list { overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 0.6rem; padding-right: 0.3rem; }
+        .history-item { background: #f8fafc; border: 1px solid var(--border); border-radius: 10px; padding: 0.75rem 1rem; cursor: pointer; transition: 0.15s; text-align: right; }
+        .history-item:hover { background: #eff6ff; border-color: #93c5fd; transform: translateX(-2px); }
+        .hist-expr { font-size: 0.85rem; color: var(--muted); font-weight: 500; }
+        .hist-res { font-size: 1.2rem; color: var(--primary-dark); font-weight: 800; }
+        .history-empty { text-align: center; color: var(--muted); margin: auto; font-size: 0.9rem; padding: 2rem 0; }
+
+        .sci-calc-card { max-width: 480px; margin: 0 auto; background: #0f172a; border-radius: 16px; padding: 1.5rem; color: white; }
+        .sci-calc-card .calc-display { width: 100%; background: #1e293b; color: #fff; font-size: 2rem; text-align: right; padding: 0.8rem; border: none; border-radius: 8px; margin-bottom: 1rem; font-weight: 700; overflow-x: auto; }
+        .sci-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.5rem; }
+        .sci-grid button { padding: 0.8rem 0.4rem; font-size: 1.1rem; font-weight: 600; border-radius: 8px; border: none; cursor: pointer; background: #334155; color: white; }
+        
+        .calc-grid button:active, .sci-grid button:active { transform: scale(0.96); }
         button.op { background: var(--primary) !important; }
         button.arrow-btn { background: #475569 !important; font-size: 1.3rem !important; }
         button.fn { background: #475569 !important; font-size: 0.9rem !important; }
         button.action { background: #ef4444 !important; }
         button.equal { background: var(--green) !important; }
 
-        .history-card { background: #ffffff; border: 1px solid var(--border); border-radius: 20px; padding: 1.5rem; display: flex; flex-direction: column; max-height: 570px; }
-        .history-list { overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 0.6rem; }
-        .history-item { background: #f8fafc; border: 1px solid var(--border); border-radius: 10px; padding: 0.75rem 1rem; cursor: pointer; text-align: right; }
-
-        .sci-calc-card { max-width: 480px; margin: 0 auto; background: #0f172a; border-radius: 16px; padding: 1.5rem; color: white; }
-        .sci-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.5rem; }
-        .sci-grid button { padding: 0.8rem 0.4rem; font-size: 1.1rem; font-weight: 600; border-radius: 8px; border: none; cursor: pointer; background: #334155; color: white; }
-
-        .market-trackers-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem; border-top: 2px dashed var(--border); padding-top: 1.5rem; }
+        .market-trackers-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+            border-top: 2px dashed var(--border);
+            padding-top: 1.5rem;
+        }
         @media (max-width: 768px) { .market-trackers-grid { grid-template-columns: 1fr; } }
-        .tracker-card { background: #ffffff; border: 1px solid var(--border); border-radius: 14px; padding: 1.2rem; }
-        .purity-toggle-box { display: inline-flex; background: #e2e8f0; padding: 2px; border-radius: 8px; margin-bottom: 0.6rem; }
-        .purity-btn { border: none; background: transparent; padding: 0.25rem 0.65rem; font-size: 0.75rem; font-weight: 800; border-radius: 6px; cursor: pointer; color: var(--muted); }
-        .purity-btn.active { background: var(--gold); color: #ffffff; }
+        .tracker-card {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1.2rem;
+            box-shadow: 0 4px 12px -2px rgba(0,0,0,0.04);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .tracker-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.8rem; }
+        .tracker-title { font-size: 1.05rem; font-weight: 700; display: flex; align-items: center; gap: 0.4rem; }
+        .tracker-badge { font-size: 0.75rem; padding: 0.2rem 0.5rem; border-radius: 20px; font-weight: 600; }
+        .badge-live { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+        .tracker-prices { margin-bottom: 0.8rem; }
+        .primary-price { font-size: 1.6rem; font-weight: 800; color: var(--text); }
+        .secondary-price { font-size: 0.85rem; color: var(--muted); font-weight: 500; }
+        
+        .purity-toggle-box {
+            display: inline-flex;
+            background: #e2e8f0;
+            padding: 2px;
+            border-radius: 8px;
+            margin-bottom: 0.6rem;
+            gap: 2px;
+        }
+        .purity-btn {
+            border: none;
+            background: transparent;
+            padding: 0.25rem 0.65rem;
+            font-size: 0.75rem;
+            font-weight: 800;
+            border-radius: 6px;
+            cursor: pointer;
+            color: var(--muted);
+            transition: 0.15s;
+        }
+        .purity-btn.active {
+            background: var(--gold);
+            color: #ffffff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+        }
 
-        .timeframe-selector { display: flex; gap: 0.35rem; background: #f1f5f9; padding: 0.25rem; border-radius: 8px; margin-bottom: 0.8rem; }
-        .tf-btn { flex: 1; padding: 0.35rem 0.2rem; font-size: 0.78rem; font-weight: 700; border: none; background: transparent; border-radius: 6px; cursor: pointer; color: var(--muted); }
+        .timeframe-selector {
+            display: flex;
+            gap: 0.35rem;
+            background: #f1f5f9;
+            padding: 0.25rem;
+            border-radius: 8px;
+            margin-bottom: 0.8rem;
+        }
+        .tf-btn {
+            flex: 1;
+            padding: 0.35rem 0.2rem;
+            font-size: 0.78rem;
+            font-weight: 700;
+            border: none;
+            background: transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            color: var(--muted);
+            transition: 0.15s;
+        }
         .tf-btn.active { background: #ffffff; color: var(--primary); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
         .tracker-chart-container { position: relative; height: 180px; width: 100%; }
 
+        /* ADSENSE / FALLBACK SLOTS */
         .ad-container { margin: 1.5rem 0; width: 100%; }
-        .ad-fallback-card { background: linear-gradient(135deg, #1e3a8a, #2563eb); color: #ffffff; border-radius: 12px; padding: 1.2rem 1.5rem; display: flex; justify-content: space-between; align-items: center; }
-        .btn-ad-fallback { background: #ffffff; color: #1d4ed8; border: none; padding: 0.6rem 1.2rem; border-radius: 8px; font-weight: 800; font-size: 0.85rem; cursor: pointer; }
+        .ad-fallback-card {
+            background: linear-gradient(135deg, #1e3a8a, #2563eb);
+            color: #ffffff;
+            border-radius: 12px;
+            padding: 1.2rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+        }
+        .ad-fallback-card h4 { font-size: 1.1rem; font-weight: 800; margin-bottom: 0.2rem; }
+        .ad-fallback-card p { font-size: 0.88rem; opacity: 0.9; }
+        .btn-ad-fallback {
+            background: #ffffff;
+            color: #1d4ed8;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 0.85rem;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: 0.2s;
+        }
+        .btn-ad-fallback:hover { background: #f8fafc; transform: scale(1.03); }
 
-        /* EXAM VIEW */
-        #banking-exam-view { display: none; background: #ffffff; border-radius: 16px; border: 1px solid var(--border); padding: 2rem; margin-bottom: 2rem; }
-        .quants-card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-bottom: 2rem; }
+        /* BANKING EXAM HUB PAGE VIEW */
+        #banking-exam-view {
+            display: none;
+            background: #ffffff;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            margin-bottom: 2rem;
+        }
+        .exam-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+        .exam-title-box h2 { font-size: 1.6rem; font-weight: 900; color: #5b21b6; }
+        .exam-title-box p { font-size: 0.92rem; color: var(--muted); }
+        .btn-back-home {
+            background: #eff6ff;
+            color: var(--primary);
+            border: 1.5px solid #bfdbfe;
+            padding: 0.6rem 1.2rem;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: 0.2s;
+        }
+        .btn-back-home:hover { background: #dbeafe; }
+
+        .quants-card-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.2rem;
+            margin-bottom: 2rem;
+        }
         @media (max-width: 900px) { .quants-card-grid { grid-template-columns: 1fr; } }
-        .quant-tool-box { background: #f8fafc; border: 1.5px solid var(--border); border-radius: 12px; padding: 1.2rem; display: flex; flex-direction: column; gap: 0.8rem; }
-        .quant-res-box { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.7rem 1rem; font-size: 1.15rem; font-weight: 800; color: #15803d; text-align: center; }
-        
-        .pdf-tabs-nav { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.6rem; margin-bottom: 1.2rem; }
+        .quant-tool-box {
+            background: #f8fafc;
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
+            padding: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        .quant-tool-box h4 { font-size: 1rem; font-weight: 800; color: #4338ca; }
+        .quant-inputs { display: flex; gap: 0.5rem; }
+        .quant-res-box {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 0.7rem 1rem;
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #15803d;
+            text-align: center;
+        }
+
+        .pdf-section-title { font-size: 1.25rem; font-weight: 800; color: #1e3a8a; margin: 2rem 0 1rem 0; }
+        .pdf-tabs-nav {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.6rem;
+            margin-bottom: 1.2rem;
+        }
         @media (max-width: 768px) { .pdf-tabs-nav { grid-template-columns: 1fr 1fr; } }
-        .pdf-tab-btn { background: #f1f5f9; border: 1.5px solid var(--border); padding: 0.85rem 0.5rem; border-radius: 10px; font-weight: 700; font-size: 0.88rem; color: var(--muted); cursor: pointer; text-align: center; }
-        .pdf-tab-btn.active { background: #6d28d9; color: #ffffff; border-color: #6d28d9; }
-        .pdf-doc-viewer { background: #ffffff; border: 2px solid #e2e8f0; border-radius: 12px; padding: 2rem; max-height: 800px; overflow-y: auto; font-size: 0.95rem; line-height: 1.7; }
+        .pdf-tab-btn {
+            background: #f1f5f9;
+            border: 1.5px solid var(--border);
+            padding: 0.85rem 0.5rem;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.88rem;
+            color: var(--muted);
+            cursor: pointer;
+            text-align: center;
+            transition: 0.2s;
+        }
+        .pdf-tab-btn.active {
+            background: #6d28d9;
+            color: #ffffff;
+            border-color: #6d28d9;
+            box-shadow: 0 4px 10px rgba(109, 40, 217, 0.3);
+        }
+        .pdf-doc-viewer {
+            background: #ffffff;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 2rem;
+            max-height: 800px;
+            overflow-y: auto;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
         .doc-section { display: none; }
         .doc-section.active { display: block; }
-        .doc-table-container { width: 100%; overflow-x: auto; margin: 0.8rem 0 1.5rem 0; border: 1px solid #cbd5e1; border-radius: 8px; }
+        .doc-section h2 { font-size: 1.35rem; color: #1e3a8a; margin: 1.5rem 0 0.8rem 0; border-bottom: 2px solid #bfdbfe; padding-bottom: 0.4rem; font-weight: 800; }
+        .doc-section h3 { font-size: 1.15rem; color: #4338ca; margin: 1.2rem 0 0.6rem 0; font-weight: 700; }
+        .doc-section h4 { font-size: 1rem; color: #0f172a; margin: 1rem 0 0.4rem 0; font-weight: 700; }
+        
+        .doc-table-container { width: 100%; overflow-x: auto; margin: 0.8rem 0 1.5rem 0; border-radius: 8px; border: 1px solid #cbd5e1; }
         .doc-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
-        .doc-table th, .doc-table td { border: 1px solid #cbd5e1; padding: 0.55rem 0.75rem; text-align: left; }
+        .doc-table th, .doc-table td { border: 1px solid #cbd5e1; padding: 0.55rem 0.75rem; text-align: left; vertical-align: middle; }
         .doc-table th { background: #f1f5f9; font-weight: 700; color: #1e3a8a; }
         .doc-table.center th, .doc-table.center td { text-align: center; }
+
+        .seo-content-section {
+            margin-top: 3rem;
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 2.2rem;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03);
+        }
+        .seo-content-section h2 { font-size: 1.35rem; font-weight: 800; color: #1e3a8a; margin-bottom: 1rem; }
+        .seo-content-section h3 { font-size: 1.1rem; font-weight: 700; color: var(--text); margin: 1.4rem 0 0.5rem 0; }
+        .seo-content-section p { font-size: 0.95rem; color: #334155; margin-bottom: 0.9rem; line-height: 1.7; }
+        .seo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin: 1.5rem 0; }
+        @media (max-width: 768px) { .seo-grid { grid-template-columns: 1fr; } }
+        .seo-card { background: #f8fafc; border: 1px solid var(--border); border-radius: 10px; padding: 1.2rem; }
+        .seo-card h4 { font-size: 1rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem; }
+        .seo-card p { font-size: 0.88rem; color: var(--muted); margin-bottom: 0; }
+
         footer { text-align: center; padding: 2.5rem 1rem; color: var(--muted); font-size: 0.875rem; margin-top: 3rem; border-top: 1px solid var(--border); background: #ffffff; }
     </style>
 </head>
 <body>
 
-    <div class="tv-ticker-wrapper">
-        <div class="tradingview-widget-container">
+    <!-- TOP REAL-TIME TRADINGVIEW TICKER TAPE (AUTO-UPDATES STOCKS, GOLD, USD/INR, BTC) -->
+    <div class="ticker-wrap">
+        <div class="tradingview-widget-container" style="width:100%; height:100%;">
             <div class="tradingview-widget-container__widget"></div>
             <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
             {
@@ -265,6 +557,7 @@
         </div>
     </div>
 
+    <!-- MAIN HEADER -->
     <header>
         <div class="brand-container" onclick="openHomePortal()">
             <div class="logo-box">
@@ -287,23 +580,25 @@
 
         <div class="header-live-badge">
             <div class="pulse-dot"></div>
-            <span id="sync-status">Live Feeds Active</span>
+            <span>Market Feeds Active</span>
         </div>
     </header>
 
     <div class="container">
+        <!-- 1. MAIN FINANCIAL PORTAL VIEW -->
         <div id="main-portal-view">
             <div class="hero-desc">
                 <h1>India's All-In-One Financial Calculation & Market Intelligence Hub</h1>
                 <p>High-Precision Loan, Property & Tax Analytics • Live Commodity & Crypto Rates • Instant Value Converters</p>
             </div>
 
+            <!-- AdSense Slot Header -->
             <div class="ad-container">
                 <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins>
                 <div class="ad-fallback-card">
                     <div>
-                        <h4 style="margin-bottom:0.2rem;">⚡ Smart Loan & SIP Wealth Calculators</h4>
-                        <p style="font-size:0.88rem; opacity:0.9;">Calculate your loan prepayment savings and mutual fund wealth accumulation in real-time.</p>
+                        <h4>⚡ Smart Loan & SIP Wealth Calculators</h4>
+                        <p>Calculate your loan prepayment savings and mutual fund wealth accumulation in real-time.</p>
                     </div>
                     <button class="btn-ad-fallback" onclick="switchTab('loan', document.querySelectorAll('.tab-btn')[1])">Open Calculator</button>
                 </div>
@@ -336,6 +631,7 @@
                 <button class="tab-btn theme-cyan" onclick="switchTab('conv-length', this)">📏 Length & Distance</button>
             </div>
 
+            <!-- 1. SIMPLE CALCULATOR + HISTORY + LIVE TRACKERS -->
             <div id="tab-simple" class="calc-wrapper active">
                 <div class="simple-calc-layout">
                     <div class="simple-calc-card">
@@ -354,7 +650,7 @@
                             <button onclick="calcPress('4')">4</button>
                             <button onclick="calcPress('5')">5</button>
                             <button onclick="calcPress('6')">6</button>
-                            <button class="op" onclick="calcPress('-')">−</button>
+                            <button class="op" onclick="calcPress('-')">-</button>
                             
                             <button onclick="calcPress('1')">1</button>
                             <button onclick="calcPress('2')">2</button>
@@ -368,22 +664,23 @@
                     </div>
 
                     <div class="history-card">
-                        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border); padding-bottom:0.8rem; margin-bottom:1rem;">
-                            <h3 style="font-size:1.1rem; color:#1e3a8a;">📜 Calculation History</h3>
-                            <button onclick="clearHistory()" style="background:#fee2e2; color:#dc2626; border:1px solid #fca5a5; padding:0.35rem 0.75rem; border-radius:8px; font-size:0.8rem; font-weight:700; cursor:pointer;">Clear</button>
+                        <div class="history-header">
+                            <h3>📜 Calculation History</h3>
+                            <button class="btn-clear-history" onclick="clearHistory()">Clear History</button>
                         </div>
                         <div class="history-list" id="calc-history-list">
-                            <div style="text-align:center; color:var(--muted); margin:auto; font-size:0.9rem;">No calculations yet.</div>
+                            <div class="history-empty">No calculations yet. Perform a calculation to see its record here.</div>
                         </div>
                     </div>
                 </div>
 
+                <!-- Live Auto-Updated Gold & Bitcoin Cards -->
                 <div class="market-trackers-grid">
                     <div class="tracker-card">
                         <div>
-                            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.8rem;">
-                                <span style="font-size:1.05rem; font-weight:700;">✨ Today's Gold Price</span>
-                                <span style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-size:0.75rem; padding:0.2rem 0.5rem; border-radius:20px; font-weight:600;">● Live Calculated</span>
+                            <div class="tracker-header">
+                                <span class="tracker-title">✨ Today's Gold Price</span>
+                                <span class="tracker-badge badge-live">● Auto-Updated</span>
                             </div>
                             
                             <div class="purity-toggle-box">
@@ -391,9 +688,9 @@
                                 <button class="purity-btn" id="purity-22k-btn" onclick="selectGoldPurity('22k')">22K (91.6%)</button>
                             </div>
 
-                            <div style="margin-bottom:0.8rem;">
-                                <div style="font-size:1.6rem; font-weight:800;" id="gold-price-inr">₹7,650 /g</div>
-                                <div style="font-size:0.85rem; color:var(--muted);" id="gold-price-sub">₹76,500 per 10g • Real-time spot benchmark</div>
+                            <div class="tracker-prices">
+                                <div class="primary-price" id="gold-price-inr">₹7,650 /g</div>
+                                <div class="secondary-price" id="gold-price-sub">₹76,500 per 10g • Spot Benchmark</div>
                             </div>
                             <div class="timeframe-selector">
                                 <button class="tf-btn active" onclick="updateMarketChart('gold', '1m', this)">1 Month</button>
@@ -409,13 +706,13 @@
 
                     <div class="tracker-card">
                         <div>
-                            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.8rem;">
-                                <span style="font-size:1.05rem; font-weight:700;">🪙 Today's Bitcoin Price (BTC)</span>
-                                <span style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-size:0.75rem; padding:0.2rem 0.5rem; border-radius:20px; font-weight:600;">● Live CoinGecko</span>
+                            <div class="tracker-header">
+                                <span class="tracker-title">🪙 Today's Bitcoin Price (BTC)</span>
+                                <span class="tracker-badge badge-live">● Live CoinGecko</span>
                             </div>
-                            <div style="margin-bottom:0.8rem;">
-                                <div style="font-size:1.6rem; font-weight:800; color:var(--text);" id="btc-price-usd">$68,500</div>
-                                <div style="font-size:0.85rem; color:var(--muted);" id="btc-price-inr">Syncing with live markets...</div>
+                            <div class="tracker-prices">
+                                <div class="primary-price" id="btc-price-usd">$68,500</div>
+                                <div class="secondary-price" id="btc-price-inr">≈ ₹59,25,000 INR • Live</div>
                             </div>
                             <div class="timeframe-selector">
                                 <button class="tf-btn active" onclick="updateMarketChart('btc', '1m', this)">1 Month</button>
@@ -431,10 +728,10 @@
                 </div>
             </div>
 
+            <!-- 2. PROPERTY CALCULATOR -->
             <div id="tab-property" class="calc-wrapper grid-view">
                 <div>
                     <h2>🏡 Property Purchase, Sale & Total Cost Calculator</h2>
-                    <p style="color: var(--muted); margin-bottom: 1.5rem;">Calculate stamp duty, registration, legal fees, total capital needed, and future resale ROI.</p>
                     <div class="input-group">
                         <label>Property Area (Sq. Ft.)</label>
                         <input type="number" id="prop-area" value="1200" oninput="calculateProperty()">
@@ -456,143 +753,108 @@
                         <input type="number" id="prop-brokerage-rate" value="1" oninput="calculateProperty()">
                     </div>
                     <div class="input-group">
-                        <label>Interior & Setup Costs (₹)</label>
+                        <label>Interiors (₹)</label>
                         <input type="number" id="prop-interior" value="400000" oninput="calculateProperty()">
                     </div>
                     <div class="input-group">
-                        <label>Holding Period (Yrs) & Annual Growth (%)</label>
+                        <label>Holding Period (Yrs) & Growth (% p.a)</label>
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
-                            <input type="number" id="prop-years" value="5" placeholder="Years" oninput="calculateProperty()">
-                            <input type="number" id="prop-appreciation" value="8" placeholder="Growth %" oninput="calculateProperty()">
+                            <input type="number" id="prop-years" value="5" oninput="calculateProperty()">
+                            <input type="number" id="prop-appreciation" value="8" oninput="calculateProperty()">
                         </div>
                     </div>
                 </div>
                 <div>
                     <div class="results-box">
-                        <div class="result-row"><span>Base Property Price</span><span id="prop-base" class="highlight">₹0</span></div>
-                        <div class="result-row"><span>Stamp Duty + Registration</span><span id="prop-gov-charges" class="highlight">₹0</span></div>
+                        <div class="result-row"><span>Base Price</span><span id="prop-base" class="highlight">₹0</span></div>
+                        <div class="result-row"><span>Stamp + Reg</span><span id="prop-gov-charges" class="highlight">₹0</span></div>
                         <div class="result-row"><span>Brokerage & Legal</span><span id="prop-brokerage" class="highlight">₹0</span></div>
                         <div class="result-row"><span>Total Purchase Cost</span><span id="prop-total-cost" style="font-size:1.2rem; font-weight:800; color:var(--primary)">₹0</span></div>
-                        <div class="result-row"><span>Estimated Future Resale Value</span><span id="prop-future-val" style="color:var(--green); font-weight:700;">₹0</span></div>
-                        <div class="result-row"><span>Net Capital Profit</span><span id="prop-net-profit" class="highlight" style="color:var(--green)">₹0</span></div>
+                        <div class="result-row"><span>Future Resale Value</span><span id="prop-future-val" style="color:var(--green); font-weight:700;">₹0</span></div>
+                        <div class="result-row"><span>Net Profit</span><span id="prop-net-profit" class="highlight" style="color:var(--green)">₹0</span></div>
                     </div>
                     <div class="chart-container"><canvas id="propertyChart"></canvas></div>
                 </div>
             </div>
 
+            <!-- 3. LOAN EMI CALCULATOR -->
             <div id="tab-loan" class="calc-wrapper grid-view">
                 <div>
                     <h2>Home & Personal Loan Prepayment Calculator</h2>
-                    <p style="color: var(--muted); margin-bottom: 1.5rem;">Calculate interest saved and tenure reduction through extra monthly principal payments.</p>
-                    <div class="input-group">
-                        <label>Loan Amount (₹)</label>
-                        <input type="number" id="loan-amount" value="3000000" oninput="calculateLoan()">
-                    </div>
-                    <div class="input-group">
-                        <label>Interest Rate (% p.a)</label>
-                        <input type="number" id="loan-rate" value="8.5" oninput="calculateLoan()">
-                    </div>
-                    <div class="input-group">
-                        <label>Tenure (Years)</label>
-                        <input type="number" id="loan-tenure" value="20" oninput="calculateLoan()">
-                    </div>
-                    <div class="input-group">
-                        <label>Monthly Extra Prepayment (₹)</label>
-                        <input type="number" id="loan-prepay" value="5000" oninput="calculateLoan()">
-                    </div>
+                    <div class="input-group"><label>Loan Amount (₹)</label><input type="number" id="loan-amount" value="3000000" oninput="calculateLoan()"></div>
+                    <div class="input-group"><label>Interest Rate (% p.a)</label><input type="number" id="loan-rate" value="8.5" oninput="calculateLoan()"></div>
+                    <div class="input-group"><label>Tenure (Years)</label><input type="number" id="loan-tenure" value="20" oninput="calculateLoan()"></div>
+                    <div class="input-group"><label>Extra Monthly Prepayment (₹)</label><input type="number" id="loan-prepay" value="5000" oninput="calculateLoan()"></div>
                 </div>
                 <div>
                     <div class="results-box">
                         <div class="result-row"><span>Regular Monthly EMI</span><span id="loan-emi" class="highlight">₹0</span></div>
-                        <div class="result-row"><span>Interest Saved via Prepayment</span><span id="loan-saved" style="color:var(--green); font-weight:700;">₹0</span></div>
+                        <div class="result-row"><span>Interest Saved</span><span id="loan-saved" style="color:var(--green); font-weight:700;">₹0</span></div>
                         <div class="result-row"><span>Tenure Reduced By</span><span id="loan-time-saved" class="highlight">0 Months</span></div>
                     </div>
                     <div class="chart-container"><canvas id="loanChart"></canvas></div>
                 </div>
             </div>
 
+            <!-- 4. GST CALCULATOR -->
             <div id="tab-gst" class="calc-wrapper grid-view">
                 <div>
                     <h2>GST Calculator (Inclusive / Exclusive)</h2>
-                    <div class="input-group">
-                        <label>Base Amount (₹)</label>
-                        <input type="number" id="gst-amount" value="10000" oninput="calculateGST()">
-                    </div>
-                    <div class="input-group">
-                        <label>GST Rate (%)</label>
+                    <div class="input-group"><label>Base Amount (₹)</label><input type="number" id="gst-amount" value="10000" oninput="calculateGST()"></div>
+                    <div class="input-group"><label>GST Rate (%)</label>
                         <select id="gst-rate" onchange="calculateGST()">
-                            <option value="5">5% (Essential Goods)</option>
-                            <option value="12">12% (Standard)</option>
-                            <option value="18" selected>18% (Services & Tech)</option>
-                            <option value="28">28% (Luxury)</option>
+                            <option value="5">5%</option><option value="12">12%</option><option value="18" selected>18%</option><option value="28">28%</option>
                         </select>
                     </div>
-                    <div class="input-group">
-                        <label>Calculation Type</label>
-                        <select id="gst-type" onchange="calculateGST()">
-                            <option value="exclusive">Add GST (Exclusive)</option>
-                            <option value="inclusive">Remove GST (Inclusive)</option>
-                        </select>
+                    <div class="input-group"><label>Type</label>
+                        <select id="gst-type" onchange="calculateGST()"><option value="exclusive">Add GST</option><option value="inclusive">Remove GST</option></select>
                     </div>
                 </div>
                 <div>
                     <div class="results-box">
                         <div class="result-row"><span>Net Amount</span><span id="gst-net" class="highlight">₹0</span></div>
-                        <div class="result-row"><span>CGST / SGST (50% each)</span><span id="gst-split" class="highlight">₹0 / ₹0</span></div>
-                        <div class="result-row"><span>Total GST Tax</span><span id="gst-total-tax" style="color:var(--amber); font-weight:700;">₹0</span></div>
-                        <div class="result-row"><span>Gross Final Total</span><span id="gst-gross" style="font-size:1.2rem; font-weight:800; color:var(--green)">₹0</span></div>
+                        <div class="result-row"><span>CGST / SGST</span><span id="gst-split" class="highlight">₹0 / ₹0</span></div>
+                        <div class="result-row"><span>Total Tax</span><span id="gst-total-tax" style="color:var(--amber); font-weight:700;">₹0</span></div>
+                        <div class="result-row"><span>Gross Total</span><span id="gst-gross" style="font-size:1.2rem; font-weight:800; color:var(--green)">₹0</span></div>
                     </div>
                 </div>
             </div>
 
+            <!-- 5. SIP CALCULATOR -->
             <div id="tab-sip" class="calc-wrapper grid-view">
                 <div>
                     <h2>Mutual Fund SIP & Step-Up Calculator</h2>
-                    <div class="input-group">
-                        <label>Monthly Investment (₹)</label>
-                        <input type="number" id="sip-amount" value="10000" oninput="calculateSIP()">
-                    </div>
-                    <div class="input-group">
-                        <label>Expected Return Rate (p.a %)</label>
-                        <input type="number" id="sip-rate" value="12" oninput="calculateSIP()">
-                    </div>
-                    <div class="input-group">
-                        <label>Time Period (Years)</label>
-                        <input type="number" id="sip-years" value="10" oninput="calculateSIP()">
-                    </div>
-                    <div class="input-group">
-                        <label>Annual Step-Up (% Optional)</label>
-                        <input type="number" id="sip-stepup" value="0" oninput="calculateSIP()">
-                    </div>
+                    <div class="input-group"><label>Monthly Investment (₹)</label><input type="number" id="sip-amount" value="10000" oninput="calculateSIP()"></div>
+                    <div class="input-group"><label>Expected Return Rate (% p.a)</label><input type="number" id="sip-rate" value="12" oninput="calculateSIP()"></div>
+                    <div class="input-group"><label>Time Period (Years)</label><input type="number" id="sip-years" value="10" oninput="calculateSIP()"></div>
+                    <div class="input-group"><label>Annual Step-Up (%)</label><input type="number" id="sip-stepup" value="0" oninput="calculateSIP()"></div>
                 </div>
                 <div>
                     <div class="results-box">
-                        <div class="result-row"><span>Invested Amount</span><span id="sip-invested" class="highlight">₹0</span></div>
-                        <div class="result-row"><span>Estimated Growth</span><span id="sip-returns" class="highlight">₹0</span></div>
-                        <div class="result-row"><span>Total Maturity Value</span><span id="sip-total" style="font-size:1.2rem; font-weight:800; color:var(--green)">₹0</span></div>
+                        <div class="result-row"><span>Invested</span><span id="sip-invested" class="highlight">₹0</span></div>
+                        <div class="result-row"><span>Est. Returns</span><span id="sip-returns" class="highlight">₹0</span></div>
+                        <div class="result-row"><span>Maturity Value</span><span id="sip-total" style="font-size:1.2rem; font-weight:800; color:var(--green)">₹0</span></div>
                     </div>
                     <div class="chart-container"><canvas id="sipChart"></canvas></div>
                 </div>
             </div>
 
+            <!-- 6. SALARY -->
             <div id="tab-salary" class="calc-wrapper grid-view">
                 <div>
-                    <h2>In-Hand Salary Calculator (CTC to Take-Home)</h2>
-                    <div class="input-group">
-                        <label>Annual CTC (₹)</label>
-                        <input type="number" id="sal-ctc" value="1200000" oninput="calculateSalary()">
-                    </div>
+                    <h2>In-Hand Salary Calculator (CTC to Net Pay)</h2>
+                    <div class="input-group"><label>Annual CTC (₹)</label><input type="number" id="sal-ctc" value="1200000" oninput="calculateSalary()"></div>
                 </div>
                 <div>
                     <div class="results-box">
-                        <div class="result-row"><span>Monthly Gross Pay</span><span id="sal-gross" class="highlight">₹0</span></div>
-                        <div class="result-row"><span>Employee PF (Monthly)</span><span id="sal-pf" class="highlight">₹0</span></div>
-                        <div class="result-row"><span>Professional Tax (Est.)</span><span class="highlight">₹200</span></div>
-                        <div class="result-row"><span>Estimated In-Hand Pay</span><span id="sal-inhand" style="font-size:1.2rem; font-weight:800; color:var(--primary)">₹0 / month</span></div>
+                        <div class="result-row"><span>Monthly Gross</span><span id="sal-gross" class="highlight">₹0</span></div>
+                        <div class="result-row"><span>Employee PF</span><span id="sal-pf" class="highlight">₹0</span></div>
+                        <div class="result-row"><span>Est. In-Hand</span><span id="sal-inhand" style="font-size:1.2rem; font-weight:800; color:var(--primary)">₹0 / mo</span></div>
                     </div>
                 </div>
             </div>
 
+            <!-- 7. SCIENTIFIC CALCULATOR -->
             <div id="tab-sci" class="calc-wrapper">
                 <div class="sci-calc-card">
                     <input type="text" id="sci-screen" class="calc-display" readonly value="0">
@@ -602,198 +864,125 @@
                         <button class="fn" onclick="sciFunc('tan')">tan</button>
                         <button class="fn" onclick="sciFunc('log')">ln</button>
                         <button class="fn" onclick="sciFunc('log10')">log</button>
-
                         <button class="fn" onclick="sciFunc('sqrt')">√</button>
                         <button class="fn" onclick="sciPress('**2')">x²</button>
                         <button class="fn" onclick="sciPress('**')">xʸ</button>
                         <button class="fn" onclick="sciPress('Math.PI')">π</button>
                         <button class="fn" onclick="sciPress('Math.E')">e</button>
-
                         <button class="action" onclick="sciClear()">C</button>
                         <button onclick="sciPress('(')">(</button>
                         <button onclick="sciPress(')')">)</button>
                         <button onclick="sciBackspace()">⌫</button>
                         <button class="op" onclick="sciPress('/')">÷</button>
-
-                        <button onclick="sciPress('7')">7</button>
-                        <button onclick="sciPress('8')">8</button>
-                        <button onclick="sciPress('9')">9</button>
-                        <button class="fn" onclick="sciFunc('abs')">|x|</button>
-                        <button class="op" onclick="sciPress('*')">×</button>
-
-                        <button onclick="sciPress('4')">4</button>
-                        <button onclick="sciPress('5')">5</button>
-                        <button onclick="sciPress('6')">6</button>
-                        <button class="fn" onclick="sciFunc('exp')">exp</button>
-                        <button class="op" onclick="sciPress('-')">−</button>
-
-                        <button onclick="sciPress('1')">1</button>
-                        <button onclick="sciPress('2')">2</button>
-                        <button onclick="sciPress('3')">3</button>
-                        <button class="fn" onclick="sciPress('%')">%</button>
-                        <button class="op" onclick="sciPress('+')">+</button>
-
-                        <button onclick="sciPress('0')" style="grid-column: span 2;">0</button>
-                        <button onclick="sciPress('.')">.</button>
-                        <button class="equal" style="grid-column: span 2;" onclick="sciCompute()">=</button>
+                        <button onclick="sciPress('7')">7</button><button onclick="sciPress('8')">8</button><button onclick="sciPress('9')">9</button><button class="fn" onclick="sciFunc('abs')">|x|</button><button class="op" onclick="sciPress('*')">×</button>
+                        <button onclick="sciPress('4')">4</button><button onclick="sciPress('5')">5</button><button onclick="sciPress('6')">6</button><button class="fn" onclick="sciFunc('exp')">exp</button><button class="op" onclick="sciPress('-')">−</button>
+                        <button onclick="sciPress('1')">1</button><button onclick="sciPress('2')">2</button><button onclick="sciPress('3')">3</button><button class="fn" onclick="sciPress('%')">%</button><button class="op" onclick="sciPress('+')">+</button>
+                        <button onclick="sciPress('0')" style="grid-column: span 2;">0</button><button onclick="sciPress('.')">.</button><button class="equal" style="grid-column: span 2;" onclick="sciCompute()">=</button>
                     </div>
                 </div>
             </div>
 
+            <!-- 8. TAX COMPARATOR -->
             <div id="tab-tax" class="calc-wrapper grid-view">
                 <div>
                     <h2>Old vs New Tax Regime Comparator</h2>
-                    <div class="input-group">
-                        <label>Total Annual Income (₹)</label>
-                        <input type="number" id="tax-income" value="1000000" oninput="calculateTax()">
-                    </div>
-                    <div class="input-group">
-                        <label>Deductions 80C/80D/HRA (Old Regime)</label>
-                        <input type="number" id="tax-deductions" value="200000" oninput="calculateTax()">
-                    </div>
+                    <div class="input-group"><label>Total Annual Income (₹)</label><input type="number" id="tax-income" value="1000000" oninput="calculateTax()"></div>
+                    <div class="input-group"><label>Deductions (Old Regime)</label><input type="number" id="tax-deductions" value="200000" oninput="calculateTax()"></div>
                 </div>
                 <div>
                     <div class="results-box">
-                        <div class="result-row"><span>Tax (Old Regime)</span><span id="tax-old" class="highlight">₹0</span></div>
-                        <div class="result-row"><span>Tax (New Regime)</span><span id="tax-new" class="highlight">₹0</span></div>
+                        <div class="result-row"><span>Old Regime Tax</span><span id="tax-old" class="highlight">₹0</span></div>
+                        <div class="result-row"><span>New Regime Tax</span><span id="tax-new" class="highlight">₹0</span></div>
                         <div class="result-row"><span>Recommendation</span><span id="tax-best" style="font-weight:800; color:var(--green)">-</span></div>
                     </div>
                 </div>
             </div>
 
+            <!-- 9. PPF CALCULATOR -->
             <div id="tab-ppf" class="calc-wrapper grid-view">
                 <div>
                     <h2>Public Provident Fund (PPF) Calculator</h2>
-                    <div class="input-group">
-                        <label>Yearly Deposit (Max ₹1.5 Lakh/yr)</label>
-                        <input type="number" id="ppf-deposit" value="150000" oninput="calculatePPF()">
-                    </div>
-                    <div class="input-group">
-                        <label>Duration (Years)</label>
-                        <select id="ppf-years" onchange="calculatePPF()">
-                            <option value="15">15 Years (Standard)</option>
-                            <option value="20">20 Years (Extended)</option>
-                            <option value="25">25 Years (Extended)</option>
-                        </select>
+                    <div class="input-group"><label>Yearly Deposit (Max ₹1.5L)</label><input type="number" id="ppf-deposit" value="150000" oninput="calculatePPF()"></div>
+                    <div class="input-group"><label>Tenure</label>
+                        <select id="ppf-years" onchange="calculatePPF()"><option value="15">15 Years</option><option value="20">20 Years</option><option value="25">25 Years</option></select>
                     </div>
                 </div>
                 <div>
                     <div class="results-box">
                         <div class="result-row"><span>Total Invested</span><span id="ppf-invested" class="highlight">₹0</span></div>
-                        <div class="result-row"><span>Total Interest (Tax Free)</span><span id="ppf-interest" class="highlight">₹0</span></div>
-                        <div class="result-row"><span>Maturity Amount</span><span id="ppf-total" style="font-size:1.2rem; font-weight:800; color:var(--green)">₹0</span></div>
+                        <div class="result-row"><span>Total Interest</span><span id="ppf-interest" class="highlight">₹0</span></div>
+                        <div class="result-row"><span>Maturity</span><span id="ppf-total" style="font-size:1.2rem; font-weight:800; color:var(--green)">₹0</span></div>
                     </div>
                 </div>
             </div>
 
+            <!-- 10. CURRENCY CONVERTER -->
             <div id="tab-conv-currency" class="calc-wrapper grid-view">
                 <div>
                     <h2>💱 Real-Time Global Currency Converter</h2>
-                    <div class="input-group">
-                        <label>Amount</label>
-                        <input type="number" id="curr-amount" value="100" oninput="convertCurrency()">
-                    </div>
-                    <div class="input-group">
-                        <label>From</label>
+                    <div class="input-group"><label>Amount</label><input type="number" id="curr-amount" value="100" oninput="convertCurrency()"></div>
+                    <div class="input-group"><label>From</label>
                         <select id="curr-from" onchange="convertCurrency()">
-                            <option value="USD" selected>USD - US Dollar ($)</option>
-                            <option value="INR">INR - Indian Rupee (₹)</option>
-                            <option value="EUR">EUR - Euro (€)</option>
-                            <option value="GBP">GBP - British Pound (£)</option>
-                            <option value="AED">AED - UAE Dirham</option>
-                            <option value="CAD">CAD - Canadian Dollar</option>
+                            <option value="USD" selected>USD ($)</option><option value="INR">INR (₹)</option><option value="EUR">EUR (€)</option><option value="GBP">GBP (£)</option><option value="AED">AED</option><option value="CAD">CAD</option>
                         </select>
                     </div>
-                    <div class="input-group">
-                        <label>To</label>
+                    <div class="input-group"><label>To</label>
                         <select id="curr-to" onchange="convertCurrency()">
-                            <option value="INR" selected>INR - Indian Rupee (₹)</option>
-                            <option value="USD">USD - US Dollar ($)</option>
-                            <option value="EUR">EUR - Euro (€)</option>
-                            <option value="GBP">GBP - British Pound (£)</option>
-                            <option value="AED">AED - UAE Dirham</option>
-                            <option value="CAD">CAD - Canadian Dollar</option>
+                            <option value="INR" selected>INR (₹)</option><option value="USD">USD ($)</option><option value="EUR">EUR (€)</option><option value="GBP">GBP (£)</option><option value="AED">AED</option><option value="CAD">CAD</option>
                         </select>
                     </div>
                 </div>
                 <div>
                     <div class="results-box">
-                        <div class="result-row"><span>Converted Amount</span><span id="curr-result" style="font-size:1.4rem; font-weight:800; color:var(--purple);">-</span></div>
+                        <div class="result-row"><span>Converted Value</span><span id="curr-result" style="font-size:1.4rem; font-weight:800; color:var(--purple)">-</span></div>
                         <div class="result-row"><span>Exchange Rate Base</span><span id="curr-rate-info" class="highlight">-</span></div>
                     </div>
                 </div>
             </div>
 
+            <!-- 11. CRYPTO CONVERTER -->
             <div id="tab-conv-crypto" class="calc-wrapper grid-view">
                 <div>
-                    <h2>🪙 Live Crypto Asset Converter</h2>
-                    <div class="input-group">
-                        <label>Crypto Quantity</label>
-                        <input type="number" id="crypto-qty" value="1" oninput="convertCrypto()">
-                    </div>
-                    <div class="input-group">
-                        <label>Select Cryptocurrency</label>
-                        <select id="crypto-type" onchange="convertCrypto()">
-                            <option value="BTC" selected>Bitcoin (BTC)</option>
-                            <option value="ETH">Ethereum (ETH)</option>
-                            <option value="SOL">Solana (SOL)</option>
-                            <option value="USDT">Tether USD (USDT)</option>
-                        </select>
+                    <h2>🪙 Crypto Asset Converter</h2>
+                    <div class="input-group"><label>Quantity</label><input type="number" id="crypto-qty" value="1" oninput="convertCrypto()"></div>
+                    <div class="input-group"><label>Asset</label>
+                        <select id="crypto-type" onchange="convertCrypto()"><option value="BTC" selected>Bitcoin (BTC)</option><option value="ETH">Ethereum (ETH)</option><option value="SOL">Solana (SOL)</option><option value="USDT">Tether (USDT)</option></select>
                     </div>
                 </div>
                 <div>
                     <div class="results-box">
-                        <div class="result-row"><span>Estimated Value (USD)</span><span id="crypto-usd" class="highlight">$0</span></div>
-                        <div class="result-row"><span>Estimated Value (INR)</span><span id="crypto-inr" style="font-size:1.3rem; font-weight:800; color:var(--green)">₹0</span></div>
+                        <div class="result-row"><span>USD Value</span><span id="crypto-usd" class="highlight">$0</span></div>
+                        <div class="result-row"><span>INR Value</span><span id="crypto-inr" style="font-size:1.3rem; font-weight:800; color:var(--green)">₹0</span></div>
                     </div>
                 </div>
             </div>
 
+            <!-- 12. WEIGHT CONVERTER -->
             <div id="tab-conv-weight" class="calc-wrapper grid-view">
                 <div>
                     <h2>⚖️ Weight & Mass Converter</h2>
-                    <div class="input-group">
-                        <label>Enter Value</label>
-                        <input type="number" id="weight-val" value="1" oninput="convertWeight()">
-                    </div>
-                    <div class="input-group">
-                        <label>From Unit</label>
-                        <select id="weight-unit" onchange="convertWeight()">
-                            <option value="kg" selected>Kilograms (kg)</option>
-                            <option value="g">Grams (g)</option>
-                            <option value="lbs">Pounds (lbs)</option>
-                            <option value="oz">Ounces (oz)</option>
-                            <option value="ton">Metric Tonne (t)</option>
-                        </select>
+                    <div class="input-group"><label>Value</label><input type="number" id="weight-val" value="1" oninput="convertWeight()"></div>
+                    <div class="input-group"><label>Unit</label>
+                        <select id="weight-unit" onchange="convertWeight()"><option value="kg" selected>Kilograms (kg)</option><option value="g">Grams (g)</option><option value="lbs">Pounds (lbs)</option><option value="oz">Ounces (oz)</option><option value="ton">Tonne (t)</option></select>
                     </div>
                 </div>
                 <div>
                     <div class="results-box">
                         <div class="result-row"><span>Kilograms</span><span id="w-kg" class="highlight">-</span></div>
                         <div class="result-row"><span>Grams</span><span id="w-g" class="highlight">-</span></div>
-                        <div class="result-row"><span>Pounds (lbs)</span><span id="w-lbs" class="highlight">-</span></div>
-                        <div class="result-row"><span>Ounces (oz)</span><span id="w-oz" class="highlight">-</span></div>
+                        <div class="result-row"><span>Pounds</span><span id="w-lbs" class="highlight">-</span></div>
+                        <div class="result-row"><span>Ounces</span><span id="w-oz" class="highlight">-</span></div>
                     </div>
                 </div>
             </div>
 
+            <!-- 13. LENGTH CONVERTER -->
             <div id="tab-conv-length" class="calc-wrapper grid-view">
                 <div>
                     <h2>📏 Length & Distance Converter</h2>
-                    <div class="input-group">
-                        <label>Enter Value</label>
-                        <input type="number" id="length-val" value="10" oninput="convertLength()">
-                    </div>
-                    <div class="input-group">
-                        <label>From Unit</label>
-                        <select id="length-unit" onchange="convertLength()">
-                            <option value="m">Meters (m)</option>
-                            <option value="ft" selected>Feet (ft)</option>
-                            <option value="in">Inches (in)</option>
-                            <option value="km">Kilometers (km)</option>
-                            <option value="mi">Miles (mi)</option>
-                            <option value="cm">Centimeters (cm)</option>
-                        </select>
+                    <div class="input-group"><label>Value</label><input type="number" id="length-val" value="10" oninput="convertLength()"></div>
+                    <div class="input-group"><label>Unit</label>
+                        <select id="length-unit" onchange="convertLength()"><option value="m">Meters (m)</option><option value="ft" selected>Feet (ft)</option><option value="in">Inches (in)</option><option value="km">Kilometers (km)</option><option value="mi">Miles (mi)</option><option value="cm">Centimeters (cm)</option></select>
                     </div>
                 </div>
                 <div>
@@ -807,32 +996,31 @@
             </div>
         </div>
 
+        <!-- 2. BANKING EXAM HUB -->
         <div id="banking-exam-view">
-            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #f1f5f9; padding-bottom:1.2rem; margin-bottom:1.5rem;">
-                <div>
-                    <h2 style="font-size:1.6rem; font-weight:900; color:#5b21b6;">🎓 Banking Exam Quants Engine & Master Revision Hub</h2>
-                    <p style="font-size:0.92rem; color:var(--muted);">Complete Compendium for IBPS, SBI, RRB PO/Clerk, RBI Grade B & LIC</p>
+            <div class="exam-header">
+                <div class="exam-title-box">
+                    <h2>🎓 Banking Exam Quants Engine & Master Revision Hub</h2>
+                    <p>Complete Compendium for IBPS, SBI, RRB PO/Clerk, RBI Grade B & LIC</p>
                 </div>
-                <button class="btn-back-home" onclick="openHomePortal()" style="background:#eff6ff; color:var(--primary); border:1.5px solid #bfdbfe; padding:0.6rem 1.2rem; border-radius:10px; font-weight:700; cursor:pointer;">← Return to Financial Portal</button>
+                <button class="btn-back-home" onclick="openHomePortal()">← Return to Financial Portal</button>
             </div>
 
             <div class="section-title">⚡ Fast Calculation Engine</div>
             <div class="quants-card-grid">
                 <div class="quant-tool-box">
-                    <h4 style="color:#4338ca;">🔢 Square & Square Root (√N)</h4>
-                    <input type="number" id="quant-num-sq" placeholder="Enter Number (e.g., 47)" oninput="calcQuantSquare()">
+                    <h4>🔢 Square & Square Root (√N)</h4>
+                    <input type="number" id="quant-num-sq" placeholder="Enter Number" oninput="calcQuantSquare()">
                     <div class="quant-res-box" id="quant-sq-res">Square: - | √Root: -</div>
                 </div>
-
                 <div class="quant-tool-box">
-                    <h4 style="color:#4338ca;">🎲 Cube & Cube Root (∛N)</h4>
-                    <input type="number" id="quant-num-cb" placeholder="Enter Number (e.g., 23)" oninput="calcQuantCube()">
+                    <h4>🎲 Cube & Cube Root (∛N)</h4>
+                    <input type="number" id="quant-num-cb" placeholder="Enter Number" oninput="calcQuantCube()">
                     <div class="quant-res-box" id="quant-cb-res">Cube: - | ∛Root: -</div>
                 </div>
-
                 <div class="quant-tool-box">
-                    <h4 style="color:#4338ca;">📊 Instant Percentage (X% of Y)</h4>
-                    <div style="display:flex; gap:0.5rem;">
+                    <h4>📊 Instant Percentage (X% of Y)</h4>
+                    <div class="quant-inputs">
                         <input type="number" id="quant-p-x" placeholder="X %" oninput="calcQuantPercent()">
                         <input type="number" id="quant-p-y" placeholder="of Y" oninput="calcQuantPercent()">
                     </div>
@@ -840,7 +1028,7 @@
                 </div>
             </div>
 
-            <div class="section-title">📚 Official Banking Exam Master Handbooks</div>
+            <div class="pdf-section-title">📚 Official Banking Exam Master Handbooks</div>
             <div class="pdf-tabs-nav">
                 <button class="pdf-tab-btn active" onclick="switchDoc('doc-quant', this)">📐 Quant & DI Handbook</button>
                 <button class="pdf-tab-btn" onclick="switchDoc('doc-reasoning', this)">🧠 Reasoning Compendium</button>
@@ -852,7 +1040,6 @@
                 <div id="doc-quant" class="doc-section active">
                     <h2>QUANTITATIVE APTITUDE & DATA INTERPRETATION FORMULA COMPENDIUM</h2>
                     <p><em>Targeting IBPS PO/Clerk, SBI PO/Clerk, RRB PO/Clerk, RBI Grade B & LIC</em></p>
-
                     <h3>MODULE 1: MULTIPLICATION BENCHMARKS & FRACTION MATRIX</h3>
                     <div class="doc-table-container">
                         <table class="doc-table center">
@@ -869,34 +1056,7 @@
                             </tbody>
                         </table>
                     </div>
-
-                    <h3>MODULE 2: QUADRATIC EQUATIONS & 5-SECOND SIGN RULES (ax² + bx + c = 0)</h3>
-                    <div class="doc-table-container">
-                        <table class="doc-table">
-                            <thead><tr><th>Signs in Eq (b, c)</th><th>Root 1 Sign</th><th>Root 2 Sign</th><th>Rule</th></tr></thead>
-                            <tbody>
-                                <tr><td>+ +</td><td>− (Negative)</td><td>− (Negative)</td><td>Both roots are strictly Negative</td></tr>
-                                <tr><td>− +</td><td>+ (Positive)</td><td>+ (Positive)</td><td>Both roots are strictly Positive</td></tr>
-                                <tr><td>+ −</td><td>− (Bigger)</td><td>+ (Smaller)</td><td>Bigger root is Negative</td></tr>
-                                <tr><td>− −</td><td>+ (Bigger)</td><td>− (Smaller)</td><td>Bigger root is Positive</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <h3>MODULE 3: 2D & 3D MENSURATION MASTER FORMULAS</h3>
-                    <div class="doc-table-container">
-                        <table class="doc-table">
-                            <thead><tr><th>Figure</th><th>Area / Volume</th><th>Perimeter / Surface Area</th></tr></thead>
-                            <tbody>
-                                <tr><td>Equilateral Triangle</td><td>(√3 / 4)a²</td><td>3a | Height = (√3 / 2)a</td></tr>
-                                <tr><td>Circle</td><td>π r²</td><td>Circumference = 2π r</td></tr>
-                                <tr><td>Right Cylinder</td><td>Volume = π r² h</td><td>CSA = 2π rh | TSA = 2π r(h + r)</td></tr>
-                                <tr><td>Right Cone</td><td>Volume = (1/3)π r² h</td><td>CSA = π rl | Slant l = √(r² + h²)</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
                 </div>
-
                 <div id="doc-reasoning" class="doc-section">
                     <h2>REASONING ABILITY & ANALYTICAL APTITUDE</h2>
                     <h3>MODULE 1: SYLLOGISMS ("ONLY A FEW" & POSSIBILITY)</h3>
@@ -905,7 +1065,6 @@
                         <li><strong>"Only A are B":</strong> Equivalent to "All B are A", where B cannot overlap with any other element.</li>
                     </ul>
                 </div>
-
                 <div id="doc-english" class="doc-section">
                     <h2>ENGLISH LANGUAGE & VERBAL ABILITY</h2>
                     <h3>MODULE 1: SUBJECT-VERB AGREEMENT & GOLDEN RULES</h3>
@@ -914,7 +1073,6 @@
                         <li>When subjects are joined by <em>Either...or, Neither...nor</em>, the verb agrees with the <strong>NEAREST SUBJECT</strong>.</li>
                     </ul>
                 </div>
-
                 <div id="doc-ga" class="doc-section">
                     <h2>GENERAL & BANKING AWARENESS MASTER NOTES</h2>
                     <h3>MODULE 1: RBI & MONETARY POLICY</h3>
