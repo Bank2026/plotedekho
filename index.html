@@ -30,17 +30,6 @@
             line-height: 1.6; 
         }
 
-        /* LIVE STOCK MARKET TICKER BAR */
-        .ticker-wrap {
-            background: #0f172a;
-            color: #f8fafc;
-            overflow: hidden;
-            height: 46px;
-            display: flex;
-            align-items: center;
-            border-bottom: 1px solid #1e293b;
-        }
-
         /* HEADER & NAVIGATION */
         header { 
             background: var(--card-bg); 
@@ -220,13 +209,14 @@
             color: #fff; 
             font-size: 2.5rem; 
             min-height: 85px; 
-            text-align: right; 
+            text-align: left; 
             padding: 1rem; 
             border: none; 
             border-radius: 12px; 
             margin-bottom: 1.2rem; 
             font-weight: 700; 
             letter-spacing: 1px;
+            direction: ltr;
         }
         .simple-calc-card .calc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; }
         .simple-calc-card .calc-grid button { 
@@ -322,31 +312,6 @@
         .tracker-prices { margin-bottom: 0.8rem; }
         .primary-price { font-size: 1.6rem; font-weight: 800; color: var(--text); }
         .secondary-price { font-size: 0.85rem; color: var(--muted); font-weight: 500; }
-        
-        .purity-toggle-box {
-            display: inline-flex;
-            background: #e2e8f0;
-            padding: 2px;
-            border-radius: 8px;
-            margin-bottom: 0.6rem;
-            gap: 2px;
-        }
-        .purity-btn {
-            border: none;
-            background: transparent;
-            padding: 0.25rem 0.65rem;
-            font-size: 0.75rem;
-            font-weight: 800;
-            border-radius: 6px;
-            cursor: pointer;
-            color: var(--muted);
-            transition: 0.15s;
-        }
-        .purity-btn.active {
-            background: var(--gold);
-            color: #ffffff;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
-        }
 
         .timeframe-selector {
             display: flex;
@@ -533,30 +498,6 @@
 </head>
 <body>
 
-    <!-- TOP REAL-TIME TRADINGVIEW TICKER TAPE (AUTO-UPDATES STOCKS, GOLD, USD/INR, BTC) -->
-    <div class="ticker-wrap">
-        <div class="tradingview-widget-container" style="width:100%; height:100%;">
-            <div class="tradingview-widget-container__widget"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
-            {
-                "symbols": [
-                    { "proName": "BSE:SENSEX", "title": "SENSEX" },
-                    { "proName": "NSE:NIFTY", "title": "NIFTY 50" },
-                    { "proName": "NSE:BANKNIFTY", "title": "BANK NIFTY" },
-                    { "proName": "MCX:GOLD1!", "title": "GOLD (24K MCX)" },
-                    { "proName": "FX_IDC:USDINR", "title": "USD/INR" },
-                    { "proName": "BINANCE:BTCUSDT", "title": "BITCOIN" }
-                ],
-                "showSymbolLogo": true,
-                "isTransparent": true,
-                "displayMode": "adaptive",
-                "colorTheme": "dark",
-                "locale": "en"
-            }
-            </script>
-        </div>
-    </div>
-
     <!-- MAIN HEADER -->
     <header>
         <div class="brand-container" onclick="openHomePortal()">
@@ -589,12 +530,17 @@
         <div id="main-portal-view">
             <div class="hero-desc">
                 <h1>India's All-In-One Financial Calculation & Market Intelligence Hub</h1>
-                <p>High-Precision Loan, Property & Tax Analytics • Live Commodity & Crypto Rates • Instant Value Converters</p>
+                <p>High-Precision Loan, Property & Tax Analytics • Live Crypto Rates • Scientific & Energy Converters</p>
             </div>
 
-            <!-- AdSense Slot Header -->
+            <!-- Google AdSense Slot Header (with FinMatrix Fallback) -->
             <div class="ad-container">
-                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                     data-ad-slot="XXXXXXXXXX"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
                 <div class="ad-fallback-card">
                     <div>
                         <h4>⚡ Smart Loan & SIP Wealth Calculators</h4>
@@ -623,15 +569,15 @@
                 </div>
             </div>
 
-            <div class="section-title">🔄 Instant Value & Unit Converters</div>
+            <div class="section-title">🔄 Instant Value & Scientific Converters</div>
             <div class="btn-grid" style="margin-bottom: 1.5rem;">
-                <button class="tab-btn theme-indigo" onclick="switchTab('conv-currency', this)">💱 Money / Currency</button>
+                <button class="tab-btn theme-indigo" onclick="switchTab('conv-energy', this)">⚡ Energy / Joule Converter</button>
                 <button class="tab-btn theme-amber" onclick="switchTab('conv-crypto', this)">🪙 Crypto Converter</button>
                 <button class="tab-btn theme-emerald" onclick="switchTab('conv-weight', this)">⚖️ Weight & Mass</button>
                 <button class="tab-btn theme-cyan" onclick="switchTab('conv-length', this)">📏 Length & Distance</button>
             </div>
 
-            <!-- 1. SIMPLE CALCULATOR + HISTORY + LIVE TRACKERS -->
+            <!-- 1. SIMPLE CALCULATOR (LEFT) + CALCULATION HISTORY (RIGHT) + BTC & ETH (BELOW) -->
             <div id="tab-simple" class="calc-wrapper active">
                 <div class="simple-calc-layout">
                     <div class="simple-calc-card">
@@ -674,122 +620,97 @@
                     </div>
                 </div>
 
-                <!-- Live Auto-Updated Gold & Bitcoin Cards -->
+                <!-- LIVE BITCOIN (LEFT) & ETHEREUM (RIGHT) TRACKERS (SHOWING BOTH $ AND ₹) -->
                 <div class="market-trackers-grid">
                     <div class="tracker-card">
                         <div>
                             <div class="tracker-header">
-                                <span class="tracker-title">✨ Today's Gold Price</span>
+                                <span class="tracker-title">🪙 Bitcoin (BTC)</span>
                                 <span class="tracker-badge badge-live">● Auto-Updated</span>
-                            </div>
-                            
-                            <div class="purity-toggle-box">
-                                <button class="purity-btn active" id="purity-24k-btn" onclick="selectGoldPurity('24k')">24K (99.9%)</button>
-                                <button class="purity-btn" id="purity-22k-btn" onclick="selectGoldPurity('22k')">22K (91.6%)</button>
-                            </div>
-
-                            <div class="tracker-prices">
-                                <div class="primary-price" id="gold-price-inr">₹7,650 /g</div>
-                                <div class="secondary-price" id="gold-price-sub">₹76,500 per 10g • Spot Benchmark</div>
-                            </div>
-                            <div class="timeframe-selector">
-                                <button class="tf-btn active" onclick="updateMarketChart('gold', '1m', this)">1 Month</button>
-                                <button class="tf-btn" onclick="updateMarketChart('gold', '6m', this)">6 Months</button>
-                                <button class="tf-btn" onclick="updateMarketChart('gold', '1y', this)">1 Year</button>
-                                <button class="tf-btn" onclick="updateMarketChart('gold', '5y', this)">5 Years</button>
-                            </div>
-                        </div>
-                        <div class="tracker-chart-container">
-                            <canvas id="goldChart"></canvas>
-                        </div>
-                    </div>
-
-                    <div class="tracker-card">
-                        <div>
-                            <div class="tracker-header">
-                                <span class="tracker-title">🪙 Today's Bitcoin Price (BTC)</span>
-                                <span class="tracker-badge badge-live">● Live CoinGecko</span>
                             </div>
                             <div class="tracker-prices">
                                 <div class="primary-price" id="btc-price-usd">$68,500</div>
-                                <div class="secondary-price" id="btc-price-inr">≈ ₹59,25,000 INR • Live</div>
+                                <div class="secondary-price" id="btc-price-inr">₹59,25,000 INR</div>
                             </div>
                             <div class="timeframe-selector">
-                                <button class="tf-btn active" onclick="updateMarketChart('btc', '1m', this)">1 Month</button>
-                                <button class="tf-btn" onclick="updateMarketChart('btc', '6m', this)">6 Months</button>
-                                <button class="tf-btn" onclick="updateMarketChart('btc', '1y', this)">1 Year</button>
-                                <button class="tf-btn" onclick="updateMarketChart('btc', '5y', this)">5 Years</button>
+                                <button class="tf-btn active" onclick="updateCryptoChart('btc', '1m', this)">1 Month</button>
+                                <button class="tf-btn" onclick="updateCryptoChart('btc', '6m', this)">6 Months</button>
+                                <button class="tf-btn" onclick="updateCryptoChart('btc', '1y', this)">1 Year</button>
                             </div>
                         </div>
                         <div class="tracker-chart-container">
                             <canvas id="btcChart"></canvas>
                         </div>
                     </div>
+
+                    <div class="tracker-card">
+                        <div>
+                            <div class="tracker-header">
+                                <span class="tracker-title">Ξ Ethereum (ETH)</span>
+                                <span class="tracker-badge badge-live">● Auto-Updated</span>
+                            </div>
+                            <div class="tracker-prices">
+                                <div class="primary-price" id="eth-price-usd">$3,300</div>
+                                <div class="secondary-price" id="eth-price-inr">₹2,85,450 INR</div>
+                            </div>
+                            <div class="timeframe-selector">
+                                <button class="tf-btn active" onclick="updateCryptoChart('eth', '1m', this)">1 Month</button>
+                                <button class="tf-btn" onclick="updateCryptoChart('eth', '6m', this)">6 Months</button>
+                                <button class="tf-btn" onclick="updateCryptoChart('eth', '1y', this)">1 Year</button>
+                            </div>
+                        </div>
+                        <div class="tracker-chart-container">
+                            <canvas id="ethChart"></canvas>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- 2. PROPERTY CALCULATOR -->
+            <!-- 2. PROPERTY PURCHASE, SALE & ROI CALCULATOR -->
             <div id="tab-property" class="calc-wrapper grid-view">
                 <div>
                     <h2>🏡 Property Purchase, Sale & Total Cost Calculator</h2>
-                    <div class="input-group">
-                        <label>Property Area (Sq. Ft.)</label>
-                        <input type="number" id="prop-area" value="1200" oninput="calculateProperty()">
-                    </div>
-                    <div class="input-group">
-                        <label>Rate per Sq. Ft. (₹)</label>
-                        <input type="number" id="prop-rate" value="5000" oninput="calculateProperty()">
-                    </div>
-                    <div class="input-group">
-                        <label>Stamp Duty (%)</label>
-                        <input type="number" id="prop-stamp-rate" value="6" oninput="calculateProperty()">
-                    </div>
-                    <div class="input-group">
-                        <label>Registration & Legal (%)</label>
-                        <input type="number" id="prop-reg-rate" value="1" oninput="calculateProperty()">
-                    </div>
-                    <div class="input-group">
-                        <label>Brokerage (%)</label>
-                        <input type="number" id="prop-brokerage-rate" value="1" oninput="calculateProperty()">
-                    </div>
-                    <div class="input-group">
-                        <label>Interiors (₹)</label>
-                        <input type="number" id="prop-interior" value="400000" oninput="calculateProperty()">
-                    </div>
-                    <div class="input-group">
-                        <label>Holding Period (Yrs) & Growth (% p.a)</label>
+                    <p style="color: var(--muted); margin-bottom: 1.5rem;">Calculate stamp duty, registration, legal fees, total capital needed, and future resale ROI.</p>
+                    <div class="input-group"><label>Property Carpet / Super Area (Sq. Ft.)</label><input type="number" id="prop-area" value="1200" oninput="calculateProperty()"></div>
+                    <div class="input-group"><label>Rate per Sq. Ft. (₹)</label><input type="number" id="prop-rate" value="5000" oninput="calculateProperty()"></div>
+                    <div class="input-group"><label>Stamp Duty (%)</label><input type="number" id="prop-stamp-rate" value="6" oninput="calculateProperty()"></div>
+                    <div class="input-group"><label>Registration & Legal Fees (%)</label><input type="number" id="prop-reg-rate" value="1" oninput="calculateProperty()"></div>
+                    <div class="input-group"><label>Brokerage / Commission (%)</label><input type="number" id="prop-brokerage-rate" value="1" oninput="calculateProperty()"></div>
+                    <div class="input-group"><label>Interior & Renovation Costs (₹)</label><input type="number" id="prop-interior" value="400000" oninput="calculateProperty()"></div>
+                    <div class="input-group"><label>Expected Holding Period & Annual Growth (% p.a)</label>
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
-                            <input type="number" id="prop-years" value="5" oninput="calculateProperty()">
-                            <input type="number" id="prop-appreciation" value="8" oninput="calculateProperty()">
+                            <input type="number" id="prop-years" value="5" placeholder="Years" oninput="calculateProperty()">
+                            <input type="number" id="prop-appreciation" value="8" placeholder="Growth %" oninput="calculateProperty()">
                         </div>
                     </div>
                 </div>
                 <div>
                     <div class="results-box">
-                        <div class="result-row"><span>Base Price</span><span id="prop-base" class="highlight">₹0</span></div>
-                        <div class="result-row"><span>Stamp + Reg</span><span id="prop-gov-charges" class="highlight">₹0</span></div>
+                        <div class="result-row"><span>Base Property Price</span><span id="prop-base" class="highlight">₹0</span></div>
+                        <div class="result-row"><span>Stamp Duty + Registration</span><span id="prop-gov-charges" class="highlight">₹0</span></div>
                         <div class="result-row"><span>Brokerage & Legal</span><span id="prop-brokerage" class="highlight">₹0</span></div>
-                        <div class="result-row"><span>Total Purchase Cost</span><span id="prop-total-cost" style="font-size:1.2rem; font-weight:800; color:var(--primary)">₹0</span></div>
-                        <div class="result-row"><span>Future Resale Value</span><span id="prop-future-val" style="color:var(--green); font-weight:700;">₹0</span></div>
-                        <div class="result-row"><span>Net Profit</span><span id="prop-net-profit" class="highlight" style="color:var(--green)">₹0</span></div>
+                        <div class="result-row"><span>Total Purchase Cost (All-Inclusive)</span><span id="prop-total-cost" style="font-size: 1.2rem; font-weight:800; color:var(--primary)">₹0</span></div>
+                        <div class="result-row"><span>Estimated Future Resale Value</span><span id="prop-future-val" style="color:var(--green); font-weight:700;">₹0</span></div>
+                        <div class="result-row"><span>Net Capital Gain / Profit</span><span id="prop-net-profit" class="highlight" style="color:var(--green)">₹0</span></div>
                     </div>
                     <div class="chart-container"><canvas id="propertyChart"></canvas></div>
                 </div>
             </div>
 
-            <!-- 3. LOAN EMI CALCULATOR -->
+            <!-- 3. LOAN PREPAYMENT CALCULATOR -->
             <div id="tab-loan" class="calc-wrapper grid-view">
                 <div>
                     <h2>Home & Personal Loan Prepayment Calculator</h2>
+                    <p style="color: var(--muted); margin-bottom: 1.5rem;">Calculate interest saved and tenure reduction through extra monthly principal payments.</p>
                     <div class="input-group"><label>Loan Amount (₹)</label><input type="number" id="loan-amount" value="3000000" oninput="calculateLoan()"></div>
                     <div class="input-group"><label>Interest Rate (% p.a)</label><input type="number" id="loan-rate" value="8.5" oninput="calculateLoan()"></div>
                     <div class="input-group"><label>Tenure (Years)</label><input type="number" id="loan-tenure" value="20" oninput="calculateLoan()"></div>
-                    <div class="input-group"><label>Extra Monthly Prepayment (₹)</label><input type="number" id="loan-prepay" value="5000" oninput="calculateLoan()"></div>
+                    <div class="input-group"><label>Monthly Extra Prepayment (₹)</label><input type="number" id="loan-prepay" value="5000" oninput="calculateLoan()"></div>
                 </div>
                 <div>
                     <div class="results-box">
                         <div class="result-row"><span>Regular Monthly EMI</span><span id="loan-emi" class="highlight">₹0</span></div>
-                        <div class="result-row"><span>Interest Saved</span><span id="loan-saved" style="color:var(--green); font-weight:700;">₹0</span></div>
+                        <div class="result-row"><span>Interest Saved via Prepayment</span><span id="loan-saved" style="color:var(--green); font-weight:700;">₹0</span></div>
                         <div class="result-row"><span>Tenure Reduced By</span><span id="loan-time-saved" class="highlight">0 Months</span></div>
                     </div>
                     <div class="chart-container"><canvas id="loanChart"></canvas></div>
@@ -800,22 +721,29 @@
             <div id="tab-gst" class="calc-wrapper grid-view">
                 <div>
                     <h2>GST Calculator (Inclusive / Exclusive)</h2>
+                    <p style="color: var(--muted); margin-bottom: 1.5rem;">Calculate Goods & Services Tax slab splits instantly with CGST and SGST bifurcation.</p>
                     <div class="input-group"><label>Base Amount (₹)</label><input type="number" id="gst-amount" value="10000" oninput="calculateGST()"></div>
                     <div class="input-group"><label>GST Rate (%)</label>
                         <select id="gst-rate" onchange="calculateGST()">
-                            <option value="5">5%</option><option value="12">12%</option><option value="18" selected>18%</option><option value="28">28%</option>
+                            <option value="5">5% (Essential Goods)</option>
+                            <option value="12">12% (Standard)</option>
+                            <option value="18" selected>18% (Services & Tech)</option>
+                            <option value="28">28% (Luxury)</option>
                         </select>
                     </div>
-                    <div class="input-group"><label>Type</label>
-                        <select id="gst-type" onchange="calculateGST()"><option value="exclusive">Add GST</option><option value="inclusive">Remove GST</option></select>
+                    <div class="input-group"><label>Calculation Type</label>
+                        <select id="gst-type" onchange="calculateGST()">
+                            <option value="exclusive">Add GST (Exclusive)</option>
+                            <option value="inclusive">Remove GST (Inclusive)</option>
+                        </select>
                     </div>
                 </div>
                 <div>
                     <div class="results-box">
                         <div class="result-row"><span>Net Amount</span><span id="gst-net" class="highlight">₹0</span></div>
-                        <div class="result-row"><span>CGST / SGST</span><span id="gst-split" class="highlight">₹0 / ₹0</span></div>
-                        <div class="result-row"><span>Total Tax</span><span id="gst-total-tax" style="color:var(--amber); font-weight:700;">₹0</span></div>
-                        <div class="result-row"><span>Gross Total</span><span id="gst-gross" style="font-size:1.2rem; font-weight:800; color:var(--green)">₹0</span></div>
+                        <div class="result-row"><span>CGST / SGST (50% each)</span><span id="gst-split" class="highlight">₹0 / ₹0</span></div>
+                        <div class="result-row"><span>Total GST Amount</span><span id="gst-total-tax" style="color:var(--amber); font-weight:700;">₹0</span></div>
+                        <div class="result-row"><span>Gross Final Total</span><span id="gst-gross" style="font-size: 1.2rem; font-weight:800; color:var(--green)">₹0</span></div>
                     </div>
                 </div>
             </div>
@@ -823,61 +751,86 @@
             <!-- 5. SIP CALCULATOR -->
             <div id="tab-sip" class="calc-wrapper grid-view">
                 <div>
-                    <h2>Mutual Fund SIP & Step-Up Calculator</h2>
+                    <h2>Mutual Fund SIP & Step-Up Wealth Calculator</h2>
+                    <p style="color: var(--muted); margin-bottom: 1.5rem;">Estimate compounding returns on systematic investment plans with annual top-up features.</p>
                     <div class="input-group"><label>Monthly Investment (₹)</label><input type="number" id="sip-amount" value="10000" oninput="calculateSIP()"></div>
-                    <div class="input-group"><label>Expected Return Rate (% p.a)</label><input type="number" id="sip-rate" value="12" oninput="calculateSIP()"></div>
+                    <div class="input-group"><label>Expected Return Rate (p.a %)</label><input type="number" id="sip-rate" value="12" oninput="calculateSIP()"></div>
                     <div class="input-group"><label>Time Period (Years)</label><input type="number" id="sip-years" value="10" oninput="calculateSIP()"></div>
-                    <div class="input-group"><label>Annual Step-Up (%)</label><input type="number" id="sip-stepup" value="0" oninput="calculateSIP()"></div>
+                    <div class="input-group"><label>Annual Step-Up (% Optional)</label><input type="number" id="sip-stepup" value="0" oninput="calculateSIP()"></div>
                 </div>
                 <div>
                     <div class="results-box">
-                        <div class="result-row"><span>Invested</span><span id="sip-invested" class="highlight">₹0</span></div>
-                        <div class="result-row"><span>Est. Returns</span><span id="sip-returns" class="highlight">₹0</span></div>
-                        <div class="result-row"><span>Maturity Value</span><span id="sip-total" style="font-size:1.2rem; font-weight:800; color:var(--green)">₹0</span></div>
+                        <div class="result-row"><span>Invested Amount</span><span id="sip-invested" class="highlight">₹0</span></div>
+                        <div class="result-row"><span>Estimated Returns</span><span id="sip-returns" class="highlight">₹0</span></div>
+                        <div class="result-row"><span>Total Maturity Value</span><span id="sip-total" style="font-size: 1.2rem; font-weight:800; color:var(--green)">₹0</span></div>
                     </div>
                     <div class="chart-container"><canvas id="sipChart"></canvas></div>
                 </div>
             </div>
 
-            <!-- 6. SALARY -->
+            <!-- 6. SALARY CALCULATOR -->
             <div id="tab-salary" class="calc-wrapper grid-view">
                 <div>
                     <h2>In-Hand Salary Calculator (CTC to Net Pay)</h2>
+                    <p style="color: var(--muted); margin-bottom: 1.5rem;">Deduction estimates for EPF, Professional Tax, and net monthly take-home salary.</p>
                     <div class="input-group"><label>Annual CTC (₹)</label><input type="number" id="sal-ctc" value="1200000" oninput="calculateSalary()"></div>
                 </div>
                 <div>
                     <div class="results-box">
-                        <div class="result-row"><span>Monthly Gross</span><span id="sal-gross" class="highlight">₹0</span></div>
-                        <div class="result-row"><span>Employee PF</span><span id="sal-pf" class="highlight">₹0</span></div>
-                        <div class="result-row"><span>Est. In-Hand</span><span id="sal-inhand" style="font-size:1.2rem; font-weight:800; color:var(--primary)">₹0 / mo</span></div>
+                        <div class="result-row"><span>Monthly Gross Pay</span><span id="sal-gross" class="highlight">₹0</span></div>
+                        <div class="result-row"><span>Employee PF (Monthly)</span><span id="sal-pf" class="highlight">₹0</span></div>
+                        <div class="result-row"><span>Professional Tax (Est.)</span><span class="highlight">₹200</span></div>
+                        <div class="result-row"><span>Estimated In-Hand Pay</span><span id="sal-inhand" style="font-size: 1.2rem; font-weight:800; color:var(--primary)">₹0 / month</span></div>
                     </div>
                 </div>
             </div>
 
             <!-- 7. SCIENTIFIC CALCULATOR -->
             <div id="tab-sci" class="calc-wrapper">
-                <div class="sci-calc-card">
-                    <input type="text" id="sci-screen" class="calc-display" readonly value="0">
-                    <div class="sci-grid">
-                        <button class="fn" onclick="sciFunc('sin')">sin</button>
-                        <button class="fn" onclick="sciFunc('cos')">cos</button>
-                        <button class="fn" onclick="sciFunc('tan')">tan</button>
-                        <button class="fn" onclick="sciFunc('log')">ln</button>
-                        <button class="fn" onclick="sciFunc('log10')">log</button>
-                        <button class="fn" onclick="sciFunc('sqrt')">√</button>
-                        <button class="fn" onclick="sciPress('**2')">x²</button>
-                        <button class="fn" onclick="sciPress('**')">xʸ</button>
-                        <button class="fn" onclick="sciPress('Math.PI')">π</button>
-                        <button class="fn" onclick="sciPress('Math.E')">e</button>
-                        <button class="action" onclick="sciClear()">C</button>
-                        <button onclick="sciPress('(')">(</button>
-                        <button onclick="sciPress(')')">)</button>
-                        <button onclick="sciBackspace()">⌫</button>
-                        <button class="op" onclick="sciPress('/')">÷</button>
-                        <button onclick="sciPress('7')">7</button><button onclick="sciPress('8')">8</button><button onclick="sciPress('9')">9</button><button class="fn" onclick="sciFunc('abs')">|x|</button><button class="op" onclick="sciPress('*')">×</button>
-                        <button onclick="sciPress('4')">4</button><button onclick="sciPress('5')">5</button><button onclick="sciPress('6')">6</button><button class="fn" onclick="sciFunc('exp')">exp</button><button class="op" onclick="sciPress('-')">−</button>
-                        <button onclick="sciPress('1')">1</button><button onclick="sciPress('2')">2</button><button onclick="sciPress('3')">3</button><button class="fn" onclick="sciPress('%')">%</button><button class="op" onclick="sciPress('+')">+</button>
-                        <button onclick="sciPress('0')" style="grid-column: span 2;">0</button><button onclick="sciPress('.')">.</button><button class="equal" style="grid-column: span 2;" onclick="sciCompute()">=</button>
+                <div>
+                    <div class="sci-calc-card">
+                        <input type="text" id="sci-screen" class="calc-display" readonly value="0">
+                        <div class="sci-grid">
+                            <button class="fn" onclick="sciFunc('sin')">sin</button>
+                            <button class="fn" onclick="sciFunc('cos')">cos</button>
+                            <button class="fn" onclick="sciFunc('tan')">tan</button>
+                            <button class="fn" onclick="sciFunc('log')">ln</button>
+                            <button class="fn" onclick="sciFunc('log10')">log</button>
+
+                            <button class="fn" onclick="sciFunc('sqrt')">√</button>
+                            <button class="fn" onclick="sciPress('**2')">x²</button>
+                            <button class="fn" onclick="sciPress('**')">xʸ</button>
+                            <button class="fn" onclick="sciPress('Math.PI')">π</button>
+                            <button class="fn" onclick="sciPress('Math.E')">e</button>
+
+                            <button class="action" onclick="sciClear()">C</button>
+                            <button onclick="sciPress('(')">(</button>
+                            <button onclick="sciPress(')')">)</button>
+                            <button onclick="sciBackspace()">⌫</button>
+                            <button class="op" onclick="sciPress('/')">÷</button>
+
+                            <button onclick="sciPress('7')">7</button>
+                            <button onclick="sciPress('8')">8</button>
+                            <button onclick="sciPress('9')">9</button>
+                            <button class="fn" onclick="sciFunc('abs')">|x|</button>
+                            <button class="op" onclick="sciPress('*')">×</button>
+
+                            <button onclick="sciPress('4')">4</button>
+                            <button onclick="sciPress('5')">5</button>
+                            <button onclick="sciPress('6')">6</button>
+                            <button class="fn" onclick="sciFunc('exp')">exp</button>
+                            <button class="op" onclick="sciPress('-')">-</button>
+
+                            <button onclick="sciPress('1')">1</button>
+                            <button onclick="sciPress('2')">2</button>
+                            <button onclick="sciPress('3')">3</button>
+                            <button class="fn" onclick="sciPress('%')">%</button>
+                            <button class="op" onclick="sciPress('+')">+</button>
+
+                            <button onclick="sciPress('0')" style="grid-column: span 2;">0</button>
+                            <button onclick="sciPress('.')">.</button>
+                            <button class="equal" style="grid-column: span 2;" onclick="sciCompute()">=</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -886,14 +839,15 @@
             <div id="tab-tax" class="calc-wrapper grid-view">
                 <div>
                     <h2>Old vs New Tax Regime Comparator</h2>
+                    <p style="color: var(--muted); margin-bottom: 1.5rem;">Determine which income tax regime yields higher tax savings with standard deductions.</p>
                     <div class="input-group"><label>Total Annual Income (₹)</label><input type="number" id="tax-income" value="1000000" oninput="calculateTax()"></div>
-                    <div class="input-group"><label>Deductions (Old Regime)</label><input type="number" id="tax-deductions" value="200000" oninput="calculateTax()"></div>
+                    <div class="input-group"><label>Deductions 80C/80D/HRA (Old Regime)</label><input type="number" id="tax-deductions" value="200000" oninput="calculateTax()"></div>
                 </div>
                 <div>
                     <div class="results-box">
-                        <div class="result-row"><span>Old Regime Tax</span><span id="tax-old" class="highlight">₹0</span></div>
-                        <div class="result-row"><span>New Regime Tax</span><span id="tax-new" class="highlight">₹0</span></div>
-                        <div class="result-row"><span>Recommendation</span><span id="tax-best" style="font-weight:800; color:var(--green)">-</span></div>
+                        <div class="result-row"><span>Tax Payable (Old Regime)</span><span id="tax-old" class="highlight">₹0</span></div>
+                        <div class="result-row"><span>Tax Payable (New Regime)</span><span id="tax-new" class="highlight">₹0</span></div>
+                        <div class="result-row"><span>Best Choice</span><span id="tax-best" style="font-weight:800; color:var(--green)">-</span></div>
                     </div>
                 </div>
             </div>
@@ -902,40 +856,50 @@
             <div id="tab-ppf" class="calc-wrapper grid-view">
                 <div>
                     <h2>Public Provident Fund (PPF) Calculator</h2>
-                    <div class="input-group"><label>Yearly Deposit (Max ₹1.5L)</label><input type="number" id="ppf-deposit" value="150000" oninput="calculatePPF()"></div>
-                    <div class="input-group"><label>Tenure</label>
-                        <select id="ppf-years" onchange="calculatePPF()"><option value="15">15 Years</option><option value="20">20 Years</option><option value="25">25 Years</option></select>
+                    <p style="color: var(--muted); margin-bottom: 1.5rem;">Calculate 15-year maturity and tax-free interest under government-backed EEE status.</p>
+                    <div class="input-group"><label>Yearly Deposit (Max ₹1.5 Lakh/yr)</label><input type="number" id="ppf-deposit" value="150000" oninput="calculatePPF()"></div>
+                    <div class="input-group"><label>Duration (Years)</label>
+                        <select id="ppf-years" onchange="calculatePPF()">
+                            <option value="15">15 Years (Standard)</option>
+                            <option value="20">20 Years (1 Block Ext.)</option>
+                            <option value="25">25 Years (2 Block Ext.)</option>
+                        </select>
                     </div>
                 </div>
                 <div>
                     <div class="results-box">
                         <div class="result-row"><span>Total Invested</span><span id="ppf-invested" class="highlight">₹0</span></div>
-                        <div class="result-row"><span>Total Interest</span><span id="ppf-interest" class="highlight">₹0</span></div>
-                        <div class="result-row"><span>Maturity</span><span id="ppf-total" style="font-size:1.2rem; font-weight:800; color:var(--green)">₹0</span></div>
+                        <div class="result-row"><span>Total Interest Earned (EEE Tax Free)</span><span id="ppf-interest" class="highlight">₹0</span></div>
+                        <div class="result-row"><span>Maturity Amount</span><span id="ppf-total" style="font-size: 1.2rem; font-weight:800; color:var(--green)">₹0</span></div>
                     </div>
                 </div>
             </div>
 
-            <!-- 10. CURRENCY CONVERTER -->
-            <div id="tab-conv-currency" class="calc-wrapper grid-view">
+            <!-- 10. ENERGY / JOULE SCIENTIFIC CONVERTER (REPLACING CURRENCY CONVERTER) -->
+            <div id="tab-conv-energy" class="calc-wrapper grid-view">
                 <div>
-                    <h2>💱 Real-Time Global Currency Converter</h2>
-                    <div class="input-group"><label>Amount</label><input type="number" id="curr-amount" value="100" oninput="convertCurrency()"></div>
-                    <div class="input-group"><label>From</label>
-                        <select id="curr-from" onchange="convertCurrency()">
-                            <option value="USD" selected>USD ($)</option><option value="INR">INR (₹)</option><option value="EUR">EUR (€)</option><option value="GBP">GBP (£)</option><option value="AED">AED</option><option value="CAD">CAD</option>
-                        </select>
-                    </div>
-                    <div class="input-group"><label>To</label>
-                        <select id="curr-to" onchange="convertCurrency()">
-                            <option value="INR" selected>INR (₹)</option><option value="USD">USD ($)</option><option value="EUR">EUR (€)</option><option value="GBP">GBP (£)</option><option value="AED">AED</option><option value="CAD">CAD</option>
+                    <h2>⚡ Scientific Energy & Joule Converter</h2>
+                    <p style="color: var(--muted); margin-bottom: 1.5rem;">Convert between Joules, Calories, Kilowatt-hours, Electron-volts, and Foot-pounds.</p>
+                    <div class="input-group"><label>Energy Value</label><input type="number" id="energy-val" value="1000" oninput="convertEnergy()"></div>
+                    <div class="input-group"><label>From Unit</label>
+                        <select id="energy-unit" onchange="convertEnergy()">
+                            <option value="j" selected>Joules (J)</option>
+                            <option value="kj">Kilojoules (kJ)</option>
+                            <option value="cal">Calories (cal)</option>
+                            <option value="kcal">Kilocalories (kcal)</option>
+                            <option value="kwh">Kilowatt-hour (kWh)</option>
+                            <option value="ev">Electron-volts (eV)</option>
+                            <option value="ftlb">Foot-pounds (ft⋅lb)</option>
                         </select>
                     </div>
                 </div>
                 <div>
                     <div class="results-box">
-                        <div class="result-row"><span>Converted Value</span><span id="curr-result" style="font-size:1.4rem; font-weight:800; color:var(--purple)">-</span></div>
-                        <div class="result-row"><span>Exchange Rate Base</span><span id="curr-rate-info" class="highlight">-</span></div>
+                        <div class="result-row"><span>Joules (J)</span><span id="e-j" class="highlight">-</span></div>
+                        <div class="result-row"><span>Calories (cal)</span><span id="e-cal" class="highlight">-</span></div>
+                        <div class="result-row"><span>Kilowatt-hours (kWh)</span><span id="e-kwh" class="highlight">-</span></div>
+                        <div class="result-row"><span>Electron-volts (eV)</span><span id="e-ev" class="highlight">-</span></div>
+                        <div class="result-row"><span>Foot-pounds (ft⋅lb)</span><span id="e-ftlb" class="highlight">-</span></div>
                     </div>
                 </div>
             </div>
@@ -944,15 +908,21 @@
             <div id="tab-conv-crypto" class="calc-wrapper grid-view">
                 <div>
                     <h2>🪙 Crypto Asset Converter</h2>
-                    <div class="input-group"><label>Quantity</label><input type="number" id="crypto-qty" value="1" oninput="convertCrypto()"></div>
-                    <div class="input-group"><label>Asset</label>
-                        <select id="crypto-type" onchange="convertCrypto()"><option value="BTC" selected>Bitcoin (BTC)</option><option value="ETH">Ethereum (ETH)</option><option value="SOL">Solana (SOL)</option><option value="USDT">Tether (USDT)</option></select>
+                    <p style="color: var(--muted); margin-bottom: 1.5rem;">Convert popular digital assets into INR and USD with live CoinGecko data.</p>
+                    <div class="input-group"><label>Crypto Quantity</label><input type="number" id="crypto-qty" value="1" oninput="convertCrypto()"></div>
+                    <div class="input-group"><label>Select Cryptocurrency</label>
+                        <select id="crypto-type" onchange="convertCrypto()">
+                            <option value="BTC" selected>Bitcoin (BTC)</option>
+                            <option value="ETH">Ethereum (ETH)</option>
+                            <option value="SOL">Solana (SOL)</option>
+                            <option value="USDT">Tether USD (USDT)</option>
+                        </select>
                     </div>
                 </div>
                 <div>
                     <div class="results-box">
-                        <div class="result-row"><span>USD Value</span><span id="crypto-usd" class="highlight">$0</span></div>
-                        <div class="result-row"><span>INR Value</span><span id="crypto-inr" style="font-size:1.3rem; font-weight:800; color:var(--green)">₹0</span></div>
+                        <div class="result-row"><span>Estimated Value (USD)</span><span id="crypto-usd" class="highlight">$0</span></div>
+                        <div class="result-row"><span>Estimated Value (INR)</span><span id="crypto-inr" style="font-size: 1.3rem; font-weight:800; color:var(--green)">₹0</span></div>
                     </div>
                 </div>
             </div>
@@ -961,17 +931,24 @@
             <div id="tab-conv-weight" class="calc-wrapper grid-view">
                 <div>
                     <h2>⚖️ Weight & Mass Converter</h2>
-                    <div class="input-group"><label>Value</label><input type="number" id="weight-val" value="1" oninput="convertWeight()"></div>
-                    <div class="input-group"><label>Unit</label>
-                        <select id="weight-unit" onchange="convertWeight()"><option value="kg" selected>Kilograms (kg)</option><option value="g">Grams (g)</option><option value="lbs">Pounds (lbs)</option><option value="oz">Ounces (oz)</option><option value="ton">Tonne (t)</option></select>
+                    <p style="color: var(--muted); margin-bottom: 1.5rem;">Convert between Metric and Imperial mass units.</p>
+                    <div class="input-group"><label>Enter Weight Value</label><input type="number" id="weight-val" value="1" oninput="convertWeight()"></div>
+                    <div class="input-group"><label>From Unit</label>
+                        <select id="weight-unit" onchange="convertWeight()">
+                            <option value="kg" selected>Kilograms (kg)</option>
+                            <option value="g">Grams (g)</option>
+                            <option value="lbs">Pounds (lbs)</option>
+                            <option value="oz">Ounces (oz)</option>
+                            <option value="ton">Metric Tonne (t)</option>
+                        </select>
                     </div>
                 </div>
                 <div>
                     <div class="results-box">
                         <div class="result-row"><span>Kilograms</span><span id="w-kg" class="highlight">-</span></div>
                         <div class="result-row"><span>Grams</span><span id="w-g" class="highlight">-</span></div>
-                        <div class="result-row"><span>Pounds</span><span id="w-lbs" class="highlight">-</span></div>
-                        <div class="result-row"><span>Ounces</span><span id="w-oz" class="highlight">-</span></div>
+                        <div class="result-row"><span>Pounds (lbs)</span><span id="w-lbs" class="highlight">-</span></div>
+                        <div class="result-row"><span>Ounces (oz)</span><span id="w-oz" class="highlight">-</span></div>
                     </div>
                 </div>
             </div>
@@ -980,9 +957,17 @@
             <div id="tab-conv-length" class="calc-wrapper grid-view">
                 <div>
                     <h2>📏 Length & Distance Converter</h2>
-                    <div class="input-group"><label>Value</label><input type="number" id="length-val" value="10" oninput="convertLength()"></div>
-                    <div class="input-group"><label>Unit</label>
-                        <select id="length-unit" onchange="convertLength()"><option value="m">Meters (m)</option><option value="ft" selected>Feet (ft)</option><option value="in">Inches (in)</option><option value="km">Kilometers (km)</option><option value="mi">Miles (mi)</option><option value="cm">Centimeters (cm)</option></select>
+                    <p style="color: var(--muted); margin-bottom: 1.5rem;">Convert between metric and imperial distance measurements.</p>
+                    <div class="input-group"><label>Enter Length Value</label><input type="number" id="length-val" value="10" oninput="convertLength()"></div>
+                    <div class="input-group"><label>From Unit</label>
+                        <select id="length-unit" onchange="convertLength()">
+                            <option value="m">Meters (m)</option>
+                            <option value="ft" selected>Feet (ft)</option>
+                            <option value="in">Inches (in)</option>
+                            <option value="km">Kilometers (km)</option>
+                            <option value="mi">Miles (mi)</option>
+                            <option value="cm">Centimeters (cm)</option>
+                        </select>
                     </div>
                 </div>
                 <div>
@@ -994,30 +979,72 @@
                     </div>
                 </div>
             </div>
+
+            <div class="seo-content-section">
+                <h2>Smart Financial Planning & Wealth Building with FinMatrix</h2>
+                <p>Welcome to <strong>FinMatrix</strong>, India's definitive financial modeling, property evaluation, and live market intelligence portal. Whether you are estimating home loan prepayment interest savings, planning property acquisitions with registration charges, or tracking Nifty 50 and bullion trends, our tools offer precision.</p>
+
+                <div class="seo-grid">
+                    <div class="seo-card">
+                        <h4>🏡 Property Cost & Stamp Duty</h4>
+                        <p>Purchasing property involves registration, stamp duty (5-7%), and brokerage that add 8-10% beyond the builder's price tag. Proper valuation modeling prevents unexpected cash flow shortages.</p>
+                    </div>
+                    <div class="seo-card">
+                        <h4>📈 Compounding Power of Step-Up SIPs</h4>
+                        <p>Increasing your mutual fund Systematic Investment Plan (SIP) contribution by just 10% each year can more than double your wealth corpus over a 15-year horizon compared to a flat monthly investment.</p>
+                    </div>
+                    <div class="seo-card">
+                        <h4>⚖️ Old vs New Income Tax Regimes</h4>
+                        <p>Under the new tax regime, individuals earning up to ₹7 Lakhs pay zero tax due to Section 87A rebate and higher standard deductions (₹75,000), making it ideal for those without major 80C/HRA deductions.</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <!-- 2. BANKING EXAM HUB -->
+        <!-- 2. DEDICATED BANKING EXAM PREPARATION PORTAL -->
         <div id="banking-exam-view">
             <div class="exam-header">
                 <div class="exam-title-box">
                     <h2>🎓 Banking Exam Quants Engine & Master Revision Hub</h2>
-                    <p>Complete Compendium for IBPS, SBI, RRB PO/Clerk, RBI Grade B & LIC</p>
+                    <p>Complete 4-Subject Compendium for IBPS PO/Clerk, SBI PO/Clerk, RRB PO/Clerk, RBI Grade B & Assistant, SEBI, NABARD, SIDBI, LIC[cite: 1].</p>
                 </div>
-                <button class="btn-back-home" onclick="openHomePortal()">← Return to Financial Portal</button>
+                <button class="btn-back-home" onclick="openHomePortal()">
+                    <span>← Return to Financial Portal</span>
+                </button>
             </div>
 
-            <div class="section-title">⚡ Fast Calculation Engine</div>
+            <!-- Google AdSense Slot Top of Exam Hub (with FinMatrix Fallback) -->
+            <div class="ad-container">
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                     data-ad-slot="XXXXXXXXXX"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <div class="ad-fallback-card" style="background: linear-gradient(135deg, #6d28d9, #8b5cf6);">
+                    <div>
+                        <h4>📚 Crack All Banking Exams with FinMatrix</h4>
+                        <p>Instant calculations for Squares, Cubes, Roots & Percentages plus complete 4-Subject master revision notes.</p>
+                    </div>
+                    <button class="btn-ad-fallback" style="color: #6d28d9;" onclick="document.querySelector('.pdf-doc-viewer').scrollIntoView({behavior: 'smooth'})">Explore Handbooks</button>
+                </div>
+            </div>
+
+            <!-- BANK EXAM SPEED CALCULATION ENGINES -->
+            <div class="section-title">⚡ Bank Exam Fast Calculation Engine (Zero-Friction Quants)</div>
             <div class="quants-card-grid">
                 <div class="quant-tool-box">
                     <h4>🔢 Square & Square Root (√N)</h4>
-                    <input type="number" id="quant-num-sq" placeholder="Enter Number" oninput="calcQuantSquare()">
+                    <input type="number" id="quant-num-sq" placeholder="Enter Number (e.g., 47)" oninput="calcQuantSquare()">
                     <div class="quant-res-box" id="quant-sq-res">Square: - | √Root: -</div>
                 </div>
+
                 <div class="quant-tool-box">
                     <h4>🎲 Cube & Cube Root (∛N)</h4>
-                    <input type="number" id="quant-num-cb" placeholder="Enter Number" oninput="calcQuantCube()">
+                    <input type="number" id="quant-num-cb" placeholder="Enter Number (e.g., 23)" oninput="calcQuantCube()">
                     <div class="quant-res-box" id="quant-cb-res">Cube: - | ∛Root: -</div>
                 </div>
+
                 <div class="quant-tool-box">
                     <h4>📊 Instant Percentage (X% of Y)</h4>
                     <div class="quant-inputs">
@@ -1028,57 +1055,960 @@
                 </div>
             </div>
 
-            <div class="pdf-section-title">📚 Official Banking Exam Master Handbooks</div>
+            <!-- 4 MASTER COMPENDIUM REVISION NOTES VIEWER -->
+            <div class="pdf-section-title">📚 Official Banking Exam Master Revision Compendiums (Complete 4 Handbooks)</div>
+            
             <div class="pdf-tabs-nav">
-                <button class="pdf-tab-btn active" onclick="switchDoc('doc-quant', this)">📐 Quant & DI Handbook</button>
-                <button class="pdf-tab-btn" onclick="switchDoc('doc-reasoning', this)">🧠 Reasoning Compendium</button>
-                <button class="pdf-tab-btn" onclick="switchDoc('doc-english', this)">📖 English Language</button>
-                <button class="pdf-tab-btn" onclick="switchDoc('doc-ga', this)">🏛️ Banking Awareness</button>
+                <button class="pdf-tab-btn active" onclick="switchDoc('doc-quant', this)">📐 Quant & DI Master Handbook</button>
+                <button class="pdf-tab-btn" onclick="switchDoc('doc-reasoning', this)">🧠 Reasoning Ability Compendium</button>
+                <button class="pdf-tab-btn" onclick="switchDoc('doc-english', this)">📖 English Language & Verbal</button>
+                <button class="pdf-tab-btn" onclick="switchDoc('doc-ga', this)">🏛️ General & Banking Awareness</button>
             </div>
 
             <div class="pdf-doc-viewer">
+                <!-- ==================== DOC 1: QUANTITATIVE APTITUDE & DI ==================== -->
                 <div id="doc-quant" class="doc-section active">
-                    <h2>QUANTITATIVE APTITUDE & DATA INTERPRETATION FORMULA COMPENDIUM</h2>
-                    <p><em>Targeting IBPS PO/Clerk, SBI PO/Clerk, RRB PO/Clerk, RBI Grade B & LIC</em></p>
-                    <h3>MODULE 1: MULTIPLICATION BENCHMARKS & FRACTION MATRIX</h3>
+                    <h2>BANKING EXAM MASTER REVISION COMPENDIUM 2026: ALL-BANKING MASTER QUANTITATIVE APTITUDE & DATA INTERPRETATION</h2>
+                    <p><strong>Comprehensive 5-Section Master Formula Compendium & Problem-Solving Guide | Natural Flow Edition</strong></p>
+                    <p><em>Targeting IBPS PO/Clerk, SBI PO/Clerk, RRB PO/Clerk, RBI Grade B & Assistant, LIC AAO/ADO, NIACL</em></p>
+
+                    <h3>MODULE 1: CALCULATION ENGINE, VEDIC SHORTCUTS & TABLES (1-50)</h3>
+                    <p>Rapid calculation constitutes 30% to 40% of preliminary banking cutoffs. Memorize standard multiplication benchmarks, squares, cubes, and fraction equivalents for zero-friction computation.</p>
+                    
+                    <h4>Complete Multiplication Tables (1 to 25)</h4>
                     <div class="doc-table-container">
                         <table class="doc-table center">
-                            <thead><tr><th>Fraction</th><th>Percentage</th><th>Decimal</th><th>Reverse Bridge</th></tr></thead>
+                            <thead>
+                                <tr><th>N</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th><th>16</th><th>17</th><th>18</th><th>19</th><th>20</th><th>21</th><th>22</th><th>23</th><th>24</th><th>25</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>x1</strong></td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td><td>15</td><td>16</td><td>17</td><td>18</td><td>19</td><td>20</td><td>21</td><td>22</td><td>23</td><td>24</td><td>25</td></tr>
+                                <tr><td><strong>x2</strong></td><td>2</td><td>4</td><td>6</td><td>8</td><td>10</td><td>12</td><td>14</td><td>16</td><td>18</td><td>20</td><td>22</td><td>24</td><td>26</td><td>28</td><td>30</td><td>32</td><td>34</td><td>36</td><td>38</td><td>40</td><td>42</td><td>44</td><td>46</td><td>48</td><td>50</td></tr>
+                                <tr><td><strong>x3</strong></td><td>3</td><td>6</td><td>9</td><td>12</td><td>15</td><td>18</td><td>21</td><td>24</td><td>27</td><td>30</td><td>33</td><td>36</td><td>39</td><td>42</td><td>45</td><td>48</td><td>51</td><td>54</td><td>57</td><td>60</td><td>63</td><td>66</td><td>69</td><td>72</td><td>75</td></tr>
+                                <tr><td><strong>x4</strong></td><td>4</td><td>8</td><td>12</td><td>16</td><td>20</td><td>24</td><td>28</td><td>32</td><td>36</td><td>40</td><td>44</td><td>48</td><td>52</td><td>56</td><td>60</td><td>64</td><td>68</td><td>72</td><td>76</td><td>80</td><td>84</td><td>88</td><td>92</td><td>96</td><td>100</td></tr>
+                                <tr><td><strong>x5</strong></td><td>5</td><td>10</td><td>15</td><td>20</td><td>25</td><td>30</td><td>35</td><td>40</td><td>45</td><td>50</td><td>55</td><td>60</td><td>65</td><td>70</td><td>75</td><td>80</td><td>85</td><td>90</td><td>95</td><td>100</td><td>105</td><td>110</td><td>115</td><td>120</td><td>125</td></tr>
+                                <tr><td><strong>x6</strong></td><td>6</td><td>12</td><td>18</td><td>24</td><td>30</td><td>36</td><td>42</td><td>48</td><td>54</td><td>60</td><td>66</td><td>72</td><td>78</td><td>84</td><td>90</td><td>96</td><td>102</td><td>108</td><td>114</td><td>120</td><td>126</td><td>132</td><td>138</td><td>144</td><td>150</td></tr>
+                                <tr><td><strong>x7</strong></td><td>7</td><td>14</td><td>21</td><td>28</td><td>35</td><td>42</td><td>49</td><td>56</td><td>63</td><td>70</td><td>77</td><td>84</td><td>91</td><td>98</td><td>105</td><td>112</td><td>119</td><td>126</td><td>133</td><td>140</td><td>147</td><td>154</td><td>161</td><td>168</td><td>175</td></tr>
+                                <tr><td><strong>x8</strong></td><td>8</td><td>16</td><td>24</td><td>32</td><td>40</td><td>48</td><td>56</td><td>64</td><td>72</td><td>80</td><td>88</td><td>96</td><td>104</td><td>112</td><td>120</td><td>128</td><td>136</td><td>144</td><td>152</td><td>160</td><td>168</td><td>176</td><td>184</td><td>192</td><td>200</td></tr>
+                                <tr><td><strong>x9</strong></td><td>9</td><td>18</td><td>27</td><td>36</td><td>45</td><td>54</td><td>63</td><td>72</td><td>81</td><td>90</td><td>99</td><td>108</td><td>117</td><td>126</td><td>135</td><td>144</td><td>153</td><td>162</td><td>171</td><td>180</td><td>189</td><td>198</td><td>207</td><td>216</td><td>225</td></tr>
+                                <tr><td><strong>x10</strong></td><td>10</td><td>20</td><td>30</td><td>40</td><td>50</td><td>60</td><td>70</td><td>80</td><td>90</td><td>100</td><td>110</td><td>120</td><td>130</td><td>140</td><td>150</td><td>160</td><td>170</td><td>180</td><td>190</td><td>200</td><td>210</td><td>220</td><td>230</td><td>240</td><td>250</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h4>Complete Multiplication Tables (26 to 50)</h4>
+                    <div class="doc-table-container">
+                        <table class="doc-table center">
+                            <thead>
+                                <tr><th>N</th><th>26</th><th>27</th><th>28</th><th>29</th><th>30</th><th>31</th><th>32</th><th>33</th><th>34</th><th>35</th><th>36</th><th>37</th><th>38</th><th>39</th><th>40</th><th>41</th><th>42</th><th>43</th><th>44</th><th>45</th><th>46</th><th>47</th><th>48</th><th>49</th><th>50</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>x1</strong></td><td>26</td><td>27</td><td>28</td><td>29</td><td>30</td><td>31</td><td>32</td><td>33</td><td>34</td><td>35</td><td>36</td><td>37</td><td>38</td><td>39</td><td>40</td><td>41</td><td>42</td><td>43</td><td>44</td><td>45</td><td>46</td><td>47</td><td>48</td><td>49</td><td>50</td></tr>
+                                <tr><td><strong>x2</strong></td><td>52</td><td>54</td><td>56</td><td>58</td><td>60</td><td>62</td><td>64</td><td>66</td><td>68</td><td>70</td><td>72</td><td>74</td><td>76</td><td>78</td><td>80</td><td>82</td><td>84</td><td>86</td><td>88</td><td>90</td><td>92</td><td>94</td><td>96</td><td>98</td><td>100</td></tr>
+                                <tr><td><strong>x3</strong></td><td>78</td><td>81</td><td>84</td><td>87</td><td>90</td><td>93</td><td>96</td><td>99</td><td>102</td><td>105</td><td>108</td><td>111</td><td>114</td><td>117</td><td>120</td><td>123</td><td>126</td><td>129</td><td>132</td><td>135</td><td>138</td><td>141</td><td>144</td><td>147</td><td>150</td></tr>
+                                <tr><td><strong>x4</strong></td><td>104</td><td>108</td><td>112</td><td>116</td><td>120</td><td>124</td><td>128</td><td>132</td><td>136</td><td>140</td><td>144</td><td>148</td><td>152</td><td>156</td><td>160</td><td>164</td><td>168</td><td>172</td><td>176</td><td>180</td><td>184</td><td>188</td><td>192</td><td>196</td><td>200</td></tr>
+                                <tr><td><strong>x5</strong></td><td>130</td><td>135</td><td>140</td><td>145</td><td>150</td><td>155</td><td>160</td><td>165</td><td>170</td><td>175</td><td>180</td><td>185</td><td>190</td><td>195</td><td>200</td><td>205</td><td>210</td><td>215</td><td>220</td><td>225</td><td>230</td><td>235</td><td>240</td><td>245</td><td>250</td></tr>
+                                <tr><td><strong>x6</strong></td><td>156</td><td>162</td><td>168</td><td>174</td><td>180</td><td>186</td><td>192</td><td>198</td><td>204</td><td>210</td><td>216</td><td>222</td><td>228</td><td>234</td><td>240</td><td>246</td><td>252</td><td>258</td><td>264</td><td>270</td><td>276</td><td>282</td><td>288</td><td>294</td><td>300</td></tr>
+                                <tr><td><strong>x7</strong></td><td>182</td><td>189</td><td>196</td><td>203</td><td>210</td><td>217</td><td>224</td><td>231</td><td>238</td><td>245</td><td>252</td><td>259</td><td>266</td><td>273</td><td>280</td><td>287</td><td>294</td><td>301</td><td>308</td><td>315</td><td>322</td><td>329</td><td>336</td><td>343</td><td>350</td></tr>
+                                <tr><td><strong>x8</strong></td><td>208</td><td>216</td><td>224</td><td>232</td><td>240</td><td>248</td><td>256</td><td>264</td><td>272</td><td>280</td><td>288</td><td>296</td><td>304</td><td>312</td><td>320</td><td>328</td><td>336</td><td>344</td><td>352</td><td>360</td><td>368</td><td>376</td><td>384</td><td>392</td><td>400</td></tr>
+                                <tr><td><strong>x9</strong></td><td>234</td><td>243</td><td>252</td><td>261</td><td>270</td><td>279</td><td>288</td><td>297</td><td>306</td><td>315</td><td>324</td><td>333</td><td>342</td><td>351</td><td>360</td><td>369</td><td>378</td><td>387</td><td>396</td><td>405</td><td>414</td><td>423</td><td>432</td><td>441</td><td>450</td></tr>
+                                <tr><td><strong>x10</strong></td><td>260</td><td>270</td><td>280</td><td>290</td><td>300</td><td>310</td><td>320</td><td>330</td><td>340</td><td>350</td><td>360</td><td>370</td><td>380</td><td>390</td><td>400</td><td>410</td><td>420</td><td>430</td><td>440</td><td>450</td><td>460</td><td>470</td><td>480</td><td>490</td><td>500</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h4>Master Reference: Squares (1 to 50) & Cubes (1 to 30)</h4>
+                    <div class="doc-table-container">
+                        <table class="doc-table center">
+                            <thead>
+                                <tr><th>N</th><th>N²</th><th>N</th><th>N²</th><th>N</th><th>N³</th><th>N</th><th>N³</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>1</td><td>26</td><td>676</td><td>1</td><td>1</td><td>26</td><td>17576</td></tr>
+                                <tr><td>2</td><td>4</td><td>27</td><td>729</td><td>2</td><td>8</td><td>27</td><td>19683</td></tr>
+                                <tr><td>3</td><td>9</td><td>28</td><td>784</td><td>3</td><td>27</td><td>28</td><td>21952</td></tr>
+                                <tr><td>4</td><td>16</td><td>29</td><td>841</td><td>4</td><td>64</td><td>29</td><td>24389</td></tr>
+                                <tr><td>5</td><td>25</td><td>30</td><td>900</td><td>5</td><td>125</td><td>30</td><td>27000</td></tr>
+                                <tr><td>6</td><td>36</td><td>31</td><td>961</td><td>6</td><td>216</td><td>-</td><td>-</td></tr>
+                                <tr><td>7</td><td>49</td><td>32</td><td>1024</td><td>7</td><td>343</td><td>-</td><td>-</td></tr>
+                                <tr><td>8</td><td>64</td><td>33</td><td>1089</td><td>8</td><td>512</td><td>-</td><td>-</td></tr>
+                                <tr><td>9</td><td>81</td><td>34</td><td>1156</td><td>9</td><td>729</td><td>-</td><td>-</td></tr>
+                                <tr><td>10</td><td>100</td><td>35</td><td>1225</td><td>10</td><td>1000</td><td>-</td><td>-</td></tr>
+                                <tr><td>11</td><td>121</td><td>36</td><td>1296</td><td>11</td><td>1331</td><td>-</td><td>-</td></tr>
+                                <tr><td>12</td><td>144</td><td>37</td><td>1369</td><td>12</td><td>1728</td><td>-</td><td>-</td></tr>
+                                <tr><td>13</td><td>169</td><td>38</td><td>1444</td><td>13</td><td>2197</td><td>-</td><td>-</td></tr>
+                                <tr><td>14</td><td>196</td><td>39</td><td>1521</td><td>14</td><td>2744</td><td>-</td><td>-</td></tr>
+                                <tr><td>15</td><td>225</td><td>40</td><td>1600</td><td>15</td><td>3375</td><td>-</td><td>-</td></tr>
+                                <tr><td>16</td><td>256</td><td>41</td><td>1681</td><td>16</td><td>4096</td><td>-</td><td>-</td></tr>
+                                <tr><td>17</td><td>289</td><td>42</td><td>1764</td><td>17</td><td>4913</td><td>-</td><td>-</td></tr>
+                                <tr><td>18</td><td>324</td><td>43</td><td>1849</td><td>18</td><td>5832</td><td>-</td><td>-</td></tr>
+                                <tr><td>19</td><td>361</td><td>44</td><td>1936</td><td>19</td><td>6859</td><td>-</td><td>-</td></tr>
+                                <tr><td>20</td><td>400</td><td>45</td><td>2025</td><td>20</td><td>8000</td><td>-</td><td>-</td></tr>
+                                <tr><td>21</td><td>441</td><td>46</td><td>2116</td><td>21</td><td>9261</td><td>-</td><td>-</td></tr>
+                                <tr><td>22</td><td>484</td><td>47</td><td>2209</td><td>22</td><td>10648</td><td>-</td><td>-</td></tr>
+                                <tr><td>23</td><td>529</td><td>48</td><td>2304</td><td>23</td><td>12167</td><td>-</td><td>-</td></tr>
+                                <tr><td>24</td><td>576</td><td>49</td><td>2401</td><td>24</td><td>13824</td><td>-</td><td>-</td></tr>
+                                <tr><td>25</td><td>625</td><td>50</td><td>2500</td><td>25</td><td>15625</td><td>-</td><td>-</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h4>VBODMAS Simplification Hierarchy</h4>
+                    <ul>
+                        <li><strong>V (Vinculum / Bar):</strong> Always evaluate expressions beneath horizontal vinculum first: 15 − 7 + 3 = 15 − 10 = 5.</li>
+                        <li><strong>B (Brackets):</strong> Strictly evaluate inward-out: Parentheses () &rarr; Braces {} &rarr; Square Brackets [].</li>
+                        <li><strong>O (Of/Orders):</strong> Exponents, radical roots, and the mathematical operator "Of" (multiplication having strict precedence over division).</li>
+                        <li><strong>D/M (Division & Multiplication):</strong> Equal operational priority; evaluate in strict sequential order from Left to Right.</li>
+                        <li><strong>A/S (Addition & Subtraction):</strong> Final operational priority; evaluate from Left to Right.</li>
+                    </ul>
+
+                    <h4>High-Speed Divisibility Rules</h4>
+                    <ul>
+                        <li><strong>2, 4, 8, 16:</strong> Last 1, 2, 3, or 4 digits must be divisible by 2, 4, 8, 16 respectively.</li>
+                        <li><strong>3 & 9:</strong> Sum of all constituent digits must be divisible by 3 or 9.</li>
+                        <li><strong>6:</strong> Number must satisfy divisibility of both 2 (even) and 3.</li>
+                        <li><strong>7:</strong> Double the unit digit and subtract from remaining truncated number; difference must be divisible by 7.</li>
+                        <li><strong>11:</strong> Difference between Sum of Odd position digits and Sum of Even position digits is 0 or multiple of 11.</li>
+                        <li><strong>12:</strong> Co-prime factorization &rarr; Divisible by both 3 and 4 simultaneously.</li>
+                    </ul>
+
+                    <h4>Fraction to Percentage & Decimal Master Matrix</h4>
+                    <div class="doc-table-container">
+                        <table class="doc-table">
+                            <thead>
+                                <tr><th>Fraction</th><th>Percentage</th><th>Decimal</th><th>Reverse Ratio Bridge</th></tr>
+                            </thead>
                             <tbody>
                                 <tr><td>1/1</td><td>100%</td><td>1.0</td><td>x% = x/100</td></tr>
                                 <tr><td>1/2</td><td>50%</td><td>0.50</td><td>0.5 × 100 = 50%</td></tr>
                                 <tr><td>1/3, 2/3</td><td>33.33%, 66.66%</td><td>0.333, 0.666</td><td>1/3 = 33 1/3%</td></tr>
                                 <tr><td>1/4, 3/4</td><td>25%, 75%</td><td>0.25, 0.75</td><td>k × (1/4)</td></tr>
                                 <tr><td>1/5, 2/5</td><td>20%, 40%</td><td>0.20, 0.40</td><td>k × (1/5)</td></tr>
+                                <tr><td>3/5, 4/5</td><td>60%, 80%</td><td>0.60, 0.80</td><td>k × (1/5)</td></tr>
                                 <tr><td>1/6, 5/6</td><td>16.66%, 83.33%</td><td>0.166, 0.833</td><td>16 2/3%, 83 1/3%</td></tr>
                                 <tr><td>1/7, 2/7</td><td>14.28%, 28.56%</td><td>0.142, 0.285</td><td>14 2/7%, 28 4/7%</td></tr>
+                                <tr><td>3/7, 4/7</td><td>42.85%, 57.14%</td><td>0.428, 0.571</td><td>42 6/7%, 57 1/7%</td></tr>
                                 <tr><td>1/8, 3/8</td><td>12.5%, 37.5%</td><td>0.125, 0.375</td><td>12 1/2%, 37 1/2%</td></tr>
+                                <tr><td>5/8, 7/8</td><td>62.5%, 87.5%</td><td>0.625, 0.875</td><td>62 1/2%, 87 1/2%</td></tr>
+                                <tr><td>1/9, 1/11</td><td>11.11%, 9.09%</td><td>0.111, 0.0909</td><td>11 1/9%, 9 1/11%</td></tr>
+                                <tr><td>1/12, 1/13</td><td>8.33%, 7.69%</td><td>0.0833, 0.0769</td><td>8 1/3%, 7 9/13%</td></tr>
+                                <tr><td>1/14, 1/15</td><td>7.14%, 6.66%</td><td>0.0714, 0.0666</td><td>7 1/7%, 6 2/3%</td></tr>
+                                <tr><td>1/16, 1/20</td><td>6.25%, 5.0%</td><td>0.0625, 0.050</td><td>6 1/4%, 1/20 = 5%</td></tr>
+                                <tr><td>1/24, 1/25</td><td>4.16%, 4.0%</td><td>0.0416, 0.040</td><td>4 1/6%, 1/25 = 4%</td></tr>
+                                <tr><td>1/30, 1/40</td><td>3.33%, 2.5%</td><td>0.0333, 0.025</td><td>3 1/3%, 1/40 = 2.5%</td></tr>
+                                <tr><td>1/50</td><td>2.0%</td><td>0.020</td><td>1/50 = 2%</td></tr>
                             </tbody>
                         </table>
                     </div>
+
+                    <h3>MODULE 2: ALGEBRA, INDICES & QUADRATIC EQUATIONS (5-SECOND SIGN RULE)</h3>
+                    <h4>Universal Algebraic Identities & Expansions</h4>
+                    <ul>
+                        <li>(a + b)² = a² + 2ab + b²</li>
+                        <li>(a − b)² = a² − 2ab + b²</li>
+                        <li>a² − b² = (a + b)(a − b)</li>
+                        <li>(a + b)² + (a − b)² = 2(a² + b²)</li>
+                        <li>(a + b)² − (a − b)² = 4ab</li>
+                        <li>(a + b + c)² = a² + b² + c² + 2(ab + bc + ca)</li>
+                        <li>(a + b)³ = a³ + b³ + 3ab(a + b)</li>
+                        <li>(a − b)³ = a³ − b³ − 3ab(a − b)</li>
+                        <li>a³ + b³ = (a + b)(a² − ab + b²)</li>
+                        <li>a³ − b³ = (a − b)(a² + ab + b²)</li>
+                        <li>a³ + b³ + c³ − 3abc = (a + b + c)(a² + b² + c² − ab − bc − ca)</li>
+                        <li>If a + b + c = 0 ⇒ a³ + b³ + c³ = 3abc</li>
+                    </ul>
+
+                    <h4>Sum of Natural Number Sequences</h4>
+                    <ul>
+                        <li>First n natural numbers: S_n = n(n + 1) / 2</li>
+                        <li>Squares of first n natural nos: S_n = n(n + 1)(2n + 1) / 6</li>
+                        <li>Cubes of first n natural nos: S_n = [n(n + 1) / 2]²</li>
+                        <li>Sum of first n even numbers: S_n = n(n + 1)</li>
+                        <li>Sum of first n odd numbers: S_n = n²</li>
+                        <li>Arithmetic Progression (AP): T_n = a + (n − 1)d | S_n = (n / 2)[2a + (n − 1)d] = (n / 2)(a + l)</li>
+                        <li>Geometric Progression (GP): T_n = a · r^(n − 1) | S_n = a(r^n − 1) / (r − 1)</li>
+                    </ul>
+
+                    <h4>Laws of Indices & Powers</h4>
+                    <ul>
+                        <li>x^a × x^b = x^(a + b)</li>
+                        <li>x^a / x^b = x^(a − b)</li>
+                        <li>(x^a)^b = x^(ab)</li>
+                        <li>x^(−a) = 1 / x^a</li>
+                        <li>x^0 = 1 (for any x ≠ 0)</li>
+                        <li>(xy)^a = x^a · y^a</li>
+                        <li>(x / y)^a = x^a / y^a</li>
+                    </ul>
+
+                    <h4>Quadratic Equation Sign Mastery (ax² + bx + c = 0)</h4>
+                    <div class="doc-table-container">
+                        <table class="doc-table">
+                            <thead>
+                                <tr><th>Signs in Eq (b, c)</th><th>Root 1 Sign</th><th>Root 2 Sign</th><th>Examination Meaning</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>+ +</td><td>− (Negative)</td><td>− (Negative)</td><td>Both roots are strictly Negative</td></tr>
+                                <tr><td>− +</td><td>+ (Positive)</td><td>+ (Positive)</td><td>Both roots are strictly Positive</td></tr>
+                                <tr><td>+ −</td><td>− (Bigger)</td><td>+ (Smaller)</td><td>Bigger root is Negative, smaller is Positive</td></tr>
+                                <tr><td>− −</td><td>+ (Bigger)</td><td>− (Smaller)</td><td>Bigger root is Positive, smaller is Negative</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p><strong>Roots Discriminant (D = b² − 4ac):</strong> If D > 0 &rarr; Two distinct real roots: x = [−b ± √D] / (2a); If D = 0 &rarr; Two identical real roots: x = −b / (2a); If D < 0 &rarr; Imaginary/Complex roots.</p>
+                    <p><strong>Golden Direct Rule for CND:</strong> If the constant term (c) in BOTH quadratic equations is Negative (−), the comparison is always <strong>Relationship cannot be determined (CND) / x = y</strong>. Never waste time solving!</p>
+
+                    <h3>MODULE 3: CORE ARITHMETIC FRAMEWORKS (COMPLETE BANK SYLLABUS)</h3>
+                    <h4>1. Percentages, Growth & Product Constancy</h4>
+                    <ul>
+                        <li>Basic Percentage: Value = (P / 100) × Total</li>
+                        <li>Percentage Change: [(Final − Initial) / Initial] × 100%</li>
+                        <li>Net Successive Change: Net % = a + b + (ab / 100) (Use + for growth/profit, − for reduction/discount).</li>
+                        <li>Product Constancy (Budget & Expenditure Rule): Since Price × Consumption = Expenditure:
+                            <ul>
+                                <li>If Price increases by 1/x &rarr; Consumption must decrease by 1/(x + 1).</li>
+                                <li>If Price decreases by 1/x &rarr; Consumption must increase by 1/(x − 1).</li>
+                            </ul>
+                        </li>
+                        <li>Income & Savings Equation: Income = Expenditure + Savings ⇒ ΔIncome = ΔExpenditure + ΔSavings</li>
+                        <li>Population / Value Flow: P_new = P_0 × [1 ± (R / 100)]^n</li>
+                    </ul>
+
+                    <h4>2. Profit, Loss, Discount & Dishonest Trader</h4>
+                    <ul>
+                        <li>Profit = SP − CP | Loss = CP − SP</li>
+                        <li>Profit % = (Profit / CP) × 100 | Loss % = (Loss / CP) × 100</li>
+                        <li>SP = CP × [(100 ± P/L%) / 100]</li>
+                        <li>Discount = MP − SP | Discount % = (Discount / MP) × 100</li>
+                        <li>Direct CP-to-MP Bridge Formula: MP / CP = (100 + Profit %) / (100 − Discount %)</li>
+                        <li>Two Articles Sold at Same SP (One at x% profit, second at x% loss): Always results in a Net Loss of Net Loss % = (x / 10)²% = (x² / 100)% | Loss Amount = (2 × SP × x²) / (100² − x²).</li>
+                        <li>Dishonest Dealer Weight Fraud: Profit % = [(True Wt − False Wt) / False Wt] × 100 = [Error / (True − Error)] × 100</li>
+                    </ul>
+
+                    <h4>3. Simple & Compound Interest (SI & CI)</h4>
+                    <ul>
+                        <li>Simple Interest: SI = (P × R × T) / 100 | Amount = P + SI = P[1 + (RT / 100)]</li>
+                        <li>Compound Interest: A = P[1 + (R / 100)]^T | CI = A − P</li>
+                        <li>Compounding Frequencies:
+                            <ul>
+                                <li>Half-Yearly: Rate = R/2, Time = 2T ⇒ A = P[1 + (R/2)/100]^(2T)</li>
+                                <li>Quarterly: Rate = R/4, Time = 4T ⇒ A = P[1 + (R/4)/100]^(4T)</li>
+                            </ul>
+                        </li>
+                        <li>2-Year CI & SI Difference: D_2 = P(R / 100)²</li>
+                        <li>3-Year CI & SI Difference: D_3 = P(R / 100)² × [(300 + R) / 100]</li>
+                        <li>Annual Installment in SI: Installment = (100 × A) / [100T + (RT(T − 1)) / 2]</li>
+                    </ul>
+
+                    <h4>4. Ratio, Proportion, Partnership & Ages</h4>
+                    <ul>
+                        <li>Proportion Properties: If a/b = c/d ⇒ a · d = b · c</li>
+                        <li>Mean Proportional: √(a · b) | Third: b²/a | Fourth: (b · c)/a</li>
+                        <li>Componendo & Dividendo: If a/b = c/d ⇒ (a + b) / (a − b) = (c + d) / (c − d)</li>
+                        <li>Partnership Profit Sharing Flow: Profit Ratio (P₁ : P₂ : P₃) = (I₁ × T₁) : (I₂ × T₂) : (I₃ × T₃)</li>
+                        <li>Working Partner: Deduct managerial salary from gross profit first; distribute remainder based on investment-time ratio.</li>
+                        <li>Ages Principle: The absolute age difference between two individuals remains constant forever.</li>
+                    </ul>
+
+                    <h4>5. Time & Work, Pipes & Cisterns</h4>
+                    <ul>
+                        <li>Work Equation: Total Work = Efficiency (Units/Day) × Time (Days)</li>
+                        <li>Combined Time: T_(A+B) = (A × B) / (A + B) | T_(A+B+C) = (ABC) / (AB + BC + CA)</li>
+                        <li>Man-Day-Hour Multiplier (MDH Formula): (M₁ × D₁ × H₁ × E₁) / W₁ = (M₂ × D₂ × H₂ × E₂) / W₂</li>
+                        <li>Wages Distribution: Partitioned strictly by work completed (Efficiency × Days).</li>
+                        <li>Pipes & Cisterns: Inlets supply positive efficiency (+); outlet leaks drain negative efficiency (−).</li>
+                    </ul>
+
+                    <h4>6. Mixture, Alligation & Replacement</h4>
+                    <ul>
+                        <li>Alligation Cross-Rule: (Cheaper Rate C, Dearer Rate D, Mean Price M) ⇒ Ratio (D − M) : (M − C)</li>
+                        <li>Successive Replacement Formula: Liquid Left = Initial Quantity × [1 − (y/x)]^n (Where x = Total Volume, y = Taken Out, n = Cycles).</li>
+                    </ul>
+
+                    <h4>7. Time, Speed, Distance, Trains & Boats</h4>
+                    <ul>
+                        <li>Speed = Distance / Time | km/h × (5/18) = m/s | m/s × (18/5) = km/h</li>
+                        <li>Average Speed (Equal Distances): Avg Speed = 2xy / (x + y) | General: Total Distance / Total Time</li>
+                        <li>Relative Speed (Trains): Opposite S_rel = S₁ + S₂ | Same S_rel = |S₁ − S₂|</li>
+                        <li>Crossing a pole/person: T = L_train / S_train | Crossing a platform: T = (L_train + L_plat) / S_train</li>
+                        <li>Boats & Streams (Current Flow): Downstream D = Boat + Stream | Upstream U = Boat − Stream</li>
+                        <li>Boat Speed in Still Water: Boat = (D + U) / 2 | Stream Speed: Stream = (D − U) / 2</li>
+                    </ul>
+
+                    <h3>MODULE 4: COMPLETE 2D & 3D MENSURATION & GEOMETRY</h3>
+                    <h4>Comprehensive 2D Plane Figures (Perimeter & Area)</h4>
+                    <div class="doc-table-container">
+                        <table class="doc-table">
+                            <thead>
+                                <tr><th>2D Figure</th><th>Area Formula</th><th>Perimeter / Circumference</th><th>Special Properties & Radii</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Equilateral Triangle</td><td>(√3 / 4)a²</td><td>3a</td><td>h = (√3 / 2)a | r = a / (2√3) | R = a / √3</td></tr>
+                                <tr><td>Right-Angled Triangle</td><td>(1 / 2) × Base × Height</td><td>P + B + H</td><td>H² = P² + B² | r = (P + B − H) / 2 | R = H / 2</td></tr>
+                                <tr><td>Scalene Triangle</td><td>√[s(s − a)(s − b)(s − c)]</td><td>a + b + c</td><td>s = (a + b + c) / 2 | r = Area / s | R = abc / (4 × Area)</td></tr>
+                                <tr><td>Rectangle</td><td>L × B</td><td>2(L + B)</td><td>Diagonal d = √(L² + B²)</td></tr>
+                                <tr><td>Square</td><td>a² = d² / 2</td><td>4a</td><td>Diagonal d = a√2</td></tr>
+                                <tr><td>Parallelogram</td><td>Base × Height</td><td>2(a + b)</td><td>Opposite sides & angles equal; diagonals bisect each other.</td></tr>
+                                <tr><td>Rhombus</td><td>(1 / 2) × d₁ × d₂</td><td>4a</td><td>4a² = d₁² + d₂² | Diagonals bisect at 90°</td></tr>
+                                <tr><td>Trapezium</td><td>(1 / 2) × (a + b) × h</td><td>Sum of 4 sides</td><td>a, b = Parallel sides, h = Height</td></tr>
+                                <tr><td>Circle</td><td>π r²</td><td>2π r = π d</td><td>π ≈ 22/7 ≈ 3.14159</td></tr>
+                                <tr><td>Semicircle</td><td>(1 / 2)π r²</td><td>π r + 2r = (36/7)r</td><td>Perimeter includes straight diameter base.</td></tr>
+                                <tr><td>Sector of Circle</td><td>(θ / 360°) π r² = (1 / 2)Lr</td><td>L + 2r</td><td>Arc Length L = (θ / 360°)2π r</td></tr>
+                                <tr><td>Circular Ring (Track)</td><td>π(R² − r²) = π(R + r)(R − r)</td><td>-</td><td>Track Width = R − r | Revolutions = Dist / (2π r)</td></tr>
+                                <tr><td>Pathway Bordering Rect.</td><td>Outer: 2w(L + B + 2w)<br>Inner: 2w(L + B − 2w)</td><td>-</td><td>Cross-Roads in Center: w(L + B − w)</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h4>Comprehensive 3D Solid Geometry (Volume & Surface Area)</h4>
+                    <div class="doc-table-container">
+                        <table class="doc-table">
+                            <thead>
+                                <tr><th>3D Solid</th><th>Volume (Capacity)</th><th>Curved / Lateral SA (CSA)</th><th>Total Surface Area (TSA)</th><th>Space Diagonal / Slant</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Cube</td><td>a³</td><td>4a²</td><td>6a²</td><td>d = a√3 | Face d = a√2</td></tr>
+                                <tr><td>Cuboid (Room)</td><td>L × B × H</td><td>2H(L + B) (4 walls)</td><td>2(LB + BH + HL)</td><td>d = √(L² + B² + H²) (Longest rod)</td></tr>
+                                <tr><td>Right Cylinder</td><td>π r² h</td><td>2π rh</td><td>2π r(h + r)</td><td>Hollow Vol: π h(R² − r²)</td></tr>
+                                <tr><td>Right Cone</td><td>(1 / 3)π r² h</td><td>π r l</td><td>π r(l + r)</td><td>Slant Height l = √(r² + h²)</td></tr>
+                                <tr><td>Frustum (Bucket)</td><td>(1 / 3)π h(R² + r² + Rr)</td><td>π(R + r)l</td><td>π(R + r)l + π R² + π r²</td><td>l = √[h² + (R − r)²]</td></tr>
+                                <tr><td>Sphere</td><td>(4 / 3)π r³</td><td>4π r²</td><td>4π r²</td><td>Diameter D = 2r</td></tr>
+                                <tr><td>Hemisphere (Bowl)</td><td>(2 / 3)π r³</td><td>2π r²</td><td>3π r² (Curved + Flat top)</td><td>Hollow Hemisphere CSA: 2π(R² + r²)</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3>MODULE 5: COUNTING PRINCIPLES, PROBABILITY & DATA INTERPRETATION</h3>
+                    <h4>Permutations, Combinations & Counting</h4>
+                    <ul>
+                        <li>Factorials: n! = n × (n − 1) × .... × 1 (0! = 1).</li>
+                        <li>Permutation (Arrangement / Order Matters): ⁿP_r = n! / (n − r)!</li>
+                        <li>Combination (Selection / Order Does NOT Matter): ⁿC_r = n! / [r!(n − r)!] | ⁿC_r = ⁿC_(n−r)</li>
+                        <li>Circular Arrangements: (n − 1)! | Necklaces/Garlands: (n − 1)! / 2</li>
+                        <li>Letters Repetition: Word permutations = Total Letters! / Duplicate Letters!</li>
+                    </ul>
+
+                    <h4>Probability Fundamentals & Card Geometry</h4>
+                    <ul>
+                        <li>P(E) = Favourable Outcomes / Total Sample Space | 0 ≤ P(E) ≤ 1</li>
+                        <li>P(E) + P(Not E) = 1 | P(At least 1) = 1 − P(None)</li>
+                        <li>Deck of 52 Playing Cards Architecture:
+                            <ul>
+                                <li>26 Red: 13 Hearts (&hearts;), 13 Diamonds (&diams;)</li>
+                                <li>26 Black: 13 Spades (&spades;), 13 Clubs (&clubs;)</li>
+                                <li>12 Face Cards: 4 Kings, 4 Queens, 4 Jacks</li>
+                                <li>4 Aces: 1 in each suit | 16 Honor Cards: A, K, Q, J</li>
+                            </ul>
+                        </li>
+                        <li>Dice & Coins: 1 Die = 6 outcomes, 2 Dice = 36 outcomes; n Coins = 2ⁿ outcomes.</li>
+                    </ul>
+
+                    <h4>Data Interpretation (DI) & Quantitative Strategy</h4>
+                    <ul>
+                        <li>4 Canonical Questions in Every DI Set:
+                            <ol>
+                                <li>What % of B is A? ⇒ (A / B) × 100</li>
+                                <li>A is what % MORE than B? ⇒ [(A − B) / B] × 100</li>
+                                <li>A is what % LESS than B? ⇒ [(B − A) / B] × 100</li>
+                                <li>Average of values = Sum of Observations / Count</li>
+                            </ol>
+                        </li>
+                        <li>Pie Chart Conversions: 360° = 100% ⇒ 1% = 3.6° ⇒ 1° = (5/18)%</li>
+                        <li>Number Series Prelims Patterns: Double / Triple Difference series; Multiplication + Addition/Subtraction (×0.5 + 1, ×1 + 2, ×1.5 + 3, ...); Square/Cube Displacement (n² ± k, n³ ± n²); Fibonacci & Alternate alternating sequence merges.</li>
+                        <li>Exam Time Allocation (35 Qs in 20 Mins): Min 0-6: Simplification / Approximation (10-15 Qs); Min 6-9: Quadratic Inequalities & Number Series (5-10 Qs); Min 9-15: 2 Data Interpretation Sets (10 Qs); Min 15-20: High-speed Arithmetic Word Problems.</li>
+                    </ul>
                 </div>
+
+                <!-- ==================== DOC 2: REASONING ABILITY ==================== -->
                 <div id="doc-reasoning" class="doc-section">
-                    <h2>REASONING ABILITY & ANALYTICAL APTITUDE</h2>
-                    <h3>MODULE 1: SYLLOGISMS ("ONLY A FEW" & POSSIBILITY)</h3>
+                    <h2>BANKING EXAM MASTER REVISION COMPENDIUM 2026: ALL-BANKING MASTER REASONING ABILITY & ANALYTICAL APTITUDE</h2>
+                    <p><strong>Comprehensive 5-Module Master Guide | Syllogism, Advanced Inequalities, Coding-Decoding, Machine Input-Output, Blood Relations, Direction Compass, Puzzles & Critical Reasoning</strong></p>
+                    <p><em>Targeting IBPS PO/Clerk, SBI PO/Clerk, RRB PO/Clerk, RBI Grade B & Assistant, LIC, NIACL</em></p>
+
+                    <h3>MODULE 1: SYLLOGISM & REVERSE SYLLOGISM (LATEST "ONLY A FEW" & POSSIBILITY RULES)</h3>
+                    <h4>1. Standard Syllogism Logic Statements</h4>
                     <ul>
-                        <li><strong>"Only a few A are B":</strong> Dual simultaneous condition: "Some A are B" AND "Some A are NOT B". "All A being B is a possibility" is <strong>ALWAYS FALSE</strong>.</li>
-                        <li><strong>"Only A are B":</strong> Equivalent to "All B are A", where B cannot overlap with any other element.</li>
+                        <li><strong>"All A are B":</strong> 100% positive relation. A is completely enclosed inside B. Definite Truth: Some A are B, Some B are A. Possibilities: All B being A is a possibility.</li>
+                        <li><strong>"Some A are B":</strong> Minimum 1% to 99% positive overlap. Definite Truth: Some B are A. Possibilities: All A can be B, All B can be A, Some A not being B is a possibility.</li>
+                        <li><strong>"No A is B":</strong> 100% negative separation / strict cross-line. Definite Truth: No B is A, Some A are not B, Some B are not A. Possibilities: No positive possibility is ever true.</li>
+                        <li><strong>"Some A are not B":</strong> Definite negative part. Trap: Does NOT automatically mean "Some A are B". Possibility: No A is B is a possibility, All B being A is a possibility. "All A being B is a possibility" is ALWAYS FALSE.</li>
+                    </ul>
+
+                    <h4>2. "Only A Few" & "Only" (The 100% Exam High-Frequency Trap)</h4>
+                    <ul>
+                        <li><strong>"Only a few A are B":</strong> This is a DUAL SIMULTANEOUS STATEMENT combining: 1. Some A are B (Positive common intersection) + 2. Some A are NOT B (Definite restricted part of A).
+                            <ul>
+                                <li>"All A being B is a possibility" &rarr; <strong>ALWAYS FALSE!</strong></li>
+                                <li>"All B being A is a possibility" &rarr; <strong>TRUE / POSSIBLE!</strong></li>
+                                <li>"Some A are not B" &rarr; <strong>DEFINITELY TRUE!</strong></li>
+                            </ul>
+                        </li>
+                        <li><strong>"Only A are B":</strong> Equates to reverse universal: "All B are A". Strict Isolation Property: B is strictly locked inside A and CANNOT have any overlap, touching, or possibility with any third element (C, D, etc.).</li>
+                    </ul>
+
+                    <h4>3. The 3 Mandatory Rules for "Either - Or" Cases</h4>
+                    <p>Two conclusions form an Either-Or pair if and only if all three conditions are met simultaneously:</p>
+                    <ol>
+                        <li>Both individual conclusions must be Individually False / Indeterminate (Doubtful).</li>
+                        <li>Both conclusions must possess the Exact Same Subject and Predicate.</li>
+                        <li>They must form one of the two legitimate Complementary Pairs:
+                            <ul>
+                                <li>Pair 1: Some + No (e.g., Some A are B + No A is B)</li>
+                                <li>Pair 2: All + Some Not (e.g., All A are B + Some A are not B)</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <p><em>Fatal Exam Trap: All + No NEVER makes an Either-Or pair! (Both can be false simultaneously when 'Some' is true).</em></p>
+
+                    <h4>4. Possibility Decision Engine & Reverse Syllogism</h4>
+                    <div class="doc-table-container">
+                        <table class="doc-table">
+                            <thead>
+                                <tr><th>Direct Relation in Venn Diagram</th><th>Definite Conclusion</th><th>Possibility Conclusion</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>100% Seen True</td><td>TRUE (&check;)</td><td>FALSE (X)</td></tr>
+                                <tr><td>100% Seen False (Blocked)</td><td>FALSE (X)</td><td>FALSE (X)</td></tr>
+                                <tr><td>Unknown / Open / Doubtful</td><td>FALSE (X)</td><td>TRUE (&check;)</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p><strong>Reverse Syllogism (PO Mains):</strong> Given: Final Conclusions ⇒ Task: Identify which set of Statements yields them. Elimination Trick: If conclusions contain a definite negative ("No" or "Some Not"), immediately eliminate statements that are 100% purely positive.</p>
+
+                    <h3>MODULE 2: INEQUALITIES & CODING-DECODING (PRELIMS TO MAINS PATTERNS)</h3>
+                    <h4>1. Inequalities: The Open-Gate Priority Hierarchy</h4>
+                    <div class="doc-table-container">
+                        <table class="doc-table">
+                            <thead>
+                                <tr><th>Hierarchy Rank</th><th>Mathematical Symbol</th><th>Designation</th><th>Decision Rule</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1st (Highest)</td><td>&gt; or &lt;</td><td>King</td><td>Takes supreme priority in conclusion if present along open path.</td></tr>
+                                <tr><td>2nd (Middle)</td><td>≥ or ≤</td><td>Minister</td><td>Takes priority ONLY if King is absent along the entire open path.</td></tr>
+                                <tr><td>3rd (Lowest)</td><td>=</td><td>Public / Bridge</td><td>Neutral conduit; allows free continuous transit in both directions.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <ul>
+                        <li>Open Door vs Closed Door: A > B ⇒ Gate is OPEN from A &rarr; B (Can move from A to B); A < B ⇒ Gate is CLOSED from A &rarr; B (Cannot move from A to B).</li>
+                        <li>Opposite Signs / Blocked Pathway: If any pathway encounters opposite gates (e.g., A > B < C or A ≤ B ≥ C), the path is completely blocked ⇒ Any definite relation between A and C is Indeterminate / False.</li>
+                        <li>Either-Or in Inequalities: Case 1 (Two Signs): A ≥ B ⇒ (1) A > B, (2) A = B; Case 2 (Three Signs on Blocked Path): If path between A and C is blocked, and no relation is given: (1) A > C, (2) A ≤ C &rarr; Forms Either-Or.</li>
+                    </ul>
+
+                    <h4>2. Forward & Reverse Alphabet Ranks & Opposite Pairs</h4>
+                    <p>Forward Alphabet Benchmarks (EJOTY + 3-Table): E=5, J=10, O=15, T=20, Y=25 | C=3, F=6, I=9, L=12, O=15, R=18, U=21, X=24. Reverse Positional Rank Formula: Rank from Right (Z) = 27 − Rank from Left (A).</p>
+                    <div class="doc-table-container">
+                        <table class="doc-table">
+                            <thead>
+                                <tr><th>Pair</th><th>Memory Trick</th><th>Pair</th><th>Memory Trick</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>A-Z</td><td>Azad / Amazon</td><td>G-T</td><td>GT Road</td></tr>
+                                <tr><td>B-Y</td><td>Boy / Bye</td><td>H-S</td><td>High School</td></tr>
+                                <tr><td>C-X</td><td>Crux / Complex</td><td>I-R</td><td>Indian Railway</td></tr>
+                                <tr><td>D-W</td><td>Dew / Down</td><td>J-Q</td><td>Jungle Queen</td></tr>
+                                <tr><td>E-V</td><td>Even / Electric Vehicle</td><td>K-P</td><td>Kurta Pyjama</td></tr>
+                                <tr><td>F-U</td><td>Fun / Fair-Unfair</td><td>L-O</td><td>Love / Light-Out</td></tr>
+                                <tr><td>M-N</td><td>Man / Moon</td><td>-</td><td>-</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h4>3. Advanced Mains Coding-Decoding Logic Engine</h4>
+                    <ul>
+                        <li>Symbol Logic: Parity of word length: Odd length = #, Even length = @; First/Last letter category: Vowels (#) vs. Consonants ($); Total number of vowels in the word (1 vowel = %, 2 vowels = &).</li>
+                        <li>Letter Logic: Opposite of the first or last letter; Middle letter of the word or immediate next (+1) consonant; Second letter from the left/right end.</li>
+                        <li>Number Logic: Total number of letters in the word ± 1; Positional rank of highest vowel or first consonant; Difference or sum of ranks of 1st and last letter.</li>
+                    </ul>
+
+                    <h3>MODULE 3: DIRECTION SENSE, BLOOD RELATIONS & ORDER-RANKING</h3>
+                    <h4>1. 8-Point Compass Navigator & Turning Geometry</h4>
+                    <ul>
+                        <li>Primary Cardinal Directions: North (↑), South (↓), East (→), West (←). Secondary Ordinal Directions: North-East (NE, 45°), South-East (SE, 135°), South-West (SW, 225°), North-West (NW, 315°).</li>
+                        <li>Right & Left Turns: Facing North: Right = East (→), Left = West (←); Facing South: Right = West (←), Left = East (→); Facing East: Right = South (↓), Left = North (↑); Facing West: Right = North (↑), Left = South (↓).</li>
+                        <li>Pythagorean Shortest Distance: Shortest Displacement = √(Horizontal Displacement² + Vertical Displacement²)</li>
+                        <li>Shadow Rules (Crucial Bank Exam Triggers):
+                            <ul>
+                                <li>Morning (Sunrise): Sun Position EAST ⇒ Shadow Direction WEST ⇒ Facing North: Left side; Facing South: Right side.</li>
+                                <li>Evening (Sunset): Sun Position WEST ⇒ Shadow Direction EAST ⇒ Facing North: Right side; Facing South: Left side.</li>
+                                <li>12:00 Noon: Sun Position Overhead ⇒ NO SHADOW.</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <h4>2. Order & Ranking Formulations</h4>
+                    <ul>
+                        <li>Total Persons in a Row: Total = (Rank from Left + Rank from Right) − 1</li>
+                        <li>Rank from Opposite End: Rank from Other End = (Total + 1) − Given Rank</li>
+                        <li>Persons Between Two Individuals: Non-Overlapping Case: Between = Total − (Rank₁ + Rank₂); Overlapping Case: Between = (Rank₁ + Rank₂) − (Total + 2).</li>
+                        <li>Minimum Persons in Overlapping Row: Min Total = (Rank₁ + Rank₂) − Between − 2</li>
+                    </ul>
+
+                    <h4>3. Blood Relations Family Tree Conventions</h4>
+                    <ul>
+                        <li>Standard Diagrammatic Symbols: Male: [+] or Square Box; Female: [−] or Circle; Married Couple: Double horizontal line A = B; Siblings (Brother/Sister): Single horizontal hyphen A − B; Generational Shift: Vertical descent line ↓.</li>
+                        <li>Key Relationship Identifiers: Paternal: Father's lineage (Paternal Uncle = Father's Brother); Maternal: Mother's lineage (Maternal Uncle = Mother's Brother); Nephew: Brother's or Sister's Son; Niece: Brother's or Sister's Daughter; Sister-in-law: Husband's/Wife's sister OR Brother's wife; Brother-in-law: Husband's/Wife's brother OR Sister's husband; Spouse: Husband or Wife; Only Son / Only Daughter: Does not rule out having siblings of opposite gender.</li>
+                    </ul>
+
+                    <h3>MODULE 4: MACHINE INPUT-OUTPUT & DATA SUFFICIENCY</h3>
+                    <ul>
+                        <li>Machine Input-Output (Shifting vs Arranging Patterns): Words alphabetically ascending from Left end; Numbers descending from Right end; Single-end shifting vs Double-end simultaneous shifting. Advanced Mains Box Transformations: Step 1 (Digit Multiplication: Cross-multiplying 1st digit of Box 1 with 2nd digit of Box 2); Step 2 (Difference / Sum of Squares: D₁² + D₂²); Step 3 (Division / Average).</li>
+                        <li>Data Sufficiency 2-Statement & 3-Statement Framework:
+                            <ul>
+                                <li>Statement I Alone: Statement I is sufficient, but Statement II alone is NOT sufficient.</li>
+                                <li>Statement II Alone: Statement II is sufficient, but Statement I alone is NOT sufficient.</li>
+                                <li>Either I or II Alone: Either Statement I alone OR Statement II alone is sufficient independently.</li>
+                                <li>Neither Nor: Both statements together are NOT sufficient; extra data needed.</li>
+                                <li>Both Together: Both Statements I and II together are necessary to answer.</li>
+                            </ul>
+                        </li>
+                        <li><em>Golden Rule: Never calculate the final numeric answer! Only verify if unique determination is mathematically guaranteed.</em></li>
+                    </ul>
+
+                    <h3>MODULE 5: SEATING ARRANGEMENTS, HIGH-LEVEL PUZZLES & CRITICAL REASONING</h3>
+                    <ul>
+                        <li>Seating Arrangement Master Architectures: Circular & Polygonal Tables: Facing Inside: Right = Anti-Clockwise, Left = Clockwise; Facing Outside: Right = Clockwise, Left = Anti-Clockwise; Opposite in Even (8-person) Tables: Exactly 3 persons sit between them on either side. Linear Rows: Row facing North: Your Left = Person's Left, Your Right = Person's Right; Row facing South: Your Left = Person's Right, Your Right = Person's Left.</li>
+                        <li>High-Yield Complex Puzzle Models: Floor & Flat Puzzles (Floors numbered bottom 1 to top 8; Flats structured Flat A West of Flat B); Box Stacks; Day, Month & Year Schedules. <em>Execution Rule: Always maintain 2 Parallel Cases (Case 1 & Case 2) from the first ambiguous clue to prevent restarting!</em></li>
+                        <li>Critical Reasoning Master Rules (Mains High-Weightage): Statement & Assumption: Assumptions containing extreme words (all, only, never, best) are Invalid; Assumptions that restate the premise or go beyond scope are Invalid; Statement & Course of Action: A practical, feasible solution that directly mitigates the problem without creating worse side effects; Cause & Effect: Check for chronological precedence and direct causal connection vs. independent third common causes.</li>
+                        <li>Reasoning Prelims Speed Strategy (35 Qs / 20 Mins): Stage 1 (Min 0-6: Syllogisms, Inequalities, Coding-Decoding, Order & Ranking &rarr; 15-18 free marks); Stage 2 (Min 6-18: 3 to 4 Sets of Puzzles & Seating Arrangements &rarr; 15-20 marks); Stage 3 (Min 18-20: Miscellaneous word formation and number-pair checking).</li>
                     </ul>
                 </div>
+
+                <!-- ==================== DOC 3: ENGLISH LANGUAGE ==================== -->
                 <div id="doc-english" class="doc-section">
-                    <h2>ENGLISH LANGUAGE & VERBAL ABILITY</h2>
-                    <h3>MODULE 1: SUBJECT-VERB AGREEMENT & GOLDEN RULES</h3>
+                    <h2>BANKING EXAM MASTER REVISION COMPENDIUM 2026: ALL-BANKING MASTER ENGLISH LANGUAGE & VERBAL ABILITY</h2>
+                    <p><strong>Comprehensive 5-Module Grammar, Vocabulary & Reading Comprehension Compendium</strong></p>
+                    <p><em>Covering Error Spotting, Sentence Improvement, Cloze Test, Para Jumbles, Fillers & RC | PO & Clerk</em></p>
+
+                    <h3>MODULE 1: VERB FORMS, CONFUSING IRREGULAR VERBS & NON-FINITE VERBS</h3>
+                    <h4>1. The 5 Standard Verb Forms in Banking Error Spotting</h4>
                     <ul>
-                        <li>When subjects are joined by <em>along with, as well as, together with, in addition to</em>, the verb agrees with the <strong>FIRST SUBJECT</strong>.</li>
-                        <li>When subjects are joined by <em>Either...or, Neither...nor</em>, the verb agrees with the <strong>NEAREST SUBJECT</strong>.</li>
+                        <li>V1 (Base / Present Plural): Go, Write, Play, Offer (Used with I/We/You/They).</li>
+                        <li>V2 (Simple Past): Went, Wrote, Played, Offered (Past completed actions).</li>
+                        <li>V3 (Past Participle): Gone, Written, Played (Used with has/have/had/been/passive voice).</li>
+                        <li>V4 (Present Participle / Gerund): Going, Writing (V1 + ing).</li>
+                        <li>V5 (Simple Present Singular): Goes, Writes, Plays (V1 + s/es used with He/She/It).</li>
+                    </ul>
+
+                    <h4>2. Non-Finite Verbs: Gerunds vs. Infinitives</h4>
+                    <ul>
+                        <li>Fixed Phrases Taking Gerund (V1+ing) (NOT plain Infinitive): Standard grammar states "to + V1", but after these specific idiomatic phrases, "to" is a Preposition and MUST take Gerund (V1+ing): <em>Look forward to, Used to, Accustomed to, With a view to, In addition to, Prone to, Given to, Devoted to, Object to, Averse to, Taken to</em>.
+                            <ul>
+                                <li>&#10008; I look forward to meet you at branch. &rarr; &#10004; <strong>I look forward to meeting you at the branch.</strong></li>
+                                <li>&#10008; He applied with a view to secure a loan. &rarr; &#10004; <strong>He applied with a view to securing a loan.</strong></li>
+                            </ul>
+                        </li>
+                        <li>Bare Infinitive (Plain V1 without "to"): After causative/perception verbs (Make, Let, Bid, Watch, See, Hear, Help) and idiomatic modal phrases (Had better, Would rather, Soon than), use plain V1:
+                            <ul>
+                                <li>&#10008; The manager made the clerk to work overtime. &rarr; &#10004; <strong>The manager made the clerk work overtime.</strong></li>
+                                <li>&#10008; You had better to consult the auditor. &rarr; &#10004; <strong>You had better consult the auditor.</strong></li>
+                            </ul>
+                        </li>
+                        <li>Possessive Case Before Gerund: Any noun or pronoun appearing immediately before a Gerund must be in the Possessive Case (my, his, her, their, Ram's), NOT objective case:
+                            <ul>
+                                <li>&#10008; Manager disapproved of him taking leave. &rarr; &#10004; <strong>Manager disapproved of his taking leave.</strong></li>
+                            </ul>
+                        </li>
+                        <li>Dangling / Unattached Participle Error: &#10008; <em>Being a rainy day, I decided to stay home.</em> &rarr; &#10004; <strong>It being a rainy day, I decided to stay home.</strong></li>
+                    </ul>
+
+                    <h4>3. Top 12 Confusing Irregular Verb Pairs (High-Frequency Traps)</h4>
+                    <div class="doc-table-container">
+                        <table class="doc-table">
+                            <thead>
+                                <tr><th>Base (V1)</th><th>Meaning</th><th>Past (V2)</th><th>Participle (V3)</th><th>Common Exam Trap</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Lie</td><td>To rest/recline</td><td>lay</td><td>lain</td><td>He has layed on the sofa &rarr; has lain</td></tr>
+                                <tr><td>Lay</td><td>To put down / place</td><td>laid</td><td>laid</td><td>Please lay down the books &rarr; laid</td></tr>
+                                <tr><td>Rise</td><td>To increase / go up</td><td>rose</td><td>risen</td><td>Prices have raised &rarr; have risen</td></tr>
+                                <tr><td>Raise</td><td>To lift up / elevate</td><td>raised</td><td>raised</td><td>He rose an objection &rarr; raised</td></tr>
+                                <tr><td>Fall</td><td>To drop down</td><td>fell</td><td>fallen</td><td>Shares have felled &rarr; have fallen</td></tr>
+                                <tr><td>Fell</td><td>To cut down a tree</td><td>felled</td><td>felled</td><td>Woodcutter fell the tree &rarr; felled</td></tr>
+                                <tr><td>Find</td><td>To discover</td><td>found</td><td>found</td><td>Auditor found the error (Correct)</td></tr>
+                                <tr><td>Found</td><td>To establish an entity</td><td>founded</td><td>founded</td><td>Bank was found in 1990 &rarr; was founded</td></tr>
+                                <tr><td>Hang</td><td>Execute by neck</td><td>hanged</td><td>hanged</td><td>The culprit was hung &rarr; was hanged</td></tr>
+                                <tr><td>Hang</td><td>Suspend clothes/picture</td><td>hung</td><td>hung</td><td>She hanged the photo &rarr; hung</td></tr>
+                                <tr><td>Bear</td><td>To tolerate / endure</td><td>bore</td><td>borne</td><td>Loss was born by firm &rarr; borne</td></tr>
+                                <tr><td>Bear</td><td>To give birth</td><td>bore</td><td>born</td><td>He was born in Delhi (Correct)</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h4>4. Stative Verbs (Never Used in Continuous -ing Tenses)</h4>
+                    <p>Denoting mental states, senses, or ownership: <em>Know, Understand, Believe, Remember, See, Hear, Smell, Taste, Love, Hate, Prefer, Wish, Belong, Own, Possess, Consist, Contain, Resemble</em>.</p>
+                    <ul>
+                        <li>&#10008; I am knowing the banking regulation. &rarr; &#10004; <strong>I know the banking regulation.</strong></li>
+                        <li>&#10008; This account is belonging to him. &rarr; &#10004; <strong>This account belongs to him.</strong></li>
+                    </ul>
+
+                    <h3>MODULE 2: 120 GOLDEN RULES OF GRAMMAR & SUBJECT-VERB AGREEMENT</h3>
+                    <h4>1. Subject-Verb Agreement Master Rules</h4>
+                    <ul>
+                        <li><strong>Rule 1 (Connectors of Addition):</strong> When two subjects are connected by <em>along with, together with, as well as, accompanied by, in addition to, with, besides, rather than, and not</em>, the verb strictly follows the <strong>FIRST SUBJECT</strong>.
+                            <ul>
+                                <li>&#10008; The Manager, along with all probationary officers, are inspecting. &rarr; &#10004; <strong>The Manager, along with all probationary officers, is inspecting.</strong></li>
+                            </ul>
+                        </li>
+                        <li><strong>Rule 2 (Correlative Proximity):</strong> When subjects are joined by <em>Either...or, Neither...nor, Not only...but also, Or, Nor</em>, the verb strictly agrees with the <strong>NEAREST SUBJECT (Subject 2)</strong>.
+                            <ul>
+                                <li>&#10004; Neither the director nor the clerks were aware.</li>
+                                <li>&#10004; Neither the clerks nor the director was aware.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Rule 3 (Indefinite Pronouns):</strong> <em>Each, Every, Everyone, Someone, Nobody, Either, Neither, Many a</em> are grammatically singular and require a <strong>SINGULAR VERB</strong> and singular pronoun.
+                            <ul>
+                                <li>&#10008; Each of the applicants have submitted their form. &rarr; &#10004; <strong>Each of the applicants has submitted his/her form.</strong></li>
+                                <li>&#10004; Many a candidate has failed the preliminary cutoff.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Rule 4 ("A Number of" vs "The Number of"):</strong> "A number of" + Plural Noun ⇒ PLURAL VERB (Means "many"); "The number of" + Plural Noun ⇒ SINGULAR VERB (Indicates specific count).</li>
+                        <li><strong>Rule 5 (Single Combined Idea / Food Pairs):</strong> When two nouns express a unified single unit or meal (Bread and butter, Rice and curry, Slow and steady, Time and tide) ⇒ take a <strong>SINGULAR VERB</strong>. (e.g., <em>Bread and butter is his staple diet</em>).</li>
+                        <li><strong>Rule 6 (Fixed Quantities & Measurements):</strong> When a plural numeral denotes a combined single sum of money, distance, time, or weight, use a <strong>SINGULAR VERB</strong>. (e.g., <em>Ten lakh rupees is a substantial sum</em> | <em>Five kilometers is an easy distance to cover</em>).</li>
+                    </ul>
+
+                    <h4>2. Pronouns & Modifiers Precision</h4>
+                    <ul>
+                        <li>Relative Pronoun "That" vs "Which / Who": Use that after superlatives (the best) and restrictive expressions: <em>all, the only, the same, none, little, everything</em>. (&#10008; <em>This is the best bank which offers high interest.</em> &rarr; &#10004; <strong>This is the best bank that offers high interest.</strong>).</li>
+                        <li>Pronoun Order in Politeness: Normal positive sentences: 231 (Second Person &rarr; Third Person &rarr; First Person: You, he and I); Confessing errors, crimes, or plural subjects: 123 (I, you and he).</li>
+                        <li>"One" as Subject: Must maintain consistency with <em>one's</em> and <em>oneself</em>, never his / himself. (&#10008; <em>One must discharge his duties.</em> &rarr; &#10004; <strong>One must discharge one's duties.</strong>).</li>
+                    </ul>
+
+                    <h4>3. Tenses & 4 Conditional Sentence Formulas</h4>
+                    <div class="doc-table-container">
+                        <table class="doc-table">
+                            <thead>
+                                <tr><th>Condition Type</th><th>If Clause (Condition)</th><th>Main Clause (Result)</th><th>Direct Bank Exam Example</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Type 0 (Universal)</td><td>Simple Present (V1/V5)</td><td>Simple Present (V1/V5)</td><td>If you heat ice, it melts.</td></tr>
+                                <tr><td>Type 1 (Real Future)</td><td>Simple Present (V1/s/es)</td><td>will / can / may + V1</td><td>If he works hard, he will clear the exam.</td></tr>
+                                <tr><td>Type 2 (Hypothetical)</td><td>Simple Past (were/V2)</td><td>would / could / might + V1</td><td>If I were Governor, I would reduce CRR.</td></tr>
+                                <tr><td>Type 3 (Past Unreal)</td><td>Past Perfect (had + V3)</td><td>would have / could have + V3</td><td>If he had prepared, he would have passed.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p><em>Fatal Exam Trap: Never use "would have" in the "If" conditional clause! (&#10008; If he would have informed the branch, they would have stopped payment. &rarr; &#10004; <strong>If he had informed the branch, they would have stopped payment.</strong>).</em></p>
+
+                    <h3>MODULE 3: CORRELATIVE CONJUNCTIONS, INVERSION & MODALS</h3>
+                    <h4>1. Fixed Correlative Pairs (Never Cross-Mix)</h4>
+                    <div class="doc-table-container">
+                        <table class="doc-table">
+                            <thead>
+                                <tr><th>Word 1</th><th>Strict Mandatory Pair</th><th>Common Wrong Exam Trap</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Scarcely / Hardly</td><td>WHEN (or BEFORE)</td><td>than / then</td></tr>
+                                <tr><td>No Sooner</td><td>THAN</td><td>when / then</td></tr>
+                                <tr><td>Not only</td><td>BUT ALSO</td><td>and / but</td></tr>
+                                <tr><td>Neither</td><td>NOR</td><td>or</td></tr>
+                                <tr><td>Either</td><td>OR</td><td>nor</td></tr>
+                                <tr><td>Lest</td><td>SHOULD (Takes NO 'not')</td><td>will / may / not</td></tr>
+                                <tr><td>Between</td><td>AND</td><td>to</td></tr>
+                                <tr><td>From</td><td>TO</td><td>and</td></tr>
+                                <tr><td>Although / Though</td><td>YET (or simple comma)</td><td>but</td></tr>
+                                <tr><td>Both</td><td>AND</td><td>as well as</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h4>2. Grammatical Inversion & Modal Auxiliaries</h4>
+                    <ul>
+                        <li>Grammatical Inversion (Auxiliary Before Subject): When a sentence commences with restrictive or negative adverbs, inverted word order (Auxiliary Verb &rarr; Subject &rarr; Main Verb) is strictly mandatory. Trigger Adverbs: <em>Hardly, Scarcely, Barely, No Sooner, Seldom, Rarely, Never, Little, Under no circumstances</em>.
+                            <ul>
+                                <li>&#10008; Hardly he had entered the vault when the alarm rang. &rarr; &#10004; <strong>Hardly had he entered the vault when the alarm rang.</strong></li>
+                                <li>&#10008; No sooner the circular was released than banks complied. &rarr; &#10004; <strong>No sooner did the circular get released than banks complied.</strong></li>
+                            </ul>
+                        </li>
+                        <li>Rule of 'Lest': Lest inherently means "in order to prevent / otherwise". It strictly takes Should and NEVER tolerates negative adverbs (not, never). (&#10008; <em>Revise thoroughly lest you should not fail.</em> &rarr; &#10004; <strong>Revise thoroughly lest you should fail.</strong>).</li>
+                        <li>Modal Auxiliaries & Past Deductions: Modals + Base V1 (Can, Could, May, Might, Shall, Should, Will, Would, Must, Ought to + V1); Should have + V3: Past obligation unfulfilled; Could have + V3: Past ability unutilized; Must have + V3: High logical deduction.</li>
+                    </ul>
+
+                    <h3>MODULE 4: HIGH-YIELD FIXED PREPOSITIONS & PHRASAL VERBS</h3>
+                    <h4>Fixed Prepositions (Fillers & Cloze Tests)</h4>
+                    <div class="doc-table-container">
+                        <table class="doc-table">
+                            <thead>
+                                <tr><th>Word</th><th>Preposition</th><th>Usage & Examination Meaning</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Abide</td><td>by</td><td>Follow policies: Abide by banking rules.</td></tr>
+                                <tr><td>Accused</td><td>of</td><td>Charged with offense: Accused of fraud.</td></tr>
+                                <tr><td>Abstain / Refrain</td><td>from</td><td>Stay away: Refrain from speculative trading.</td></tr>
+                                <tr><td>Accustomed</td><td>to</td><td>Habituated: Accustomed to working under pressure.</td></tr>
+                                <tr><td>Cope</td><td>with</td><td>Manage: Cope with workload (Never 'cope up with').</td></tr>
+                                <tr><td>Congratulate</td><td>on</td><td>Wish success: Congratulated on promotion.</td></tr>
+                                <tr><td>Compliant</td><td>with</td><td>Adhering: Compliant with RBI guidelines.</td></tr>
+                                <tr><td>Deprived</td><td>of</td><td>Stripped from: Deprived of voting rights.</td></tr>
+                                <tr><td>Immune</td><td>to</td><td>Protected: Immune to market fluctuations.</td></tr>
+                                <tr><td>Indifferent</td><td>to</td><td>Unconcerned: Indifferent to public criticism.</td></tr>
+                                <tr><td>Senior / Junior / Prior</td><td>to</td><td>Comparative rank: Senior to him (Never 'than').</td></tr>
+                                <tr><td>Prohibit / Prevent</td><td>from</td><td>Disallow: Prevented from entering the locker.</td></tr>
+                                <tr><td>Vested</td><td>with / in</td><td>Empowered: Authority vested in the committee.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h4>Banking & Economic Phrasal Verbs</h4>
+                    <div class="doc-table-container">
+                        <table class="doc-table">
+                            <thead>
+                                <tr><th>Phrasal Verb</th><th>Meaning</th><th>Direct Banking Sentence Example</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Call off</td><td>Cancel an event</td><td>The union called off the indefinite strike.</td></tr>
+                                <tr><td>Call on / upon</td><td>Formally invite / visit</td><td>The governor called upon banks to curb NPAs.</td></tr>
+                                <tr><td>Break down</td><td>Fail mechanically</td><td>The core banking server broke down today.</td></tr>
+                                <tr><td>Bring about</td><td>Cause to happen</td><td>Fintech brought about massive inclusion.</td></tr>
+                                <tr><td>Bring out</td><td>Publish / Release</td><td>RBI brought out its financial stability report.</td></tr>
+                                <tr><td>Look into</td><td>Investigate</td><td>The vigilance cell will look into transactions.</td></tr>
+                                <tr><td>Put off</td><td>Postpone</td><td>The committee meeting was put off till Monday.</td></tr>
+                                <tr><td>Put up with</td><td>Tolerate</td><td>The manager refused to put up with negligence.</td></tr>
+                                <tr><td>Write off</td><td>Cancel debt as loss</td><td>The bank wrote off bad loans worth 500 crores.</td></tr>
+                                <tr><td>Bail out</td><td>Financial rescue</td><td>The government bailed out the stressed lender.</td></tr>
+                                <tr><td>Phase out</td><td>Discontinue slowly</td><td>Old physical notes are being phased out.</td></tr>
+                                <tr><td>Clamp down on</td><td>Crack down strictly</td><td>Regulator clamped down on illegal lending apps.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3>MODULE 5: ROOT WORDS, HIGH-SCORING VOCABULARY & READING STRATEGY</h3>
+                    <h4>1. Root Word Mastery (1 Root = 20 Vocabulary Words)</h4>
+                    <div class="doc-table-container">
+                        <table class="doc-table">
+                            <thead>
+                                <tr><th>Root</th><th>Meaning</th><th>Exam Words & Meanings</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Bene</td><td>Good / Well</td><td>Beneficial (Helpful), Benevolent (Kind), Beneficiary (Receiver of funds)</td></tr>
+                                <tr><td>Mal</td><td>Bad / Evil</td><td>Malicious (Spiteful), Malfunction (Failing), Malpractice (Wrongdoing)</td></tr>
+                                <tr><td>Chron</td><td>Time</td><td>Chronological (Time-order), Chronic (Long-standing), Synchronize (Occur together)</td></tr>
+                                <tr><td>Cred</td><td>Belief / Trust</td><td>Credible (Believable), Incredible (Unbelievable), Credulous (Gullible)</td></tr>
+                                <tr><td>Omni</td><td>All / Universal</td><td>Omnipotent (All-powerful), Omnipresent (Everywhere), Omniscient (All-knowing)</td></tr>
+                                <tr><td>Loqu / Loc</td><td>To Speak</td><td>Eloquent (Persuasive speaker), Loquacious (Talkative), Monologue (Solo speech)</td></tr>
+                                <tr><td>Vor</td><td>To Eat / Consume</td><td>Voracious (Greedy/insatiable), Carnivorous, Omnivorous</td></tr>
+                                <tr><td>Ambi / Amphi</td><td>Both / Dual</td><td>Ambiguous (Unclear/dual meaning), Ambivalent (Undecided)</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h4>2. Top 15 Most Repeated Bank Exam Words</h4>
+                    <div class="doc-table-container">
+                        <table class="doc-table">
+                            <thead>
+                                <tr><th>Word</th><th>Meaning</th><th>Synonym / Antonym</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Mitigate</td><td>Reduce severity</td><td>Syn: Alleviate, Ease | Ant: Aggravate, Worsen</td></tr>
+                                <tr><td>Exacerbate</td><td>Make a situation worse</td><td>Syn: Intensify, Inflame | Ant: Ameliorate</td></tr>
+                                <tr><td>Complacent</td><td>Smug / Careless</td><td>Syn: Self-satisfied | Ant: Vigilant, Concerned</td></tr>
+                                <tr><td>Prudent</td><td>Wise in financial decisions</td><td>Syn: Sensible, Frugal | Ant: Reckless, Prodigal</td></tr>
+                                <tr><td>Resilient</td><td>Able to recover quickly</td><td>Syn: Robust, Tough | Ant: Fragile, Vulnerable</td></tr>
+                                <tr><td>Augment</td><td>To enlarge or increase</td><td>Syn: Amplify, Expand | Ant: Diminish, Contract</td></tr>
+                                <tr><td>Deteriorate</td><td>Worsen over time</td><td>Syn: Degenerate, Decay | Ant: Improve</td></tr>
+                                <tr><td>Stringent</td><td>Strict and precise</td><td>Syn: Rigorous, Rigid | Ant: Lenient, Lax</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h4>3. Reading Comprehension & Para Jumble Speed Execution</h4>
+                    <ul>
+                        <li>RC Passage Elimination Strategy: Always solve direct Vocabulary, Antonym, and Synonym questions first (takes 15 seconds per question). For Tone/Theme questions: Eliminate extreme options (cynical, utopian, aggressive); bank passages usually maintain analytical, objective, or critical-constructive tones.</li>
+                        <li>Para Jumble Mandatory Pairing Method: Look for mandatory 2-sentence connections: Noun &rarr; Pronoun, Acronym &rarr; Full form, Problem &rarr; Solution. Independent opening sentence will never start with conjunctions (however, furthermore, thus) or pronouns.</li>
+                        <li>20-Minute Exam Allocation Blueprint: Min 0-4: Error Spotting & Sentence Correction (5-8 Qs); Min 4-8: Cloze Test & Word Swap (5-7 Qs); Min 8-12: Para Jumbles / Sentence Rearrangement (5 Qs); Min 12-20: Reading Comprehension Passages (8-10 Qs).</li>
                     </ul>
                 </div>
+
+                <!-- ==================== DOC 4: GENERAL & BANKING AWARENESS ==================== -->
                 <div id="doc-ga" class="doc-section">
-                    <h2>GENERAL & BANKING AWARENESS MASTER NOTES</h2>
-                    <h3>MODULE 1: RBI & MONETARY POLICY</h3>
+                    <h2>BANKING EXAM MASTER REVISION COMPENDIUM 2026: ALL-BANKING MASTER GENERAL & BANKING AWARENESS[cite: 1]</h2>
+                    <p><strong>Comprehensive 5-Module Master Guide | RBI Structure, Monetary Policy, Money & Capital Markets, Basel III, PSL Norms, NPA Resolution, Digital Banking & Flagship Schemes</strong>[cite: 1]</p>
+                    <p><em>Targeting IBPS PO/Clerk, SBI PO/Clerk, RRB PO/Clerk, RBI Grade B & Assistant, SEBI, NABARD, SIDBI</em>[cite: 1]</p>
+
+                    <h3>MODULE 1: RESERVE BANK OF INDIA (RBI) STRUCTURE & MONETARY POLICY OPERATIONS[cite: 1]</h3>
+                    <h4>1. RBI Institutional History & Legal Framework[cite: 1]</h4>
                     <ul>
-                        <li>Established April 1, 1935 (RBI Act 1934) based on Hilton Young Commission recommendations. Nationalized January 1, 1949.</li>
-                        <li>Monetary Policy Committee (MPC): 6 members, target headline inflation rate: 4% ± 2%.</li>
+                        <li>Establishment: April 1, 1935, under the RBI Act, 1934 on the recommendation of the Hilton Young Commission (Royal Commission on Indian Currency & Finance)[cite: 1].</li>
+                        <li>Nationalization: January 1, 1949 (under RBI Transfer to Public Ownership Act, 1948)[cite: 1].</li>
+                        <li>Headquarters: Mumbai (Initially established in Kolkata, moved to Mumbai in 1937)[cite: 1].</li>
+                        <li>First Governor: Sir Osborne Smith (1935-1937)[cite: 1]. First Indian Governor: Sir C.D. Deshmukh (1943-1949)[cite: 1].</li>
+                        <li>Central Board of Directors: Official Directors (1 Governor + Max 4 Deputy Governors) + Non-official Directors appointed by the Central Government[cite: 1].</li>
+                        <li>Accounting Year: April 1 to March 31 (Aligned with Financial Year)[cite: 1].</li>
+                        <li>Subsidiaries of RBI (100% Owned):[cite: 1]
+                            <ol>
+                                <li>DICGC: Deposit Insurance and Credit Guarantee Corporation[cite: 1].</li>
+                                <li>BRBNMPL: Bharatiya Reserve Bank Note Mudran Private Limited (Note printing at Mysuru & Salboni)[cite: 1].</li>
+                                <li>ReBIT: Reserve Bank Information Technology Private Limited[cite: 1].</li>
+                                <li>IFTAS: Indian Financial Technology and Allied Services[cite: 1].</li>
+                                <li>RBH: Reserve Bank Innovation Hub (Bengaluru)[cite: 1].</li>
+                            </ol>
+                        </li>
+                    </ul>
+
+                    <h4>2. Monetary Policy Committee (MPC) Architecture[cite: 1]</h4>
+                    <ul>
+                        <li>Statutory Basis: Section 45ZB of the amended RBI Act, 1934[cite: 1].</li>
+                        <li>Composition (6 Members): 3 Members from RBI (Governor as Ex-Officio Chairperson, Deputy Governor in-charge of Monetary Policy, and 1 RBI officer nominated by the Board) + 3 External Members appointed by the Central Government (Tenure: 4 years, not eligible for reappointment)[cite: 1].</li>
+                        <li>Decision Mechanism: Majority vote; Governor holds the Casting Vote in case of a tie[cite: 1].</li>
+                        <li>Inflation Target Mandate: 4% Headline CPI Inflation with a tolerance band of ± 2% (2% to 6%)[cite: 1].</li>
+                        <li>Failure Definition: If inflation breaches the 2%-6% band for 3 consecutive quarters, RBI must submit a formal explanatory report to the Central Government[cite: 1].</li>
+                    </ul>
+
+                    <h4>3. Direct & Indirect Monetary Policy Instruments[cite: 1]</h4>
+                    <div class="doc-table-container">
+                        <table class="doc-table">
+                            <thead>
+                                <tr><th>Policy Tool</th><th>Definition & Operational Mechanism</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>CRR (Cash Reserve Ratio)</td><td>Percentage of Net Demand and Time Liabilities (NDTL) that commercial banks must maintain as pure cash with RBI[cite: 1]. RBI pays zero interest on CRR balances[cite: 1].</td></tr>
+                                <tr><td>SLR (Statutory Liquidity Ratio)</td><td>Percentage of NDTL maintained with banks themselves in liquid unencumbered assets: Cash, Gold, or Approved Government Securities (G-Secs / T-Bills)[cite: 1].</td></tr>
+                                <tr><td>Repo Rate (Policy Rate)</td><td>Interest rate at which RBI lends short-term liquidity to commercial banks against the collateral of approved government securities[cite: 1].</td></tr>
+                                <tr><td>Reverse Repo Rate</td><td>Interest rate at which RBI borrows funds from commercial banks (Liquidity absorption)[cite: 1].</td></tr>
+                                <tr><td>SDF (Standing Deposit Facility)</td><td>Collateral-free liquidity absorption mechanism set 25 bps below the Repo Rate[cite: 1].</td></tr>
+                                <tr><td>MSF (Marginal Standing Facility)</td><td>Emergency penal overnight borrowing window for scheduled commercial banks against G-Secs (within SLR quota via dip)[cite: 1]. Set 25 bps above Repo Rate[cite: 1].</td></tr>
+                                <tr><td>Bank Rate</td><td>Long-term lending rate for discounting commercial bills; penal rate aligned with MSF[cite: 1].</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3>MODULE 2: BANK ACCOUNTS, CHEQUE TYPES, DIGITAL PAYMENTS & FINANCIAL CODES[cite: 1]</h3>
+                    <h4>1. Bank Deposit Accounts & DICGC Insurance[cite: 1]</h4>
+                    <ul>
+                        <li>Demand Deposits (CASA): Current Account: For business entities/firms; unlimited transactions, no interest earned, overdraft facility available[cite: 1]; Savings Account: For individuals; nominal interest (calculated daily product basis), restrictions on withdrawals[cite: 1].</li>
+                        <li>Time / Term Deposits (RAFA): Recurring Deposit (RD): Fixed regular monthly installments deposited for a pre-determined tenure[cite: 1]; Fixed Deposit (FD): One-time lump sum deposit earning higher fixed interest for tenure (7 days to 10 years)[cite: 1].</li>
+                        <li>Special Accounts: BSBDA (Basic Savings Bank Deposit Account): Zero minimum balance; max 4 free withdrawals per month[cite: 1]; NRE (Non-Resident External): INR account for NRIs; fully repatriable, interest tax-free in India[cite: 1]; NRO (Non-Resident Ordinary): INR account for income earned in India; restricted repatriation ($1M/year), taxable[cite: 1]; FCNR (Foreign Currency Non-Resident): Term deposit in foreign currencies (USD, GBP, EUR); fully repatriable[cite: 1].</li>
+                        <li>DICGC Deposit Insurance Cover: Maximum Insurance Limit: ₹5,00,000 (5 Lakh Rupees) per depositor per insured bank (covers both Principal + Accumulated Interest across all branches)[cite: 1].</li>
+                    </ul>
+
+                    <h4>2. Negotiable Instruments & Cheque Terminology[cite: 1]</h4>
+                    <ul>
+                        <li>Legal Act: Negotiable Instruments Act, 1881[cite: 1]. Cheque Validity: Strictly 3 Months from the date of issuance[cite: 1].</li>
+                        <li>Bearer Cheque: Payable to whoever presents the cheque physically across the teller counter[cite: 1].</li>
+                        <li>Order Cheque: Payable only to the specific named individual or their authorized endorsee[cite: 1].</li>
+                        <li>Crossed Cheque (//): Two parallel transverse lines on top-left; cannot be cashed at counter, credited only to payee's bank account[cite: 1].</li>
+                        <li>Stale Cheque: Cheque presented after 3 months validity has expired (Invalid)[cite: 1].</li>
+                        <li>Post-Dated Cheque: Cheque bearing a future calendar date[cite: 1].</li>
+                        <li>CTS (Cheque Truncation System): Electronic clearing of cheque images rather than physical movement[cite: 1].</li>
+                        <li>Positive Pay System: Re-confirmation of key details for cheques above ₹50,000 (mandatory above ₹5 Lakhs)[cite: 1].</li>
+                    </ul>
+
+                    <h4>3. Digital Payment Systems (NPCI & RBI Frameworks)[cite: 1]</h4>
+                    <div class="doc-table-container">
+                        <table class="doc-table">
+                            <thead>
+                                <tr><th>System</th><th>Operating Entity</th><th>Min / Max Limit</th><th>Settlement Model</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>NEFT</td><td>RBI</td><td>Min: ₹1 | Max: No Limit</td><td>24x7x365 Half-hourly batches (48 batches/day)[cite: 1]</td></tr>
+                                <tr><td>RTGS</td><td>RBI</td><td>Min: ₹2,00,000 | Max: No Limit</td><td>Real-Time Gross Settlement (Instant, continuous)[cite: 1]</td></tr>
+                                <tr><td>IMPS</td><td>NPCI</td><td>Min: ₹1 | Max: ₹5,00,000</td><td>Instant 24x7 Interbank Transfer via mobile/net[cite: 1]</td></tr>
+                                <tr><td>UPI</td><td>NPCI</td><td>Default Max: ₹1 Lakh/day (₹5L for Capital Mkts, Hospitals, Edu)</td><td>Instant mobile-to-mobile virtual payment address (VPA)[cite: 1]</td></tr>
+                                <tr><td>AePS</td><td>NPCI</td><td>Biometric authentication</td><td>Aadhaar-enabled banking at Micro-ATMs/BCs[cite: 1]</td></tr>
+                                <tr><td>NACH</td><td>NPCI</td><td>High-volume repetitive debits/credits</td><td>Bulk payments (dividends, subsidies, loan EMIs)[cite: 1]</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h4>4. Financial Codes Identification Matrix[cite: 1]</h4>
+                    <ul>
+                        <li>IFSC (Indian Financial System Code): 11 Alpha-numeric characters for electronic funds routing[cite: 1]. First 4 characters = Bank Name (e.g., SBIN)[cite: 1]; 5th character is always '0' (Zero) (Reserved for future use)[cite: 1]; Last 6 characters = Specific Branch Code (e.g., 000123)[cite: 1].</li>
+                        <li>MICR (Magnetic Ink Character Recognition): 9 Digits printed on cheque bottom band with magnetic iron-oxide ink[cite: 1]. First 3 digits = City Code (aligned with PIN code)[cite: 1]; Middle 3 digits = Bank Code[cite: 1]; Last 3 digits = Branch Code[cite: 1].</li>
+                        <li>SWIFT (Society for Worldwide Interbank Financial Telecommunication): 8 or 11 character alphanumeric code for cross-border international messaging and wire transfers. HQ: La Hulpe, Belgium[cite: 1].</li>
+                        <li>LEI (Legal Entity Identifier): 20-digit globally unique code for non-individual financial transactions above ₹50 Crores[cite: 1].</li>
+                    </ul>
+
+                    <h3>MODULE 3: NON-PERFORMING ASSETS (NPA), BASEL III NORMS & PSL GUIDELINES[cite: 1]</h3>
+                    <h4>1. NPA Norms, SMA Stages & Loan Asset Classification[cite: 1]</h4>
+                    <ul>
+                        <li>Definition of NPA: An advance/loan where interest or installment of principal remains overdue for a period of more than 90 Days[cite: 1]. Agricultural Loan NPA Norms: Short-duration crops: Overdue for 2 Crop Seasons; Long-duration crops: Overdue for 1 Crop Season[cite: 1].</li>
+                        <li>SMA (Special Mention Account) Early Stress Triggers: SMA-0 (1 to 30 Days overdue); SMA-1 (31 to 60 Days overdue); SMA-2 (61 to 90 Days overdue)[cite: 1].</li>
+                        <li>Standard Asset Classification Stages: Standard Asset: Regular performing account (overdue ≤ 90 days); Sub-Standard Asset: Remained NPA for a period ≤ 12 Months; Doubtful Asset: Remained in sub-standard category for > 12 Months (D1: Up to 1 year doubtful, D2: 1 to 3 years doubtful, D3: More than 3 years doubtful); Loss Asset: Identified as uncollectible / zero recoverable value by the bank, internal/external auditors, or RBI inspection[cite: 1].</li>
+                        <li>SARFAESI Act, 2002: Empowers banks to seize and auction underlying secured collateral (except agricultural land) without court intervention for NPAs > ₹1 Lakh[cite: 1].</li>
+                        <li>IBC (Insolvency and Bankruptcy Code, 2016): Time-bound resolution process (180 days + 90 days extension = Max 330 days) overseen by NCLT (Corporates) and DRT (Individuals)[cite: 1].</li>
+                    </ul>
+
+                    <h4>2. Basel III Capital Adequacy Norms & PSL Targets[cite: 1]</h4>
+                    <ul>
+                        <li>BCBS (Basel Committee on Banking Supervision): Headquartered at the Bank for International Settlements (BIS), Basel, Switzerland[cite: 1].</li>
+                        <li>CRAR = [(Tier 1 Capital + Tier 2 Capital) / Total Risk-Weighted Assets (RWA)] × 100[cite: 1]</li>
+                        <li>RBI Mandated Minimum Capital Standards in India: Minimum Total Capital (CRAR): 9.0% for commercial banks (11.5% including CCB); Tier 1 Capital: Minimum 7.0%; Common Equity Tier 1 (CET-1): Minimum 5.5%; Capital Conservation Buffer (CCB): 2.5% in common equity[cite: 1].</li>
+                        <li>Pillar 1: Minimum Capital Requirements (Credit, Market, Operational Risk); Pillar 2: Supervisory Review Process; Pillar 3: Market Discipline & Disclosure[cite: 1].</li>
+                        <li>Priority Sector Lending (PSL) Targets: Domestic Commercial Banks & Foreign Banks (≥20 branches) = <strong>40% of ANBC</strong>[cite: 1]; Regional Rural Banks (RRBs) = <strong>75% of ANBC</strong>[cite: 1]; Small Finance Banks (SFBs) = <strong>75% of ANBC</strong>[cite: 1]; Primary Urban Co-op Banks (UCBs) = <strong>75% of ANBC (Phased)</strong>[cite: 1].</li>
+                        <li>8 Prescribed PSL Categories: (1) Agriculture, (2) MSME, (3) Export Credit, (4) Education, (5) Housing, (6) Social Infrastructure, (7) Renewable Energy, (8) Others/Weaker Sections[cite: 1].</li>
+                    </ul>
+
+                    <h3>MODULE 4: FINANCIAL REGULATORS, MARKETS & ALL-INDIA FINANCIAL INSTITUTIONS[cite: 1]</h3>
+                    <h4>1. Apex Financial Regulators in India[cite: 1]</h4>
+                    <div class="doc-table-container">
+                        <table class="doc-table">
+                            <thead>
+                                <tr><th>Regulatory Authority</th><th>Statutory Act</th><th>HQ</th><th>Regulatory Domain</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>RBI (Reserve Bank of India)</td><td>RBI Act, 1934</td><td>Mumbai</td><td>Banking System, NBFCs, Money Market, Forex, Payment Systems[cite: 1]</td></tr>
+                                <tr><td>SEBI (Securities & Exchange Board)</td><td>SEBI Act, 1992</td><td>Mumbai</td><td>Capital / Stock Markets, Mutual Funds, Commodities, Depositories[cite: 1]</td></tr>
+                                <tr><td>IRDAI (Insurance Regulatory Authority)</td><td>IRDA Act, 1999</td><td>Hyderabad</td><td>Life & General Insurance Companies, Reinsurance, Intermediaries[cite: 1]</td></tr>
+                                <tr><td>PFRDA (Pension Fund Authority)</td><td>PFRDA Act, 2013</td><td>New Delhi</td><td>National Pension System (NPS), Atal Pension Yojana (APY)[cite: 1]</td></tr>
+                                <tr><td>IFSCA (Int. Financial Services Centres)</td><td>IFSCA Act, 2019</td><td>GIFT City, Gandhinagar</td><td>Unified regulator for financial products in IFSC SEZs[cite: 1]</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h4>2. All-India Financial Institutions (AIFIs)[cite: 1]</h4>
+                    <ul>
+                        <li>NABARD (National Bank for Agriculture and Rural Development): Established: July 12, 1982, under NABARD Act, 1981 on the recommendation of B. Sivaraman Committee[cite: 1]. Headquarters: Mumbai[cite: 1]. Apex refinancing body for RRBs and Co-operatives; manages RIDF (Rural Infrastructure Development Fund)[cite: 1].</li>
+                        <li>SIDBI (Small Industries Development Bank of India): Established: April 2, 1990[cite: 1]. Headquarters: Lucknow, UP[cite: 1]. Principal institution for promotion, financing, and development of Micro, Small, and Medium Enterprises (MSMEs)[cite: 1].</li>
+                        <li>EXIM Bank (Export-Import Bank of India): Established: January 1, 1982[cite: 1]. Headquarters: Mumbai[cite: 1]. Coordinates and finances cross-border foreign trade and exports[cite: 1].</li>
+                        <li>NHB (National Housing Bank): Established: July 9, 1988[cite: 1]. Headquarters: New Delhi[cite: 1]. Apex housing finance refinancing institution (100% Govt of India owned)[cite: 1].</li>
+                        <li>NaBFID (Nat. Bank for Financing Infrastructure & Dev.): Established 2021 as 5th AIFI[cite: 1]. HQ: Mumbai[cite: 1].</li>
+                    </ul>
+
+                    <h4>3. Money Market vs Capital Market Instruments[cite: 1]</h4>
+                    <ul>
+                        <li>Money Market (Short-Term ≤ 364 Days - Regulated by RBI):[cite: 1]
+                            <ul>
+                                <li>Call Money: Overnight 1-day interbank borrowing/lending[cite: 1].</li>
+                                <li>Notice Money: 2 to 14 days interbank borrowing/lending[cite: 1].</li>
+                                <li>Term Money: 15 days to 1 year interbank borrowing[cite: 1].</li>
+                                <li>Treasury Bills (T-Bills): Issued by Central Govt; zero-coupon (discounted); tenures: 91 days, 182 days, 364 days. Min amount: ₹25,000[cite: 1].</li>
+                                <li>Cash Management Bills (CMBs): Short-term bills for temporary mismatches (&lt;91 days)[cite: 1].</li>
+                                <li>Commercial Paper (CP): Unsecured promissory notes issued by top corporates; maturity: 7 days to 1 year; Min: ₹5 Lakhs[cite: 1].</li>
+                                <li>Certificate of Deposit (CD): Issued by commercial banks/AIFIs; maturity: 7 days to 1 year (Banks); Min: ₹1 Lakh[cite: 1].</li>
+                            </ul>
+                        </li>
+                        <li>Capital Market (Long-Term &gt; 1 Year - Regulated by SEBI): Equity Shares: Ownership stake with voting rights; Debentures / Bonds: Debt instruments bearing coupon interest; G-Secs (Dated Securities): Fixed or floating sovereign debt bonds with tenures up to 40 years[cite: 1].</li>
+                    </ul>
+
+                    <h3>MODULE 5: FLAGSHIP GOVERNMENT SCHEMES & CURRENT AFFAIRS BLUEPRINT[cite: 1]</h3>
+                    <h4>1. Flagship Government Financial Inclusion Schemes[cite: 1]</h4>
+                    <ul>
+                        <li>PM Jan Dhan Yojana (PMJDY): Launched: August 28, 2014[cite: 1]. Motto: "Mera Khata, Bhagya Vidhaata"[cite: 1]. Benefits: Zero-balance basic savings account; ₹10,000 Overdraft (OD) facility (after 6 months satisfactory operation); RuPay Debit Card with ₹2 Lakh Free Accidental Insurance Cover[cite: 1].</li>
+                        <li>PM MUDRA Yojana (PMMY): Launched: April 8, 2015, to fund the unfunded micro-enterprises[cite: 1]. 3 Canonical Loan Categories: (1) Shishu: Loans up to ₹50,000; (2) Kishore: Loans from ₹50,000 to ₹5 Lakh; (3) Tarun: Loans from ₹5 Lakh to ₹10 Lakh (Enhanced up to ₹20 Lakh under Tarun Plus for past repaid entrepreneurs)[cite: 1].</li>
+                        <li>PM SVANidhi: Micro-credit scheme for urban street vendors; initial working capital loan ₹10,000, 2nd tranche ₹20,000, 3rd tranche ₹50,000 with 7% interest subsidy[cite: 1].</li>
+                        <li>Stand-Up India Scheme: Bank loans between ₹10 Lakh and ₹1 Crore to at least one SC/ST borrower and at least one woman borrower per bank branch for greenfield enterprises[cite: 1].</li>
+                    </ul>
+
+                    <h4>2. Social Security Insurance & Pension Triad[cite: 1]</h4>
+                    <div class="doc-table-container">
+                        <table class="doc-table">
+                            <thead>
+                                <tr><th>Scheme Name</th><th>Target Age Bracket</th><th>Annual Premium</th><th>Coverage & Benefit</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>PMJJBY (Jeevan Jyoti Bima)</td><td>18 to 50 Years</td><td>₹436 / Year</td><td>₹2,00,000 (2 Lakh) Life Insurance Cover for death due to any cause[cite: 1].</td></tr>
+                                <tr><td>PMSBY (Suraksha Bima)</td><td>18 to 70 Years</td><td>₹20 / Year</td><td>₹2,00,000 for accidental death / total permanent disability (₹1 Lakh for partial)[cite: 1].</td></tr>
+                                <tr><td>APY (Atal Pension Yojana)</td><td>18 to 40 Years</td><td>Variable monthly contribution</td><td>Guaranteed monthly pension of ₹1,000 to ₹5,000 starting from age 60[cite: 1].</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h4>3. General & Current Awareness Mains Master Checklist[cite: 1]</h4>
+                    <ul>
+                        <li>RBI Notifications & Circulars: Review all regulatory directives, penalties on banks, and policy announcements from the last 6 months[cite: 1].</li>
+                        <li>Union Budget & Economic Survey: Fiscal deficit target, capital expenditure (CapEx) outlays, tax slabs, and priority sector allocations[cite: 1].</li>
+                        <li>National & International Banking News: Mergers & acquisitions, bank CEO/MD appointments, new digital portal/app launches, MoUs[cite: 1].</li>
+                        <li>Indices & Reports: Global Hunger Index, HDI, World Happiness Report, ease of doing business frameworks, GDP growth projections by IMF, World Bank, and RBI[cite: 1].</li>
+                        <li>Summits & Sports: G20/G7/BRICS summits, Olympic/Asian Games medal tallies, Grand Slams, and national award recipients[cite: 1].</li>
                     </ul>
                 </div>
             </div>
@@ -1086,16 +2016,14 @@
     </div>
 
     <footer>
-        <p><strong>FinMatrix</strong> — Financial Calculators, Live Market Intelligence & Banking Prep Hub.</p>
-        <p style="margin-top:0.4rem; color:#94a3b8; font-size:0.8rem;">© 2026 FinMatrix. Market data and formulas provided for education and planning.</p>
+        <p><strong>FinMatrix</strong> — All-In-One Financial Calculation, Real Estate Planning, Unit Conversion & Banking Exam Preparation Hub.</p>
+        <p style="margin-top: 0.4rem; color: #94a3b8; font-size: 0.8rem;">© 2026 FinMatrix. Market data and formulas provided for education and planning purposes.</p>
     </footer>
 
     <script>
         let sipChartInstance = null, loanChartInstance = null, propChartInstance = null;
-        let goldChartInstance = null, btcChartInstance = null;
+        let btcChartInstance = null, ethChartInstance = null;
         let calculationHistory = [];
-        let activeGoldPurity = '24k';
-        let baseGold24kPrice = 7650;
         let fxRates = { USD: 1, INR: 86.50, EUR: 0.92, GBP: 0.78, AED: 3.67, CAD: 1.38 };
         let cryptoPricesUSD = { BTC: 68500, ETH: 3300, SOL: 190, USDT: 1 };
 
@@ -1133,14 +2061,18 @@
             let n = parseFloat(document.getElementById('quant-num-sq').value);
             let res = document.getElementById('quant-sq-res');
             if (isNaN(n)) { res.innerText = "Square: - | √Root: -"; return; }
-            res.innerText = `Square: ${(n * n).toLocaleString()} | √Root: ${(n >= 0 ? Math.sqrt(n).toFixed(3) : 'Invalid')}`;
+            let sq = (n * n).toLocaleString();
+            let sqrt = n >= 0 ? Math.sqrt(n).toFixed(3) : "Invalid";
+            res.innerText = `Square: ${sq} | √Root: ${sqrt}`;
         }
 
         function calcQuantCube() {
             let n = parseFloat(document.getElementById('quant-num-cb').value);
             let res = document.getElementById('quant-cb-res');
             if (isNaN(n)) { res.innerText = "Cube: - | ∛Root: -"; return; }
-            res.innerText = `Cube: ${(n * n * n).toLocaleString()} | ∛Root: ${Math.cbrt(n).toFixed(3)}`;
+            let cb = (n * n * n).toLocaleString();
+            let cbrt = Math.cbrt(n).toFixed(3);
+            res.innerText = `Cube: ${cb} | ∛Root: ${cbrt}`;
         }
 
         function calcQuantPercent() {
@@ -1148,7 +2080,8 @@
             let y = parseFloat(document.getElementById('quant-p-y').value);
             let res = document.getElementById('quant-pct-res');
             if (isNaN(x) || isNaN(y)) { res.innerText = "Result: -"; return; }
-            res.innerText = `${x}% of ${y} = ${((x / 100) * y).toLocaleString()}`;
+            let val = ((x / 100) * y).toLocaleString();
+            res.innerText = `${x}% of ${y} = ${val}`;
         }
 
         function calculateProperty() {
@@ -1166,6 +2099,7 @@
             let regFee = (basePrice * regRate) / 100;
             let brokerage = (basePrice * brokW) / 100;
             let totalPurchaseCost = basePrice + stampDuty + regFee + brokerage + interior;
+
             let futureValue = basePrice * Math.pow(1 + (appRate / 100), years);
             let netProfit = futureValue - totalPurchaseCost;
 
@@ -1179,24 +2113,39 @@
             updateChart('propertyChart', ['Base Price', 'Govt Taxes', 'Interiors & Brokerage'], [basePrice, stampDuty + regFee, brokerage + interior], ['#3b82f6', '#f59e0b', '#8b5cf6'], 'property');
         }
 
+        const operators = ['+', '-', '*', '/'];
+
         function calcPress(val) {
             let screen = document.getElementById('calc-screen');
-            if (screen.value === '0' || screen.value === 'Error') {
-                screen.value = val;
+            let current = screen.value;
+
+            if (current === '0' || current === 'Error') {
+                if (operators.includes(val)) {
+                    screen.value = '0' + val;
+                } else {
+                    screen.value = val;
+                }
             } else {
-                screen.value += val;
+                let lastChar = current.slice(-1);
+                // If user clicks an operator right after another operator, replace the previous operator
+                if (operators.includes(val) && operators.includes(lastChar)) {
+                    screen.value = current.slice(0, -1) + val;
+                } else {
+                    screen.value += val;
+                }
             }
+            screen.scrollLeft = screen.scrollWidth;
         }
 
         function calcMoveCursor(direction) {
             let screen = document.getElementById('calc-screen');
-            let pos = Math.max(0, Math.min(screen.value.length, screen.selectionStart + direction));
-            screen.setSelectionRange(pos, pos);
             screen.focus();
         }
 
         function calcClear() {
-            document.getElementById('calc-screen').value = "0";
+            let screen = document.getElementById('calc-screen');
+            screen.value = "0";
+            screen.focus();
         }
 
         function calcCompute() {
@@ -1214,6 +2163,8 @@
             } catch (e) {
                 screen.value = "Error";
             }
+            screen.scrollLeft = screen.scrollWidth;
+            screen.focus();
         }
 
         function addHistory(expr, res) {
@@ -1225,20 +2176,25 @@
         function renderHistory() {
             const list = document.getElementById('calc-history-list');
             if (calculationHistory.length === 0) {
-                list.innerHTML = `<div style="text-align:center; color:var(--muted); margin:auto; font-size:0.9rem;">No calculations yet.</div>`;
+                list.innerHTML = `<div class="history-empty">No calculations yet. Perform a calculation to see its record here.</div>`;
                 return;
             }
             list.innerHTML = calculationHistory.map((item, idx) => `
-                <div class="history-item" onclick="reuseHistory(${idx})">
-                    <div style="font-size:0.85rem; color:var(--muted);">${item.expr} =</div>
-                    <div style="font-size:1.15rem; color:var(--primary); font-weight:800;">${item.res}</div>
+                <div class="history-item" onclick="reuseHistory(${idx})" title="Click to reuse">
+                    <div class="hist-expr">${item.expr} =</div>
+                    <div class="hist-res">${item.res}</div>
                 </div>
             `).join('');
         }
 
         function reuseHistory(index) {
             const item = calculationHistory[index];
-            if (item) document.getElementById('calc-screen').value = item.res.toString();
+            if (item) {
+                const screen = document.getElementById('calc-screen');
+                screen.value = item.res.toString();
+                screen.scrollLeft = screen.scrollWidth;
+                screen.focus();
+            }
         }
 
         function clearHistory() {
@@ -1246,49 +2202,29 @@
             renderHistory();
         }
 
-        const marketHistoryData = {
-            gold24k: {
-                '1m': { labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Today'], data: [7420, 7490, 7550, 7610, 7650] },
-                '6m': { labels: ['6M ago', '4M ago', '3M ago', '2M ago', '1M ago', 'Now'], data: [6950, 7120, 7280, 7450, 7580, 7650] },
-                '1y': { labels: ['Q1', 'Q2', 'Q3', 'Q4', 'Current'], data: [6200, 6550, 7050, 7400, 7650] },
-                '5y': { labels: ['2021', '2022', '2023', '2024', '2025', '2026'], data: [4750, 5200, 5950, 7100, 7500, 7650] }
-            },
-            gold22k: {
-                '1m': { labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Today'], data: [6800, 6865, 6920, 6975, 7012] },
-                '6m': { labels: ['6M ago', '4M ago', '3M ago', '2M ago', '1M ago', 'Now'], data: [6370, 6526, 6673, 6830, 6948, 7012] },
-                '1y': { labels: ['Q1', 'Q2', 'Q3', 'Q4', 'Current'], data: [5683, 6004, 6462, 6783, 7012] },
-                '5y': { labels: ['2021', '2022', '2023', '2024', '2025', '2026'], data: [4354, 4766, 5454, 6508, 6875, 7012] }
-            },
+        const cryptoHistoryData = {
             btc: {
                 '1m': { labels: ['W1', 'W2', 'W3', 'W4', 'Today'], data: [62400, 64100, 63800, 67200, 68500] },
                 '6m': { labels: ['6M ago', '4M ago', '3M ago', '2M ago', '1M ago', 'Now'], data: [54000, 59500, 62000, 65000, 64200, 68500] },
-                '1y': { labels: ['Q1', 'Q2', 'Q3', 'Q4', 'Current'], data: [38000, 52000, 58000, 64000, 68500] },
-                '5y': { labels: ['2021', '2022', '2023', '2024', '2025', '2026'], data: [29000, 19500, 28000, 62000, 66000, 68500] }
+                '1y': { labels: ['Q1', 'Q2', 'Q3', 'Q4', 'Current'], data: [38000, 52000, 58000, 64000, 68500] }
+            },
+            eth: {
+                '1m': { labels: ['W1', 'W2', 'W3', 'W4', 'Today'], data: [3100, 3180, 3220, 3270, 3300] },
+                '6m': { labels: ['6M ago', '4M ago', '3M ago', '2M ago', '1M ago', 'Now'], data: [2600, 2800, 2950, 3100, 3200, 3300] },
+                '1y': { labels: ['Q1', 'Q2', 'Q3', 'Q4', 'Current'], data: [2200, 2500, 2900, 3150, 3300] }
             }
         };
 
-        function selectGoldPurity(purity) {
-            activeGoldPurity = purity;
-            document.getElementById('purity-24k-btn').classList.toggle('active', purity === '24k');
-            document.getElementById('purity-22k-btn').classList.toggle('active', purity === '22k');
-            
-            let gramPrice = purity === '24k' ? baseGold24kPrice : Math.round(baseGold24kPrice * (22 / 24));
-            document.getElementById('gold-price-inr').innerText = formatINR(gramPrice) + " /g";
-            document.getElementById('gold-price-sub').innerText = `${formatINR(gramPrice * 10)} per 10g • ${purity.toUpperCase()} Gold`;
-            renderMarketChart('gold', '1m');
-        }
-
-        function renderMarketChart(asset, range) {
-            const isGold = asset === 'gold';
-            const canvas = document.getElementById(isGold ? 'goldChart' : 'btcChart');
+        function renderCryptoChart(coin, range) {
+            const isBtc = coin === 'btc';
+            const canvas = document.getElementById(isBtc ? 'btcChart' : 'ethChart');
             if (!canvas) return;
             const ctx = canvas.getContext('2d');
-            
-            let dataKey = isGold ? (activeGoldPurity === '24k' ? 'gold24k' : 'gold22k') : 'btc';
-            const dataSet = marketHistoryData[dataKey][range];
-            const color = isGold ? '#d97706' : '#2563eb';
+            const dataSet = cryptoHistoryData[coin][range];
+            const color = isBtc ? '#2563eb' : '#8b5cf6';
+            const bgGradient = isBtc ? 'rgba(37, 99, 235, 0.12)' : 'rgba(139, 92, 246, 0.12)';
 
-            let currentInstance = isGold ? goldChartInstance : btcChartInstance;
+            let currentInstance = isBtc ? btcChartInstance : ethChartInstance;
             if (currentInstance) currentInstance.destroy();
 
             const newChart = new Chart(ctx, {
@@ -1298,111 +2234,85 @@
                     datasets: [{
                         data: dataSet.data,
                         borderColor: color,
-                        backgroundColor: color + '18',
+                        backgroundColor: bgGradient,
                         fill: true,
                         tension: 0.35,
                         pointRadius: 3,
+                        pointHoverRadius: 5,
                         borderWidth: 2.5
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: (c) => ` $${c.parsed.y.toLocaleString('en-US')}`
+                            }
+                        }
+                    },
                     scales: {
                         x: { grid: { display: false }, ticks: { font: { size: 10 } } },
-                        y: { grid: { color: '#f1f5f9' }, ticks: { font: { size: 10 } } }
+                        y: { 
+                            grid: { color: '#f1f5f9' }, 
+                            ticks: { 
+                                font: { size: 10 },
+                                callback: (v) => '$' + (v >= 1000 ? (v/1000) + 'k' : v)
+                            } 
+                        }
                     }
                 }
             });
 
-            if (isGold) goldChartInstance = newChart;
-            else btcChartInstance = newChart;
+            if (isBtc) btcChartInstance = newChart;
+            else ethChartInstance = newChart;
         }
 
-        function updateMarketChart(asset, range, btn) {
+        function updateCryptoChart(coin, range, btn) {
             btn.parentElement.querySelectorAll('.tf-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            renderMarketChart(asset, range);
+            renderCryptoChart(coin, range);
         }
 
-        // REAL-TIME AUTO-UPDATE ENGINE
         async function fetchLiveMarketRates() {
-            // 1. Live Crypto Rates via CoinGecko
             try {
-                const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana,tether&vs_currencies=usd,inr');
+                const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd,inr');
                 if (res.ok) {
                     const data = await res.json();
                     if (data.bitcoin) {
                         const usd = data.bitcoin.usd;
                         const inr = data.bitcoin.inr;
                         document.getElementById('btc-price-usd').innerText = `$${usd.toLocaleString('en-US')}`;
-                        document.getElementById('btc-price-inr').innerText = `≈ ₹${inr.toLocaleString('en-IN')} INR • Live`;
+                        document.getElementById('btc-price-inr').innerText = `₹${inr.toLocaleString('en-IN')} INR`;
                         cryptoPricesUSD.BTC = usd;
-                        if (data.ethereum) cryptoPricesUSD.ETH = data.ethereum.usd;
-                        if (data.solana) cryptoPricesUSD.SOL = data.solana.usd;
-                        marketHistoryData.btc['1m'].data[4] = usd;
-                        renderMarketChart('btc', '1m');
-                        convertCrypto();
+                        cryptoHistoryData.btc['1m'].data[4] = usd;
+                        renderCryptoChart('btc', '1m');
+                    }
+                    if (data.ethereum) {
+                        const usd = data.ethereum.usd;
+                        const inr = data.ethereum.inr;
+                        document.getElementById('eth-price-usd').innerText = `$${usd.toLocaleString('en-US')}`;
+                        document.getElementById('eth-price-inr').innerText = `₹${inr.toLocaleString('en-IN')} INR`;
+                        cryptoPricesUSD.ETH = usd;
+                        cryptoHistoryData.eth['1m'].data[4] = usd;
+                        renderCryptoChart('eth', '1m');
                     }
                 }
-            } catch (e) { console.log("Using cached cryptocurrency rates."); }
+            } catch (e) {
+                console.log("Using cached fallback rates for crypto.");
+            }
 
-            // 2. Live Forex Rates via open.er-api
             try {
                 const fxRes = await fetch('https://open.er-api.com/v6/latest/USD');
                 if (fxRes.ok) {
                     const fxData = await fxRes.json();
                     if (fxData && fxData.rates) {
                         fxRates.INR = fxData.rates.INR || 86.50;
-                        fxRates.EUR = fxData.rates.EUR || 0.92;
-                        fxRates.GBP = fxData.rates.GBP || 0.78;
-                        fxRates.AED = fxData.rates.AED || 3.67;
-                        fxRates.CAD = fxData.rates.CAD || 1.38;
-                        convertCurrency();
-
-                        // 3. Derived Live Gold Spot Calculation
-                        const spotOunceUSD = 2650;
-                        const gramUSD = spotOunceUSD / 31.1035;
-                        baseGold24kPrice = Math.round(gramUSD * fxRates.INR * 1.15); // Factoring duty/GST
-                        selectGoldPurity(activeGoldPurity);
                     }
                 }
-            } catch (e) { console.log("Using fallback exchange rates."); }
-        }
-
-        let sciExpr = "";
-        function sciPress(val) {
-            let screen = document.getElementById('sci-screen');
-            if (screen.value === '0' || screen.value === 'Error') sciExpr = "";
-            sciExpr += val;
-            screen.value = sciExpr;
-        }
-        function sciClear() {
-            sciExpr = "";
-            document.getElementById('sci-screen').value = "0";
-        }
-        function sciBackspace() {
-            let screen = document.getElementById('sci-screen');
-            sciExpr = sciExpr.slice(0, -1);
-            screen.value = sciExpr || "0";
-        }
-        function sciFunc(fn) {
-            let screen = document.getElementById('sci-screen');
-            if (screen.value === '0' || screen.value === 'Error') sciExpr = "";
-            sciExpr += `Math.${fn}(`;
-            screen.value = sciExpr;
-        }
-        function sciCompute() {
-            let screen = document.getElementById('sci-screen');
-            try {
-                let result = Function(`'use strict'; return (${sciExpr})`)();
-                screen.value = Number.isFinite(result) ? result : "Error";
-                sciExpr = screen.value.toString();
-            } catch (e) {
-                screen.value = "Error";
-                sciExpr = "";
-            }
+            } catch (e) { console.log("Using cached forex."); }
         }
 
         function calculateSIP() {
@@ -1423,6 +2333,7 @@
             document.getElementById('sip-invested').innerText = formatINR(totalInvested);
             document.getElementById('sip-returns').innerText = formatINR(returns);
             document.getElementById('sip-total').innerText = formatINR(totalValue);
+
             updateChart('sipChart', ['Invested', 'Gains'], [totalInvested, returns], ['#3b82f6', '#10b981'], 'sip');
         }
 
@@ -1451,6 +2362,7 @@
             document.getElementById('loan-emi').innerText = formatINR(emi);
             document.getElementById('loan-saved').innerText = formatINR(interestSaved);
             document.getElementById('loan-time-saved').innerText = `${Math.floor(monthsSaved/12)} Yrs ${monthsSaved % 12} Mos`;
+
             updateChart('loanChart', ['Principal', 'Interest Paid'], [P, prepayInterest], ['#3b82f6', '#f59e0b'], 'loan');
         }
 
@@ -1482,7 +2394,9 @@
             let years = parseInt(document.getElementById('ppf-years').value);
             let total = 0, invested = annual * years;
 
-            for (let i = 0; i < years; i++) total = (total + annual) * (1 + r);
+            for (let i = 0; i < years; i++) {
+                total = (total + annual) * (1 + r);
+            }
 
             document.getElementById('ppf-invested').innerText = formatINR(invested);
             document.getElementById('ppf-interest').innerText = formatINR(total - invested);
@@ -1525,14 +2439,27 @@
             document.getElementById('tax-best').innerText = newTax <= oldTax ? "✨ New Regime Saves More" : "✨ Old Regime Saves More";
         }
 
-        function convertCurrency() {
-            let amt = parseFloat(document.getElementById('curr-amount').value) || 0;
-            let from = document.getElementById('curr-from').value;
-            let to = document.getElementById('curr-to').value;
-            let inUSD = amt / fxRates[from];
-            let converted = inUSD * fxRates[to];
-            document.getElementById('curr-result').innerText = `${converted.toFixed(2)} ${to}`;
-            document.getElementById('curr-rate-info').innerText = `1 ${from} = ${(fxRates[to]/fxRates[from]).toFixed(4)} ${to}`;
+        // ENERGY / SCIENTIFIC CONVERTER (JOULES, CALORIES, KWH, ETC.)
+        const energyFactors = {
+            j: 1,
+            kj: 1000,
+            cal: 4.184,
+            kcal: 4184,
+            kwh: 3600000,
+            ev: 1.602176634e-19,
+            ftlb: 1.355818
+        };
+
+        function convertEnergy() {
+            let val = parseFloat(document.getElementById('energy-val').value) || 0;
+            let unit = document.getElementById('energy-unit').value;
+            let valInJoules = val * energyFactors[unit];
+
+            document.getElementById('e-j').innerText = valInJoules.toExponential(4) + " J";
+            document.getElementById('e-cal').innerText = (valInJoules / energyFactors.cal).toLocaleString(undefined, {maximumFractionDigits: 2}) + " cal";
+            document.getElementById('e-kwh').innerText = (valInJoules / energyFactors.kwh).toExponential(4) + " kWh";
+            document.getElementById('e-ev').innerText = (valInJoules / energyFactors.ev).toExponential(4) + " eV";
+            document.getElementById('e-ftlb').innerText = (valInJoules / energyFactors.ftlb).toLocaleString(undefined, {maximumFractionDigits: 2}) + " ft⋅lb";
         }
 
         function convertCrypto() {
@@ -1596,7 +2523,6 @@
             else loanChartInstance = newChart;
         }
 
-        // INITIALIZE ALL ENGINES & AUTO-UPDATE
         calculateProperty();
         calculateSIP();
         calculateLoan();
@@ -1604,15 +2530,14 @@
         calculatePPF();
         calculateSalary();
         calculateTax();
-        convertCurrency();
+        convertEnergy();
         convertCrypto();
         convertWeight();
         convertLength();
 
-        selectGoldPurity('24k');
-        renderMarketChart('btc', '1m');
+        renderCryptoChart('btc', '1m');
+        renderCryptoChart('eth', '1m');
 
-        // Immediate fetch on open/refresh + 60s background sync
         fetchLiveMarketRates();
         setInterval(fetchLiveMarketRates, 60000);
     </script>
